@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClaudeKit Skills Dashboard v2.16.0</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a2e;
+    --border: #2a2a3e;
+    --text: #e4e4ef;
+    --text-muted: #8888a0;
+    --accent: #7c6aef;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --orange: #fb923c;
+    --pink: #f472b6;
+    --blue: #60a5fa;
+    --cyan: #22d3ee;
+    --red: #f87171;
+    --yellow: #fbbf24;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 80px 20px 50px;
+    background: linear-gradient(180deg, #1a1040 0%, #120e25 40%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 20%, rgba(124,106,239,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(34,211,238,0.06) 0%, transparent 50%);
+    animation: heroGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroGlow {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-5%, 5%); }
+  }
+
+  .hero > * { position: relative; z-index: 1; }
+
+  .hero h1 {
+    font-size: 3.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #c4b5fd, var(--cyan), #818cf8);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    animation: gradientShift 6s ease infinite;
+    letter-spacing: -0.5px;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero .version {
+    color: var(--cyan);
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(124,106,239,0.2), rgba(34,211,238,0.15));
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(124,106,239,0.3);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat .num {
+    font-size: 2.4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent2), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+  }
+
+  .controls-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 14px 18px 14px 46px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+
+  .search-box input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124,106,239,0.15);
+    background: rgba(18,18,26,0.95);
+  }
+
+  .search-box::before {
+    content: "\1F50D";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+  }
+
+  .filter-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-tag {
+    padding: 8px 18px;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+  }
+
+  .filter-tag:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    background: rgba(124,106,239,0.1);
+    transform: translateY(-1px);
+  }
+
+  .filter-tag.active {
+    background: linear-gradient(135deg, var(--accent), #6366f1);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(124,106,239,0.35);
+    transform: translateY(-1px);
+  }
+
+  .count-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    margin-left: 4px;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  .results-info {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: 500px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: linear-gradient(145deg, var(--surface), rgba(26,26,46,0.6));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--cyan), var(--pink));
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: radial-gradient(circle at 50% 0%, rgba(124,106,239,0.06), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+    pointer-events: none;
+  }
+
+  .card:hover {
+    border-color: rgba(124,106,239,0.5);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 40px rgba(124,106,239,0.2), 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  .card:hover::before { opacity: 1; animation: borderGlow 2s linear infinite; }
+  .card:hover::after { opacity: 1; }
+
+  @keyframes borderGlow {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .card-command {
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: var(--accent2);
+    margin-top: 2px;
+  }
+
+  .card-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-usage {
+    background: linear-gradient(135deg, rgba(26,26,46,0.8), rgba(18,18,26,0.9));
+    border: 1px solid rgba(34,211,238,0.15);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--cyan);
+    overflow-x: auto;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .card-usage::before {
+    content: '>';
+    color: var(--accent2);
+    margin-right: 8px;
+    font-weight: bold;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-dev { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .tag-ai { background: rgba(167,139,250,0.15); color: var(--accent2); }
+  .tag-ops { background: rgba(251,146,60,0.15); color: var(--orange); }
+  .tag-design { background: rgba(244,114,182,0.15); color: var(--pink); }
+  .tag-test { background: rgba(52,211,153,0.15); color: var(--green); }
+  .tag-tool { background: rgba(34,211,238,0.15); color: var(--cyan); }
+  .tag-workflow { background: rgba(251,191,36,0.15); color: var(--yellow); }
+  .tag-security { background: rgba(248,113,113,0.15); color: var(--red); }
+
+  .footer {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    background: linear-gradient(180deg, var(--bg), #0d0d18);
+  }
+
+  .tag {
+    transition: transform 0.2s;
+  }
+  .tag:hover { transform: scale(1.05); }
+
+  ::selection {
+    background: rgba(124,106,239,0.4);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  .expand-btn {
+    background: linear-gradient(135deg, rgba(124,106,239,0.1), rgba(34,211,238,0.08));
+    border: 1px solid rgba(124,106,239,0.25);
+    color: var(--accent2);
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: all 0.3s;
+  }
+
+  .expand-btn:hover {
+    background: linear-gradient(135deg, rgba(124,106,239,0.2), rgba(34,211,238,0.15));
+    border-color: var(--accent);
+    color: var(--cyan);
+    transform: translateY(-1px);
+  }
+
+  .card-detail {
+    display: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .card-detail.open { display: block; }
+
+  .detail-section {
+    margin-bottom: 10px;
+  }
+
+  .detail-section strong {
+    color: var(--text);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .detail-section ul {
+    margin-top: 4px;
+    padding-left: 18px;
+  }
+
+  .detail-section li {
+    margin-bottom: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="version">v2.16.0 &mdash; Engineer Edition</div>
+  <h1>ClaudeKit Skills Dashboard</h1>
+  <p>Tra cứu đầy đủ tất cả skills, cách dùng và ứng dụng trong ClaudeKit Engineer</p>
+  <div class="stats-bar">
+    <div class="stat"><div class="num" id="totalSkills">0</div><div class="label">Skills</div></div>
+    <div class="stat"><div class="num" id="totalCategories">0</div><div class="label">Categories</div></div>
+    <div class="stat"><div class="num" id="totalVisible">0</div><div class="label">Showing</div></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Tìm kiếm skill... (tên, mô tả, lệnh)" autocomplete="off">
+    </div>
+    <div class="filter-tags" id="filterTags"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="results-info" id="resultsInfo"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="footer">
+  ClaudeKit Engineer v2.16.0 &bull; 76 Skills &bull; Tạo bởi Claude Code
+</div>
+
+<script>
+const skills = [
+  {
+    name: "agent-browser",
+    icon: "🌐",
+    command: "/agent-browser",
+    desc: "Tự động hóa trình duyệt web thông minh, tối ưu cho AI. Chạy các phiên duyệt web dài tự động, tự kiểm tra kết quả, quay video phiên làm việc, và hỗ trợ kiểm thử trên trình duyệt đám mây (Browserbase). Sử dụng DOM snapshots tiết kiệm context.",
+    usage: "/agent-browser [url hoặc tác vụ]",
+    category: "tool",
+    tags: ["tool", "ai"],
+    details: {
+      features: ["Chạy script Puppeteer CLI tự động", "Phiên duyệt web liên tục (persistent sessions)", "Quay video phiên làm việc", "Kiểm thử trên trình duyệt đám mây Browserbase", "Chụp DOM snapshot tiết kiệm context token"],
+      useCases: ["Thu thập dữ liệu web (web scraping) tự động", "Chụp ảnh màn hình & giám sát website", "Tự động điền form, đăng nhập", "Kiểm thử End-to-End trên trình duyệt", "Phân tích hiệu suất trang web"]
+    }
+  },
+  {
+    name: "ai-artist",
+    icon: "🎨",
+    command: "/ai-artist",
+    desc: "Tạo hình ảnh AI chất lượng cao thông qua Nano Banana với kho 129 prompt mẫu được tuyển chọn. Có phỏng vấn xác nhận phong cách/tông màu trước khi tạo (dùng --skip để bỏ qua). 3 chế độ tạo: search (tìm kiếm), creative (sáng tạo), wild (phóng khoáng). Hỗ trợ nhiều phong cách: Ukiyo-e, Bento grid, cyberpunk, cinematic, vintage patent...",
+    usage: "/ai-artist [ý tưởng] [--mode search|creative|wild] [--skip]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Kho 129 prompt mẫu được tuyển chọn kỹ lưỡng", "Phỏng vấn xác nhận phong cách, tông màu, bố cục trước khi tạo", "3 chế độ: search (tìm mẫu có sẵn), creative (tùy chỉnh sáng tạo), wild (tự do phóng khoáng)", "Hơn 55 phong cách nghệ thuật khác nhau", "Tích hợp API Nano Banana để sinh hình ảnh"],
+      useCases: ["Tạo hình minh họa cho bài viết, website", "Thiết kế concept art cho dự án", "Tạo ảnh marketing, quảng cáo", "Tạo ảnh cho mạng xã hội", "Thiết kế tài sản thương hiệu (brand assets)"]
+    }
+  },
+  {
+    name: "ai-multimodal",
+    icon: "🤖",
+    command: "/ai-multimodal",
+    desc: "Phân tích hình ảnh, âm thanh, video bằng Gemini API (khả năng nhận diện hình ảnh tốt hơn Claude). Tạo hình ảnh (Imagen 4, Nano Banana 2, MiniMax), tạo video (Veo 3, Hailuo), chuyển văn bản thành giọng nói (MiniMax TTS), tạo nhạc (MiniMax). Hỗ trợ OCR, trích xuất thiết kế, phiên âm.",
+    usage: "/ai-multimodal [đường-dẫn-file] [mô-tả]",
+    category: "ai",
+    tags: ["ai"],
+    details: {
+      features: ["Phân tích hình ảnh bằng Gemini Vision (chính xác hơn Claude)", "Tạo hình ảnh bằng Imagen 4, Nano Banana 2, MiniMax", "Tạo video bằng Veo 3, Hailuo", "Chuyển văn bản thành giọng nói (Text-to-Speech) bằng MiniMax", "Tạo nhạc bằng MiniMax Music", "Nhận diện chữ OCR và phiên âm audio"],
+      useCases: ["Phân tích thiết kế UI từ ảnh chụp màn hình", "Tạo video ngắn từ mô tả văn bản", "Chuyển nội dung thành giọng đọc tự nhiên", "Tạo nhạc nền cho video, podcast", "Trích xuất nội dung từ tài liệu scan (OCR)"]
+    }
+  },
+  {
+    name: "ask",
+    icon: "💡",
+    command: "/ask",
+    desc: "Đặt câu hỏi kỹ thuật và nhận tư vấn chuyên sâu từ chuyên gia. Phù hợp cho các câu hỏi về kiến trúc hệ thống, lựa chọn công nghệ, best practices, và các quyết định kỹ thuật quan trọng.",
+    usage: "/ask [câu-hỏi-kỹ-thuật]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tư vấn chuyên gia về kỹ thuật và kiến trúc", "Hướng dẫn thiết kế kiến trúc hệ thống", "Giải đáp về best practices ngành", "So sánh và đánh giá các công nghệ"],
+      useCases: ["Hỏi về cách thiết kế kiến trúc hệ thống phù hợp", "So sánh các công nghệ/framework để lựa chọn", "Tìm hiểu best practices cho một vấn đề cụ thể", "Đưa ra quyết định kỹ thuật quan trọng cho dự án"]
+    }
+  },
+  {
+    name: "backend-development",
+    icon: "⚙️",
+    command: "/backend-development",
+    desc: "Xây dựng hệ thống backend hoàn chỉnh với Node.js, Python, Go. Hỗ trợ các framework phổ biến: NestJS, FastAPI, Django. Tạo API (REST/GraphQL/gRPC), xác thực người dùng (OAuth, JWT), kết nối cơ sở dữ liệu, thiết kế microservices, bảo mật theo chuẩn OWASP, container hóa với Docker/K8s.",
+    usage: "/backend-development [framework] [tác-vụ]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["Hỗ trợ NestJS, FastAPI, Django và các framework khác", "Tạo API theo chuẩn REST, GraphQL, hoặc gRPC", "Xác thực bằng OAuth 2.0, JWT, session", "Kết nối và tương tác với các loại database", "Thiết kế kiến trúc microservices", "Bảo mật ứng dụng theo tiêu chuẩn OWASP Top 10"],
+      useCases: ["Tạo API mới cho ứng dụng web/mobile", "Thiết lập hệ thống đăng nhập, phân quyền", "Thiết kế cấu trúc cơ sở dữ liệu", "Xây dựng kiến trúc microservice từ đầu", "Kiểm tra bảo mật API theo OWASP"]
+    }
+  },
+  {
+    name: "better-auth",
+    icon: "🔐",
+    command: "/better-auth",
+    desc: "Tích hợp xác thực người dùng với thư viện Better Auth (TypeScript). Hỗ trợ đăng nhập email/mật khẩu, đăng nhập mạng xã hội (Google, GitHub...), xác thực 2 lớp (2FA/MFA), khóa vật lý (passkeys/WebAuthn), quản lý phiên đăng nhập, phân quyền theo vai trò (RBAC), giới hạn tốc độ truy cập.",
+    usage: "/better-auth [phương-thức-xác-thực hoặc tính-năng]",
+    category: "dev",
+    tags: ["dev", "security"],
+    details: {
+      features: ["Đăng nhập bằng email và mật khẩu", "Đăng nhập qua mạng xã hội (Google, GitHub, Facebook...)", "Xác thực 2 lớp (2FA/MFA) bằng OTP, authenticator app", "Hỗ trợ khóa vật lý Passkeys/WebAuthn", "Quản lý phiên đăng nhập an toàn", "Phân quyền theo vai trò (RBAC)", "Giới hạn tốc độ truy cập (Rate Limiting)"],
+      useCases: ["Thiết lập hệ thống đăng nhập cho ứng dụng TypeScript", "Thêm đăng nhập qua Google, GitHub...", "Bật xác thực 2 lớp cho tài khoản", "Cấu hình phân quyền người dùng theo vai trò", "Bảo vệ API với rate limiting"]
+    }
+  },
+  {
+    name: "bootstrap",
+    icon: "🚀",
+    command: "/bootstrap",
+    desc: "Khởi tạo dự án mới từ đầu với quy trình chuyên nghiệp: nghiên cứu yêu cầu, chọn tech stack phù hợp, thiết kế hệ thống, lập kế hoạch triển khai, và bắt đầu code. Có 4 chế độ: full (tương tác từng bước), auto (tự động mặc định), fast (bỏ qua nghiên cứu), parallel (chạy nhiều agent song song).",
+    usage: "/bootstrap [yêu-cầu] [--full|--auto|--fast|--parallel]",
+    category: "workflow",
+    tags: ["workflow", "dev"],
+    details: {
+      features: ["Chế độ tương tác (full) — hỏi đáp từng bước", "Tự động chọn tech stack phù hợp", "Khởi tạo hệ thống thiết kế (design system)", "Lập kế hoạch triển khai theo giai đoạn", "Chế độ song song (parallel) dùng nhiều agent cùng lúc"],
+      useCases: ["Khởi tạo dự án web/mobile mới từ con số 0", "Setup dự án monorepo cho team", "Scaffold ứng dụng full-stack nhanh chóng", "Tạo dự án với cấu trúc chuẩn, sẵn sàng phát triển"]
+    }
+  },
+  {
+    name: "brainstorm",
+    icon: "🧠",
+    command: "/brainstorm",
+    desc: "Động não tìm giải pháp với phân tích ưu nhược điểm (trade-off) và sự trung thực tuyệt đối. Phù hợp cho: lên ý tưởng, quyết định kiến trúc hệ thống, tranh luận kỹ thuật, khám phá tính năng mới, đánh giá tính khả thi, thảo luận thiết kế. Tuân thủ nguyên tắc YAGNI/KISS/DRY.",
+    usage: "/brainstorm [chủ-đề hoặc vấn-đề]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Tuân thủ nguyên tắc YAGNI, KISS, DRY", "Ma trận so sánh ưu nhược điểm (trade-off matrix)", "Đánh giá rủi ro chi tiết", "Phân tích tính khả thi thực tế", "Đề xuất nhiều hướng giải pháp khác nhau"],
+      useCases: ["Thảo luận thiết kế kiến trúc hệ thống", "Lựa chọn công nghệ/framework phù hợp", "Khám phá và đánh giá tính năng mới", "Tranh luận về các quyết định kỹ thuật", "Phân tích ưu nhược điểm trước khi triển khai"]
+    }
+  },
+  {
+    name: "chrome-devtools",
+    icon: "🔧",
+    command: "/chrome-devtools",
+    desc: "Tự động hóa trình duyệt Chrome bằng Puppeteer CLI scripts với phiên làm việc liên tục. Chụp ảnh màn hình, phân tích hiệu suất trang, theo dõi mạng, thu thập dữ liệu web, tự động điền form, gỡ lỗi JavaScript.",
+    usage: "/chrome-devtools [url hoặc tác-vụ]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tự động hóa bằng Puppeteer CLI", "Phiên duyệt web liên tục không bị mất trạng thái", "Theo dõi và ghi nhận lưu lượng mạng", "Đo lường hiệu suất tải trang", "Kiểm tra và tương tác với DOM"],
+      useCases: ["Thu thập dữ liệu từ website (scraping)", "Chụp ảnh màn hình tự động hàng loạt", "Phân tích tốc độ tải và hiệu suất website", "Tự động hóa form đăng ký, đăng nhập", "Gỡ lỗi JavaScript trực tiếp trên trình duyệt"]
+    }
+  },
+  {
+    name: "ck-autoresearch",
+    icon: "🔄",
+    command: "/ck-autoresearch",
+    desc: "Vòng lặp tối ưu hóa tự động — chạy N lần lặp dựa trên một chỉ số đo lường cụ thể, học hỏi từ lịch sử git, tự động giữ lại thay đổi tốt và loại bỏ thay đổi xấu. Dùng để cải thiện các chỉ số có thể đo được như test coverage, performance, kích thước bundle...",
+    usage: "/ck-autoresearch [mô-tả-mục-tiêu/chỉ-số]",
+    category: "workflow",
+    tags: ["workflow", "ai"],
+    details: {
+      features: ["Tối ưu hóa lặp đi lặp lại tự động", "Học từ lịch sử git để ra quyết định", "Tự động giữ/loại bỏ thay đổi dựa trên kết quả", "Chạy hoàn toàn tự chủ không cần can thiệp", "Đo lường chỉ số trước và sau mỗi vòng lặp"],
+      useCases: ["Tăng tỷ lệ test coverage lên mức mong muốn", "Giảm kích thước bundle cho web app", "Cải thiện điểm hiệu suất (performance score)", "Tối ưu hóa bất kỳ chỉ số nào đo lường được"]
+    }
+  },
+  {
+    name: "ck-debug",
+    icon: "🐛",
+    command: "/ck-debug",
+    desc: "Gỡ lỗi có hệ thống với phân tích nguyên nhân gốc rễ (root cause analysis) trước khi tiến hành sửa. Phù hợp cho: bug, test thất bại, hành vi bất thường, vấn đề hiệu suất, truy vết call stack, kiểm tra đa lớp, phân tích log, lỗi CI/CD, chẩn đoán database.",
+    usage: "/ck-debug [mô-tả-lỗi hoặc vấn-đề]",
+    category: "dev",
+    tags: ["dev", "test"],
+    details: {
+      features: ["Phân tích nguyên nhân gốc rễ (Root Cause Analysis)", "Truy vết call stack chi tiết", "Kiểm tra và xác nhận đa lớp (multi-layer validation)", "Phân tích log tự động tìm manh mối", "Chẩn đoán vấn đề database"],
+      useCases: ["Tìm và sửa bug phức tạp", "Xử lý test thất bại không rõ nguyên nhân", "Giải quyết vấn đề hiệu suất chậm", "Sửa lỗi pipeline CI/CD", "Điều tra hành vi bất thường của hệ thống"]
+    }
+  },
+  {
+    name: "ck-help",
+    icon: "❓",
+    command: "/ck-help",
+    desc: "Trợ giúp sử dụng ClaudeKit — hướng dẫn chi tiết các lệnh, cách dùng skills, cấu hình và khắc phục sự cố. Là nơi bắt đầu khi bạn chưa biết dùng tính năng nào.",
+    usage: "/ck-help [chủ-đề]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tài liệu hướng dẫn ClaudeKit đầy đủ", "Gợi ý skill phù hợp với nhu cầu", "Hướng dẫn cấu hình hệ thống", "Khắc phục sự cố thường gặp"],
+      useCases: ["Tìm hiểu cách sử dụng một skill cụ thể", "Cấu hình ClaudeKit cho dự án", "Khắc phục lỗi khi dùng ClaudeKit"]
+    }
+  },
+  {
+    name: "ck-loop",
+    icon: "♻️",
+    command: "/ck-loop",
+    desc: "Vòng lặp tối ưu hóa tự động (tương tự ck-autoresearch) — chạy N lần lặp để cải thiện một chỉ số cụ thể, học từ git history, tự động giữ/loại bỏ thay đổi dựa trên kết quả đo được.",
+    usage: "/ck-loop [mô-tả-mục-tiêu/chỉ-số]",
+    category: "workflow",
+    tags: ["workflow", "ai"],
+    details: {
+      features: ["Tối ưu hóa lặp đi lặp lại tự động", "Nhận biết lịch sử thay đổi từ git", "Tự động giữ hoặc loại bỏ thay đổi", "Đo lường chỉ số sau mỗi vòng lặp", "Học từ các lần thử trước"],
+      useCases: ["Tinh chỉnh hiệu suất ứng dụng", "Cải thiện chất lượng code tự động", "Tối ưu hóa test coverage", "Giảm kích thước build/bundle"]
+    }
+  },
+  {
+    name: "ck-plan",
+    icon: "📋",
+    command: "/ck-plan",
+    desc: "Lập kế hoạch triển khai chi tiết, thiết kế kiến trúc hệ thống, tạo lộ trình kỹ thuật (technical roadmap) với các giai đoạn rõ ràng. Hỗ trợ lưu trữ kế hoạch (archive), kiểm tra phản biện (red-team), và xác nhận kế hoạch (validate).",
+    usage: "/ck-plan [tác-vụ] HOẶC [archive|red-team|validate]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Tài liệu hóa từng giai đoạn triển khai", "Thiết kế kiến trúc hệ thống chi tiết", "Kiểm tra phản biện (red-team) để tìm điểm yếu", "Lưu trữ và phiên bản hóa kế hoạch", "Tạo lộ trình kỹ thuật dài hạn"],
+      useCases: ["Lập kế hoạch phát triển tính năng mới", "Thiết kế kiến trúc cho hệ thống lớn", "Xây dựng chiến lược triển khai theo giai đoạn", "Đánh giá và cải thiện kế hoạch hiện có", "Tạo roadmap kỹ thuật cho team"]
+    }
+  },
+  {
+    name: "ck-predict",
+    icon: "🔮",
+    command: "/ck-predict",
+    desc: "5 chuyên gia ảo (expert personas) tranh luận và phản biện về thay đổi dự kiến trước khi triển khai. Giúp phát hiện sớm các vấn đề về kiến trúc, bảo mật, hiệu suất và trải nghiệm người dùng. Nên dùng trước khi làm tính năng lớn hoặc thay đổi rủi ro cao.",
+    usage: "/ck-predict <mô-tả-tính-năng> [--files <glob>]",
+    category: "workflow",
+    tags: ["workflow", "security"],
+    details: {
+      features: ["5 chuyên gia ảo tranh luận độc lập", "Đánh giá kiến trúc hệ thống", "Phân tích rủi ro bảo mật", "Dự đoán vấn đề hiệu suất", "Đánh giá trải nghiệm người dùng (UX)"],
+      useCases: ["Đánh giá trước khi triển khai tính năng lớn", "Phát hiện rủi ro trong thay đổi phức tạp", "Xem xét thay đổi kiến trúc hệ thống", "Kiểm tra code liên quan đến bảo mật"]
+    }
+  },
+  {
+    name: "ck-scenario",
+    icon: "🎯",
+    command: "/ck-scenario",
+    desc: "Tạo ra các trường hợp biên (edge cases) và kịch bản kiểm thử toàn diện bằng cách phân tích tính năng theo 12 chiều khác nhau. Nên dùng trước khi bắt đầu code hoặc viết test để không bỏ sót trường hợp nào.",
+    usage: "/ck-scenario <đường-dẫn-file hoặc mô-tả-tính-năng>",
+    category: "test",
+    tags: ["test"],
+    details: {
+      features: ["Phân tích theo 12 chiều (12 dimensions)", "Tự động sinh edge cases", "Tạo kịch bản kiểm thử chi tiết", "Phân tích trước khi triển khai"],
+      useCases: ["Chuẩn bị trước khi bắt đầu code tính năng mới", "Lên kế hoạch kiểm thử đầy đủ", "Phát hiện các trường hợp biên dễ bị bỏ sót", "Chuẩn bị cho QA testing"]
+    }
+  },
+  {
+    name: "ck-security",
+    icon: "🛡️",
+    command: "/ck-security",
+    desc: "Kiểm tra bảo mật chuyên sâu dựa trên mô hình STRIDE và tiêu chuẩn OWASP, có tùy chọn tự động sửa lỗi. Quét code tìm lỗ hổng bảo mật, phân loại theo mức độ nghiêm trọng (critical/high/medium/low), và có thể tự động sửa lặp đi lặp lại theo pattern ck:autoresearch.",
+    usage: "/ck-security <phạm-vi> [--fix] [--iterations N]",
+    category: "security",
+    tags: ["security"],
+    details: {
+      features: ["Mô hình đe dọa STRIDE (Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation)", "Kiểm tra theo tiêu chuẩn OWASP Top 10", "Phân loại lỗ hổng theo mức độ nghiêm trọng", "Tự động sửa lỗi bảo mật (--fix)", "Sửa lỗi lặp đi lặp lại nhiều vòng"],
+      useCases: ["Kiểm tra bảo mật toàn bộ codebase", "Quét tìm lỗ hổng trước khi release", "Tự động sửa các vấn đề bảo mật phát hiện được", "Đánh giá tuân thủ tiêu chuẩn bảo mật"]
+    }
+  },
+  {
+    name: "code-review",
+    icon: "👁️",
+    command: "/code-review",
+    desc: "Review code với tinh thần phản biện gay gắt (adversarial rigor). Hỗ trợ nhiều đầu vào: thay đổi đang chờ (pending), số PR, commit hash, quét toàn bộ codebase. Luôn bật chế độ red-team để tìm lỗ hổng bảo mật, giả định sai, và các điểm có thể gây lỗi.",
+    usage: "/code-review [#PR | COMMIT | --pending | codebase]",
+    category: "dev",
+    tags: ["dev", "security"],
+    details: {
+      features: ["Review phản biện gay gắt (adversarial review)", "Phân tích kiểu red-team tìm điểm yếu", "Review Pull Request theo số PR", "Review commit cụ thể theo hash", "Quét toàn bộ codebase tìm vấn đề", "Phát hiện lỗ hổng bảo mật tiềm ẩn"],
+      useCases: ["Review Pull Request trước khi merge", "Kiểm tra code trước khi phát hành", "Đánh giá bảo mật của code mới", "Kiểm tra chất lượng code tổng thể", "Tìm bug tiềm ẩn trong codebase"]
+    }
+  },
+  {
+    name: "coding-level",
+    icon: "📊",
+    command: "/coding-level",
+    desc: "Thiết lập mức độ kinh nghiệm lập trình để Claude điều chỉnh cách giải thích và định dạng đầu ra cho phù hợp. Mức 0 = người mới hoàn toàn, mức 5 = chuyên gia. Claude sẽ tự động điều chỉnh độ chi tiết, thuật ngữ, và lượng giải thích theo mức bạn chọn.",
+    usage: "/coding-level [0-5]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["6 mức từ 0 (người mới) đến 5 (chuyên gia)", "Tự động điều chỉnh cách giải thích", "Thay đổi định dạng đầu ra phù hợp", "Áp dụng cho toàn bộ phiên làm việc"],
+      useCases: ["Người mới bắt đầu muốn giải thích chi tiết từng bước", "Junior developer muốn hiểu rõ lý do", "Senior developer muốn câu trả lời ngắn gọn, đi thẳng vào vấn đề", "Điều chỉnh độ chi tiết giải thích theo nhu cầu"]
+    }
+  },
+  {
+    name: "context-engineering",
+    icon: "📐",
+    command: "/context-engineering",
+    desc: "Kiểm tra mức sử dụng context, theo dõi thời gian còn lại, tối ưu hóa tiêu thụ token, gỡ lỗi khi context bị đầy. Dùng khi muốn biết đã dùng bao nhiêu phần trăm context, kiểm tra rate limit, hoặc tìm hiểu về kiến trúc agent và hệ thống bộ nhớ.",
+    usage: "/context-engineering [chủ-đề hoặc câu-hỏi]",
+    category: "tool",
+    tags: ["tool", "ai"],
+    details: {
+      features: ["Giám sát mức sử dụng context window", "Tối ưu hóa tiêu thụ token", "Theo dõi rate limit", "Thiết kế hệ thống bộ nhớ cho agent", "Tư vấn kiến trúc agent AI"],
+      useCases: ["Kiểm tra đã dùng bao nhiêu % context", "Tối ưu hóa token để tiết kiệm chi phí", "Gỡ lỗi khi context bị đầy bất ngờ", "Thiết kế kiến trúc agent AI hiệu quả"]
+    }
+  },
+  {
+    name: "cook",
+    icon: "👨‍🍳",
+    command: "/cook",
+    desc: "LUÔN kích hoạt skill này trước khi triển khai BẤT KỲ tính năng, kế hoạch, hay bản sửa lỗi nào. Đây là bước chuẩn bị trước khi code — kiểm tra yêu cầu, xác nhận phạm vi, lên danh sách việc cần làm. Có nhiều chế độ: interactive (tương tác), fast (nhanh), parallel (song song), auto (tự động).",
+    usage: "/cook [tác-vụ] [--interactive|--fast|--parallel|--auto|--no-test]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Danh sách kiểm tra trước khi triển khai", "Chế độ tương tác, nhanh, song song, tự động", "Tích hợp kiểm thử", "Xác nhận kế hoạch trước khi bắt đầu"],
+      useCases: ["Chuẩn bị trước mỗi tính năng mới", "Kiểm tra lại yêu cầu trước khi sửa bug", "Xác nhận phạm vi công việc trước khi code", "Đảm bảo không bỏ sót bước quan trọng"]
+    }
+  },
+  {
+    name: "copywriting",
+    icon: "✍️",
+    command: "/copywriting",
+    desc: "Kho công thức viết quảng cáo chuyển đổi cao: mẫu tiêu đề, email marketing, cấu trúc landing page, tối ưu nút hành động (CTA), trích xuất phong cách viết. Dùng cho viết nội dung chuyển đổi, quảng cáo, email, landing page, hoặc áp dụng phong cách viết riêng.",
+    usage: "/copywriting [loại-nội-dung] [bối-cảnh]",
+    category: "design",
+    tags: ["design"],
+    details: {
+      features: ["Các công thức copywriting chuyển đổi cao (AIDA, PAS, BAB...)", "Mẫu tiêu đề thu hút clicks", "Cấu trúc email marketing hiệu quả", "Thiết kế cấu trúc landing page", "Tối ưu nút kêu gọi hành động (CTA)", "Trích xuất và áp dụng phong cách viết từ mẫu"],
+      useCases: ["Viết tiêu đề quảng cáo thu hút", "Tạo email marketing chuyển đổi cao", "Viết nội dung landing page bán hàng", "Viết quảng cáo Google/Facebook", "Mô tả sản phẩm hấp dẫn"]
+    }
+  },
+  {
+    name: "databases",
+    icon: "🗄️",
+    command: "/databases",
+    desc: "Thiết kế cấu trúc cơ sở dữ liệu (schema), viết truy vấn cho MongoDB và PostgreSQL. Bao gồm: thiết kế database, truy vấn SQL/NoSQL, aggregation pipeline, chiến lược đánh index, migration, replication, tối ưu hiệu suất, và sử dụng psql CLI.",
+    usage: "/databases [truy-vấn hoặc tác-vụ schema]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["Hỗ trợ MongoDB và PostgreSQL", "Thiết kế cấu trúc database (schema design)", "Tối ưu hóa truy vấn", "Xây dựng aggregation pipeline MongoDB", "Chiến lược đánh index hiệu quả", "Viết và quản lý migration", "Hướng dẫn psql CLI"],
+      useCases: ["Thiết kế cơ sở dữ liệu từ đầu cho dự án", "Viết truy vấn SQL/NoSQL phức tạp", "Tối ưu hiệu suất database chậm", "Tạo script migration an toàn", "Thiết lập replication cho high availability"]
+    }
+  },
+  {
+    name: "deploy",
+    icon: "🚢",
+    command: "/deploy",
+    desc: "Triển khai (deploy) dự án lên bất kỳ nền tảng nào với khả năng tự động phát hiện platform. Hỗ trợ: Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, AWS, GCP, GitHub Pages, Digital Ocean, Vultr, Coolify, Dokploy... Tự động đọc config để chọn platform phù hợp.",
+    usage: "/deploy [platform] [môi-trường]",
+    category: "ops",
+    tags: ["ops"],
+    details: {
+      features: ["Tự động phát hiện platform từ file cấu hình", "Hỗ trợ hơn 15 nền tảng hosting", "Quản lý nhiều môi trường (dev/staging/production)", "Tự động tạo file cấu hình cần thiết"],
+      useCases: ["Triển khai ứng dụng lên production lần đầu", "Thiết lập môi trường staging cho testing", "Chuyển đổi nền tảng hosting", "Deploy nhanh lên Vercel/Netlify/Cloudflare"]
+    }
+  },
+  {
+    name: "design",
+    icon: "🎨",
+    command: "/design",
+    desc: "Skill thiết kế toàn diện: nhận diện thương hiệu, design tokens, UI styling, tạo logo (55 phong cách, Gemini AI), chương trình nhận diện doanh nghiệp (CIP — 50 sản phẩm), trình chiếu HTML (Chart.js), banner (22 phong cách), icon (15 phong cách), ảnh mạng xã hội đa nền tảng.",
+    usage: "/design [loại-thiết-kế] [bối-cảnh]",
+    category: "design",
+    tags: ["design"],
+    details: {
+      features: ["55 phong cách logo khác nhau", "50 sản phẩm nhận diện doanh nghiệp (CIP)", "22 phong cách banner cho đa nền tảng", "15 phong cách icon SVG", "Trình chiếu HTML với Chart.js", "Tạo hình bằng Gemini AI", "Ảnh mạng xã hội cho Facebook, Instagram, YouTube, TikTok..."],
+      useCases: ["Thiết kế logo cho thương hiệu mới", "Xây dựng bộ nhận diện thương hiệu hoàn chỉnh", "Tạo design system cho sản phẩm", "Làm slide trình chiếu chuyên nghiệp", "Thiết kế banner quảng cáo, ảnh mạng xã hội"]
+    }
+  },
+  {
+    name: "devops",
+    icon: "☁️",
+    command: "/devops",
+    desc: "Triển khai hạ tầng lên Cloudflare (Workers, R2, D1), Docker, GCP (Cloud Run, GKE), Kubernetes (kubectl, Helm). Bao gồm: serverless, container, CI/CD pipeline, GitOps, kiểm tra bảo mật hạ tầng.",
+    usage: "/devops [platform] [tác-vụ]",
+    category: "ops",
+    tags: ["ops"],
+    details: {
+      features: ["Cloudflare Workers, R2 Storage, D1 Database", "Docker containerization", "GCP Cloud Run và GKE", "Kubernetes với kubectl, Helm charts", "Xây dựng CI/CD pipeline", "Quy trình GitOps"],
+      useCases: ["Triển khai ứng dụng container lên Kubernetes", "Setup serverless trên Cloudflare Workers", "Xây dựng CI/CD pipeline tự động", "Quản lý hạ tầng bằng Infrastructure as Code", "Kiểm tra bảo mật cấu hình hạ tầng"]
+    }
+  },
+  {
+    name: "docs",
+    icon: "📝",
+    command: "/docs",
+    desc: "Phân tích codebase và quản lý tài liệu dự án. Ba hành động chính: init (khởi tạo tài liệu mới), update (cập nhật tài liệu theo code mới), summarize (tóm tắt codebase). Tự động phân tích cấu trúc code để sinh tài liệu phù hợp.",
+    usage: "/docs init|update|summarize",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tự động sinh tài liệu từ codebase", "Phân tích cấu trúc code", "Khởi tạo tài liệu mới (init)", "Cập nhật tài liệu theo thay đổi code (update)", "Tóm tắt codebase (summarize)"],
+      useCases: ["Tạo tài liệu cho dự án mới chưa có docs", "Cập nhật docs khi code thay đổi", "Tóm tắt nhanh codebase cho người mới", "Quản lý tài liệu dự án xuyên suốt"]
+    }
+  },
+  {
+    name: "docs-seeker",
+    icon: "📚",
+    command: "/docs-seeker",
+    desc: "Tìm kiếm tài liệu chính thức của thư viện/framework thông qua llms.txt (context7.com). Tra cứu API docs, phân tích GitHub repository, tìm tài liệu kỹ thuật, xem tính năng mới nhất của thư viện.",
+    usage: "/docs-seeker [tên-thư-viện] [chủ-đề]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tích hợp llms.txt để truy cập docs nhanh", "Tìm kiếm qua Context7.com", "Phân tích GitHub repository trực tiếp", "Luôn lấy API docs phiên bản mới nhất"],
+      useCases: ["Tra cứu tài liệu của thư viện bất kỳ", "Tìm API reference chính xác", "Xem tính năng mới nhất của framework", "Tìm hiểu cách dùng thư viện chưa quen"]
+    }
+  },
+  {
+    name: "drive-telegram-reporter",
+    icon: "📊",
+    command: "/drive-telegram-reporter",
+    desc: "Hệ thống tự động giám sát Google Drive và gửi báo cáo qua Telegram Bot, đồng thời lưu dữ liệu vào Google Sheet. Phù hợp cho: theo dõi hoạt động Drive, tạo chatbot báo cáo Telegram, giám sát đơn hàng/file/nhân sự, tạo dashboard tự động.",
+    usage: "/drive-telegram-reporter",
+    category: "tool",
+    tags: ["tool", "ai"],
+    details: {
+      features: ["Giám sát thay đổi trên Google Drive real-time", "Gửi báo cáo tự động qua Telegram Bot", "Lưu log vào Google Sheet", "Lên lịch báo cáo định kỳ"],
+      useCases: ["Giám sát file trên Google Drive tự động", "Nhận báo cáo qua Telegram mỗi ngày/tuần", "Theo dõi đơn hàng, file nhân sự trên Drive", "Tạo dashboard Google Sheet tự cập nhật"]
+    }
+  },
+  {
+    name: "find-skills",
+    icon: "🔍",
+    command: "/find-skills",
+    desc: "Giúp bạn tìm và cài đặt skill phù hợp khi hỏi 'làm sao để X', 'tìm skill cho X', 'có skill nào giúp...'. Tự động gợi ý skill dựa trên mô tả nhu cầu của bạn.",
+    usage: "/find-skills [mô-tả-nhu-cầu]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tìm kiếm skill theo mô tả nhu cầu", "Gợi ý skill phù hợp nhất", "Hướng dẫn cài đặt skill mới"],
+      useCases: ["Tìm skill phù hợp khi chưa biết dùng cái nào", "Khám phá các khả năng mới của ClaudeKit", "Cài đặt thêm skill cho nhu cầu cụ thể"]
+    }
+  },
+  {
+    name: "fix",
+    icon: "🔨",
+    command: "/fix",
+    desc: "LUÔN kích hoạt skill này trước khi sửa BẤT KỲ lỗi nào: bug, error, test thất bại, lỗi CI/CD, type error, lint, log error, lỗi UI, vấn đề code. Có 4 chế độ: auto (tự động sửa), review (xem xét trước khi sửa), quick (sửa nhanh), parallel (sửa song song nhiều lỗi).",
+    usage: "/fix [vấn-đề] --auto|--review|--quick|--parallel",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["Chế độ tự động sửa (--auto)", "Chế độ xem xét trước (--review)", "Sửa nhanh (--quick)", "Sửa song song nhiều lỗi (--parallel)", "Phân tích nguyên nhân gốc rễ"],
+      useCases: ["Sửa bug trong ứng dụng", "Xử lý type error TypeScript", "Sửa lỗi lint/formatting", "Khắc phục test thất bại", "Sửa lỗi CI/CD pipeline", "Sửa lỗi giao diện UI"]
+    }
+  },
+  {
+    name: "frontend-design",
+    icon: "🖼️",
+    command: "/frontend-design",
+    desc: "Tạo giao diện frontend hoàn thiện, đẹp mắt từ thiết kế/ảnh chụp màn hình/video. Bao gồm: web components, trải nghiệm 3D, sao chép giao diện từ hình mẫu, tạo prototype nhanh, giao diện nhập vai. Tránh hiệu ứng 'AI slop' (nhìn giả tạo).",
+    usage: "/frontend-design",
+    category: "design",
+    tags: ["design", "dev"],
+    details: {
+      features: ["Chuyển ảnh chụp màn hình thành code (screenshot to code)", "Chuyển video demo thành code (video to code)", "Xây dựng trải nghiệm 3D", "Tạo prototype nhanh chóng", "Chống hiệu ứng AI slop — giao diện trông tự nhiên"],
+      useCases: ["Tái tạo giao diện từ hình mẫu/screenshot", "Tạo prototype nhanh cho ý tưởng", "Xây dựng trải nghiệm web 3D", "Tạo giao diện nhập vai (immersive)"]
+    }
+  },
+  {
+    name: "frontend-development",
+    icon: "⚛️",
+    command: "/frontend-development",
+    desc: "Xây dựng giao diện frontend React/TypeScript với các pattern hiện đại. Bao gồm: tạo components, React Suspense, lazy loading, useSuspenseQuery, tùy chỉnh MUI v7, TanStack Router, tối ưu hiệu suất render.",
+    usage: "/frontend-development [component hoặc tính-năng]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["React với TypeScript strict mode", "React Suspense và lazy loading", "useSuspenseQuery cho data fetching", "Styling với MUI v7", "Routing với TanStack Router", "Tối ưu hiệu suất render"],
+      useCases: ["Tạo React component mới", "Tối ưu hiệu suất render cho ứng dụng", "Thiết lập state management", "Cấu hình routing cho SPA", "Tích hợp thư viện UI component"]
+    }
+  },
+  {
+    name: "git",
+    icon: "📦",
+    command: "/git",
+    desc: "Thao tác Git với conventional commits chuẩn. Staging, commit, push, tạo Pull Request, merge. Tự động tách commits theo loại/phạm vi (type/scope). Quét phát hiện secrets trước khi commit.",
+    usage: "/git cm|cp|pr|merge [tham-số]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Conventional commits chuẩn (feat:, fix:, chore:...)", "Tự động tách commits theo loại và phạm vi", "Tạo Pull Request chuyên nghiệp", "Quét phát hiện secrets/mật khẩu trước commit", "Merge branches an toàn"],
+      useCases: ["Commit thay đổi với message chuẩn", "Tạo Pull Request chất lượng", "Merge branches không xung đột", "Push code lên remote", "Quét bảo mật trước khi commit"]
+    }
+  },
+  {
+    name: "gkg",
+    icon: "🕸️",
+    command: "/gkg",
+    desc: "Phân tích code ngữ nghĩa với GitLab Knowledge Graph. Nhảy đến định nghĩa (go-to-definition), tìm nơi sử dụng (find-usages), phân tích ảnh hưởng khi thay đổi (impact analysis), trực quan hóa kiến trúc. Hỗ trợ: Ruby, Java, Kotlin, Python, TypeScript/JavaScript.",
+    usage: "/gkg [tên-symbol hoặc truy-vấn]",
+    category: "tool",
+    tags: ["tool", "dev"],
+    details: {
+      features: ["Nhảy đến định nghĩa hàm/class (go-to-definition)", "Tìm tất cả nơi sử dụng symbol (find-usages)", "Phân tích ảnh hưởng khi thay đổi code", "Trực quan hóa kiến trúc hệ thống", "Hỗ trợ nhiều ngôn ngữ: Ruby, Java, Kotlin, Python, TS/JS"],
+      useCases: ["Tìm nơi định nghĩa function/class", "Xem function này được gọi ở những đâu", "Đánh giá phạm vi ảnh hưởng khi sửa code", "Hiểu kiến trúc tổng thể của codebase"]
+    }
+  },
+  {
+    name: "google-adk-python",
+    icon: "🤖",
+    command: "/google-adk-python",
+    desc: "Xây dựng AI agent với Google ADK (Agent Development Kit) bằng Python. Hệ thống đa agent, giao thức Agent-to-Agent (A2A), tích hợp MCP tools, workflow agents, quản lý state/memory, callbacks/plugins, triển khai lên Vertex AI, đánh giá chất lượng.",
+    usage: "/google-adk-python [agent hoặc tính-năng]",
+    category: "ai",
+    tags: ["ai", "dev"],
+    details: {
+      features: ["Google Agent Development Kit (ADK)", "Hệ thống đa agent phối hợp", "Giao thức A2A (Agent-to-Agent)", "Tích hợp MCP tools", "Workflow agents có trạng thái", "Triển khai lên Vertex AI"],
+      useCases: ["Tạo AI agent thông minh", "Xây dựng hệ thống đa agent phối hợp", "Triển khai agent lên Google Cloud", "Tích hợp tools cho agent"]
+    }
+  },
+  {
+    name: "journal",
+    icon: "📓",
+    command: "/journal",
+    desc: "Viết nhật ký làm việc phân tích các thay đổi gần đây và suy ngẫm về phiên làm việc. Ghi lại quyết định, tiến độ, và bài học kinh nghiệm để tham khảo sau này.",
+    usage: "/journal [chủ-đề hoặc suy-ngẫm]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Phân tích các thay đổi code gần đây", "Suy ngẫm về phiên làm việc", "Theo dõi tiến độ dự án", "Ghi lại các quyết định quan trọng"],
+      useCases: ["Ghi lại tiến độ công việc hàng ngày", "Phân tích những gì đã thay đổi trong sprint", "Viết ghi chú cho sprint review", "Lưu lại quyết định kỹ thuật và lý do"]
+    }
+  },
+  {
+    name: "kanban",
+    icon: "📌",
+    command: "/kanban",
+    desc: "Bảng điều phối AI agent dạng Kanban để trực quan hóa tác vụ và phối hợp team. Hiển thị trạng thái công việc, phân công agent, theo dõi tiến độ.",
+    usage: "/kanban [thư-mục]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Trực quan hóa tác vụ dạng Kanban", "Phối hợp team agent", "Điều phối agent orchestration", "Theo dõi trạng thái công việc"],
+      useCases: ["Quản lý và phân công tác vụ", "Phối hợp nhiều agent cùng làm việc", "Hiển thị sprint board", "Theo dõi tiến độ trực quan"]
+    }
+  },
+  {
+    name: "llms",
+    icon: "📄",
+    command: "/llms",
+    desc: "Tạo file llms.txt từ tài liệu hoặc quét codebase. Tuân theo chuẩn llmstxt.org. Tạo chỉ mục thân thiện với AI để LLM có thể hiểu nhanh nội dung website/dự án.",
+    usage: "/llms [đường-dẫn|url] [--full] [--output đường-dẫn]",
+    category: "ai",
+    tags: ["ai", "tool"],
+    details: {
+      features: ["Tuân theo chuẩn llmstxt.org", "Quét codebase tự động", "Quét URL/website", "Tối ưu context cho AI/LLM"],
+      useCases: ["Tạo llms.txt cho website", "Tóm tắt tài liệu dạng AI-friendly", "Tạo chỉ mục LLM cho dự án", "Chuẩn bị context cho AI đọc hiểu"]
+    }
+  },
+  {
+    name: "markdown-novel-viewer",
+    icon: "📖",
+    command: "/markdown-novel-viewer",
+    desc: "Xem file markdown với giao diện đọc sách thanh lịch, tĩnh lặng qua HTTP server local. Phù hợp cho đọc nội dung dài, xem trước tài liệu, đọc truyện/tiểu thuyết, xem báo cáo — không bị phân tâm.",
+    usage: "/markdown-novel-viewer [file-hoặc-thư-mục]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Giao diện đọc sách đẹp, thanh lịch", "Chạy qua HTTP server local", "Hỗ trợ duyệt thư mục", "Thiết kế tối giản, không gây phân tâm"],
+      useCases: ["Đọc nội dung dài (long-form)", "Xem trước tài liệu markdown", "Đọc truyện/tiểu thuyết viết bằng markdown", "Xem báo cáo dạng markdown"]
+    }
+  },
+  {
+    name: "mcp-builder",
+    icon: "🔌",
+    command: "/mcp-builder",
+    desc: "Xây dựng MCP server để kết nối LLM với dịch vụ bên ngoài. Hỗ trợ FastMCP (Python) và MCP SDK (Node/TypeScript). Bao gồm: thiết kế tool, tích hợp API, tạo resource providers.",
+    usage: "/mcp-builder [dịch-vụ hoặc API cần tích hợp]",
+    category: "ai",
+    tags: ["ai", "dev"],
+    details: {
+      features: ["FastMCP cho Python", "MCP SDK cho Node/TypeScript", "Thiết kế tool interface", "Tích hợp API bên ngoài", "Tạo resource providers"],
+      useCases: ["Tạo MCP server cho dịch vụ riêng", "Kết nối AI với API bên ngoài", "Mở rộng khả năng của LLM bằng custom tools", "Xây dựng plugin cho Claude/AI agents"]
+    }
+  },
+  {
+    name: "mcp-management",
+    icon: "🎛️",
+    command: "/mcp-management",
+    desc: "Quản lý các MCP server — khám phá server có sẵn, phân tích khả năng, thực thi tools/prompts/resources. Quản lý nhiều server cùng lúc, tìm tool phù hợp một cách thông minh.",
+    usage: "/mcp-management [tác-vụ hoặc tên-server]",
+    category: "ai",
+    tags: ["ai", "tool"],
+    details: {
+      features: ["Khám phá MCP server có sẵn", "Phân tích khả năng của từng tool", "Quản lý nhiều server đồng thời", "Tìm kiếm tool thông minh tiết kiệm context"],
+      useCases: ["Xem danh sách MCP server đang chạy", "Tìm tool phù hợp cho tác vụ", "Thực thi MCP tool trực tiếp", "Cấu hình và quản lý MCP server"]
+    }
+  },
+  {
+    name: "media-processing",
+    icon: "🎬",
+    command: "/media-processing",
+    desc: "Xử lý media chuyên nghiệp: FFmpeg cho video/audio, ImageMagick cho hình ảnh, RMBG cho xóa nền bằng AI. Bao gồm: chuyển đổi định dạng, bộ lọc, tạo thumbnail, xử lý hàng loạt, streaming HLS/DASH.",
+    usage: "/media-processing [file-đầu-vào] [thao-tác]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["FFmpeg cho xử lý video và audio", "ImageMagick cho chỉnh sửa hình ảnh", "RMBG xóa nền bằng AI", "Xử lý hàng loạt (batch processing)", "Cấu hình streaming HLS/DASH"],
+      useCases: ["Chuyển đổi định dạng video/audio", "Resize, crop, tối ưu hình ảnh hàng loạt", "Xóa nền hình ảnh bằng AI", "Cắt, ghép, thêm hiệu ứng âm thanh", "Thiết lập streaming video"]
+    }
+  },
+  {
+    name: "mermaidjs-v11",
+    icon: "📊",
+    command: "/mermaidjs-v11",
+    desc: "Tạo sơ đồ chuyên nghiệp với cú pháp Mermaid.js v11. Hỗ trợ: flowchart, sequence diagram, class diagram, ER diagram, Gantt chart, state diagram, architecture diagram, timeline, user journey.",
+    usage: "/mermaidjs-v11 [loại-sơ-đồ hoặc mô-tả]",
+    category: "tool",
+    tags: ["tool", "design"],
+    details: {
+      features: ["Sơ đồ luồng (Flowchart)", "Sơ đồ tuần tự (Sequence diagram)", "Sơ đồ lớp (Class diagram)", "Sơ đồ quan hệ thực thể (ER diagram)", "Biểu đồ Gantt", "Sơ đồ trạng thái (State diagram)", "Sơ đồ kiến trúc (Architecture diagram)"],
+      useCases: ["Vẽ sơ đồ hệ thống cho tài liệu", "Tạo ER diagram cho database", "Trực quan hóa workflow/quy trình", "Tạo timeline dự án", "Mô tả kiến trúc hệ thống"]
+    }
+  },
+  {
+    name: "mintlify",
+    icon: "📗",
+    command: "/mintlify",
+    desc: "Xây dựng và triển khai website tài liệu chuyên nghiệp với Mintlify. Phù hợp cho: API docs, developer portal, knowledge base. Hỗ trợ MDX components, 7 theme, OpenAPI/AsyncAPI, tính năng AI, deploy đa nền tảng.",
+    usage: "/mintlify [tác-vụ] [đường-dẫn]",
+    category: "tool",
+    tags: ["tool", "dev"],
+    details: {
+      features: ["Nhiều MDX components (Cards, Steps, Tabs, CodeGroup...)", "7 theme có sẵn", "Tích hợp OpenAPI/AsyncAPI tự động", "Tính năng AI (llms.txt, MCP)", "Deploy lên GitHub, Vercel, Cloudflare, AWS"],
+      useCases: ["Tạo website tài liệu API", "Xây dựng developer portal", "Tạo knowledge base cho sản phẩm", "Viết tài liệu kỹ thuật đẹp mắt"]
+    }
+  },
+  {
+    name: "mobile-development",
+    icon: "📱",
+    command: "/mobile-development",
+    desc: "Xây dựng ứng dụng di động với React Native, Flutter, Swift/SwiftUI (iOS), Kotlin/Jetpack Compose (Android). Bao gồm: thiết kế UX mobile, tối ưu hiệu suất, chế độ offline-first, triển khai lên App Store/Google Play.",
+    usage: "/mobile-development [nền-tảng] [tính-năng]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["React Native đa nền tảng", "Flutter với Dart", "Swift/SwiftUI cho iOS native", "Kotlin/Jetpack Compose cho Android native", "Hỗ trợ offline-first", "Hướng dẫn triển khai lên App Store"],
+      useCases: ["Tạo ứng dụng iOS/Android", "Xây dựng app đa nền tảng", "Tối ưu hiệu suất ứng dụng mobile", "Thiết kế UX mobile chuẩn", "Đưa app lên App Store/Google Play"]
+    }
+  },
+  {
+    name: "payment-integration",
+    icon: "💳",
+    command: "/payment-integration",
+    desc: "Tích hợp thanh toán với nhiều nhà cung cấp: SePay (chuyển khoản VietQR cho Việt Nam), Polar, Stripe, Paddle (quản lý thuế quốc tế), Creem.io (cấp phép phần mềm). Bao gồm: checkout, webhooks, gói đăng ký, mã QR, đơn hàng đa nhà cung cấp.",
+    usage: "/payment-integration [nhà-cung-cấp] [tác-vụ]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["SePay tích hợp VietQR cho thị trường Việt Nam", "Stripe thanh toán quốc tế", "Polar cho open-source monetization", "Paddle quản lý thuế toàn cầu (Merchant of Record)", "Creem.io cấp phép phần mềm", "Webhooks xử lý sự kiện thanh toán", "Gói đăng ký (subscriptions)"],
+      useCases: ["Tích hợp thanh toán chuyển khoản VietQR", "Thiết lập Stripe checkout", "Quản lý gói đăng ký định kỳ", "Xử lý webhook thanh toán", "Setup thanh toán đa nhà cung cấp"]
+    }
+  },
+  {
+    name: "plans-kanban",
+    icon: "📋",
+    command: "/plans-kanban",
+    desc: "Xem dashboard tổng quan các kế hoạch với theo dõi tiến độ và trực quan hóa timeline. Hiển thị bảng Kanban, trạng thái từng kế hoạch, tiến độ theo giai đoạn, các mốc quan trọng (milestones).",
+    usage: "/plans-kanban [thư-mục-plans]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Bảng Kanban trực quan", "Theo dõi tiến độ theo phần trăm", "Trực quan hóa timeline", "Hiển thị tiến độ từng giai đoạn", "Quản lý milestones"],
+      useCases: ["Xem tổng quan tiến độ tất cả kế hoạch", "Theo dõi trạng thái từng plan", "Kiểm tra tiến độ theo giai đoạn", "Quản lý các mốc quan trọng"]
+    }
+  },
+  {
+    name: "preview",
+    icon: "👁️",
+    command: "/preview",
+    desc: "Hai chức năng chính: (1) Xem trước file/thư mục, (2) Tạo nội dung trực quan — giải thích bằng hình ảnh, slides trình chiếu, sơ đồ. Xuất ra Markdown hoặc HTML tự chứa (self-contained). Hỗ trợ xem diff, review kế hoạch, tóm tắt.",
+    usage: "/preview [đường-dẫn] HOẶC [--html] --explain|--slides|--diagram [chủ-đề]",
+    category: "tool",
+    tags: ["tool", "design"],
+    details: {
+      features: ["Xem trước file và thư mục", "Tạo slide trình chiếu", "Tạo sơ đồ giải thích", "Giải thích bằng hình ảnh trực quan", "Xuất ra HTML hoặc Markdown", "Xem diff thay đổi, review kế hoạch"],
+      useCases: ["Xem trước nội dung file nhanh", "Tạo slides thuyết trình từ chủ đề", "Giải thích khái niệm phức tạp bằng hình ảnh", "Tạo sơ đồ minh họa", "Review kế hoạch triển khai"]
+    }
+  },
+  {
+    name: "problem-solving",
+    icon: "🧩",
+    command: "/problem-solving",
+    desc: "Áp dụng kỹ thuật giải quyết vấn đề có hệ thống khi bị bế tắc. Phù hợp khi gặp: vòng xoáy phức tạp, tắc nghẽn sáng tạo, vấn đề lặp lại, bị giới hạn bởi giả định, đơn giản hóa quá mức, hoặc không chắc về quy mô.",
+    usage: "/problem-solving [mô-tả-vấn-đề]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Các kỹ thuật giải quyết vấn đề có hệ thống", "Giảm độ phức tạp từng bước", "Nhận diện pattern lặp lại", "Thách thức các giả định sẵn có", "Phân tích quy mô và khả năng mở rộng"],
+      useCases: ["Khi bị bế tắc không tìm ra cách giải", "Vấn đề phức tạp với nhiều yếu tố liên quan", "Tắc nghẽn sáng tạo, cần góc nhìn mới", "Vấn đề cứ lặp đi lặp lại", "Không chắc giải pháp có mở rộng được không"]
+    }
+  },
+  {
+    name: "project-management",
+    icon: "📊",
+    command: "/project-management",
+    desc: "Theo dõi tiến độ dự án, cập nhật trạng thái kế hoạch, quản lý Claude Tasks, tạo báo cáo, phối hợp cập nhật tài liệu. Phù hợp cho: giám sát dự án, kiểm tra trạng thái, hoàn thành kế hoạch, nạp dữ liệu task, duy trì tính liên tục giữa các phiên.",
+    usage: "/project-management [tác-vụ: status, hydrate, sync, report]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Theo dõi tiến độ toàn diện", "Cập nhật trạng thái các kế hoạch", "Quản lý Claude Tasks", "Tạo báo cáo tự động", "Duy trì tính liên tục giữa các phiên làm việc"],
+      useCases: ["Kiểm tra trạng thái tổng thể dự án", "Tạo báo cáo tiến độ", "Đồng bộ tasks giữa các phiên", "Cập nhật trạng thái kế hoạch"]
+    }
+  },
+  {
+    name: "project-organization",
+    icon: "📁",
+    command: "/project-organization",
+    desc: "Tổ chức file, thư mục và cấu trúc nội dung trong bất kỳ dự án nào. Dùng khi tạo file mới, xác định đường dẫn đầu ra, sắp xếp lại tài nguyên hiện có, hoặc chuẩn hóa bố cục dự án.",
+    usage: "/project-organization [thư-mục hoặc file cần tổ chức]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tổ chức file và thư mục", "Chuẩn hóa cấu trúc dự án", "Xác định đường dẫn đầu ra phù hợp", "Sắp xếp tài nguyên hiện có"],
+      useCases: ["Tổ chức lại cấu trúc dự án lộn xộn", "Chuẩn hóa bố cục thư mục", "Di chuyển và đổi tên file hợp lý", "Thiết lập cấu trúc dự án chuẩn"]
+    }
+  },
+  {
+    name: "react-best-practices",
+    icon: "⚛️",
+    command: "/react-best-practices",
+    desc: "Hướng dẫn tối ưu hiệu suất React và Next.js từ đội ngũ Vercel Engineering. Nên dùng khi viết, review, hoặc tái cấu trúc code React/Next.js. Bao gồm: component patterns, data fetching, tối ưu bundle.",
+    usage: "/react-best-practices [component hoặc pattern]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["Hướng dẫn từ Vercel Engineering chính thức", "Tối ưu hóa React components", "Patterns data fetching hiệu quả", "Tối ưu kích thước bundle", "Performance patterns chuẩn"],
+      useCases: ["Review code React tìm vấn đề hiệu suất", "Tối ưu ứng dụng React chậm", "Tái cấu trúc components theo best practices", "Áp dụng Next.js patterns đúng cách"]
+    }
+  },
+  {
+    name: "remotion",
+    icon: "🎥",
+    command: "/remotion",
+    desc: "Hướng dẫn best practices cho Remotion — thư viện tạo video bằng React. Tạo video lập trình được (programmatic video) với React components, animation, data-driven content.",
+    usage: "/remotion [video hoặc component]",
+    category: "dev",
+    tags: ["dev", "design"],
+    details: {
+      features: ["Tạo video bằng React components", "Remotion best practices", "Video dựa trên component", "Video lập trình được (programmatic)"],
+      useCases: ["Tạo video tự động từ code React", "Tạo video animation cho sản phẩm", "Tạo video trực quan hóa dữ liệu", "Sinh video hàng loạt từ template"]
+    }
+  },
+  {
+    name: "repomix",
+    icon: "📦",
+    command: "/repomix",
+    desc: "Đóng gói toàn bộ repository thành file thân thiện với AI bằng Repomix. Xuất ra XML, Markdown, plain text hoặc JSON. Phù hợp cho: chụp ảnh codebase, chuẩn bị context cho LLM, kiểm tra bảo mật, phân tích thư viện bên thứ ba.",
+    usage: "/repomix [đường-dẫn] [--style xml|markdown|plain|json]",
+    category: "tool",
+    tags: ["tool", "ai"],
+    details: {
+      features: ["Xuất ra XML, Markdown, plain text, JSON", "Chụp ảnh toàn bộ codebase", "Chuẩn bị context cho LLM", "Hỗ trợ kiểm tra bảo mật"],
+      useCases: ["Đóng gói repo để AI phân tích", "Chụp ảnh trạng thái codebase", "Chuẩn bị dữ liệu cho security audit", "Phân tích thư viện bên thứ ba"]
+    }
+  },
+  {
+    name: "research",
+    icon: "🔬",
+    command: "/research",
+    desc: "Nghiên cứu giải pháp kỹ thuật chuyên sâu, phân tích kiến trúc, thu thập yêu cầu kỹ lưỡng. Phù hợp cho: đánh giá công nghệ, tìm best practices, thiết kế giải pháp, phân tích khả năng mở rộng/bảo mật/bảo trì.",
+    usage: "/research [chủ-đề]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Đánh giá công nghệ toàn diện", "Phân tích kiến trúc hệ thống", "Thu thập và phân tích yêu cầu", "Tìm kiếm best practices từ ngành"],
+      useCases: ["Đánh giá và so sánh các công nghệ", "Nghiên cứu giải pháp cho bài toán cụ thể", "Phân tích kiến trúc hệ thống tham khảo", "Đánh giá khả năng mở rộng và bảo mật"]
+    }
+  },
+  {
+    name: "retro",
+    icon: "📈",
+    command: "/retro",
+    desc: "Sprint retrospective dựa trên dữ liệu thực. Thu thập các chỉ số từ git (commits, dòng code, hotspots, churn), tính toán các chỉ báo sức khỏe dự án, và tạo báo cáo chi tiết dạng markdown hoặc HTML.",
+    usage: "/retro [khoảng-thời-gian] [--compare] [--team] [--format html|md]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Phân tích chỉ số git tự động", "Theo dõi số dòng code (LOC)", "Phát hiện hotspot (file thay đổi nhiều)", "Phân tích code churn", "Tính chỉ báo sức khỏe dự án", "Xuất báo cáo HTML hoặc Markdown"],
+      useCases: ["Chạy retrospective cuối sprint", "Check-in tiến độ hàng tuần", "Review năng suất team", "Phân tích xu hướng phát triển dự án"]
+    }
+  },
+  {
+    name: "scout",
+    icon: "🔭",
+    command: "/scout",
+    desc: "Quét codebase nhanh chóng bằng nhiều agent chạy song song. Tìm file, thu thập context cho tác vụ, tìm kiếm nhanh trên nhiều thư mục. Hỗ trợ agent nội bộ (Explore) và bên ngoài (Gemini/OpenCode).",
+    usage: "/scout [mục-tiêu-tìm-kiếm] [phần-mở-rộng]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Nhiều agent chạy song song", "Tìm file nhanh chóng", "Thu thập context tự động", "Tìm kiếm trên nhiều thư mục cùng lúc", "Hỗ trợ agent Explore, Gemini, OpenCode"],
+      useCases: ["Tìm file trong codebase lớn", "Thu thập context trước khi bắt đầu tác vụ", "Khám phá cấu trúc codebase mới", "Tìm kiếm nhanh theo từ khóa"]
+    }
+  },
+  {
+    name: "security-scan",
+    icon: "🔒",
+    command: "/security-scan",
+    desc: "Quét toàn bộ codebase tìm lỗ hổng bảo mật, mật khẩu/khóa bí mật lộ trong code (hardcoded secrets), vấn đề dependency, và các pattern theo OWASP. Dùng khi cần kiểm tra bảo mật, tìm secrets bị lộ, audit dependencies, hoặc trước khi release.",
+    usage: "/security-scan [phạm-vi] [--secrets-only] [--deps-only] [--full]",
+    category: "security",
+    tags: ["security"],
+    details: {
+      features: ["Quét lỗ hổng bảo mật trong code", "Phát hiện secrets/mật khẩu bị lộ", "Kiểm tra dependency có lỗ hổng", "Nhận diện pattern OWASP", "Quét toàn bộ hoặc một phần"],
+      useCases: ["Kiểm tra bảo mật trước khi release", "Tìm secrets bị commit nhầm", "Kiểm tra dependency có CVE", "Đảm bảo tuân thủ OWASP"]
+    }
+  },
+  {
+    name: "sequential-thinking",
+    icon: "🔗",
+    command: "/sequential-thinking",
+    desc: "Phân tích từng bước cho vấn đề phức tạp với khả năng quay lại sửa các bước trước. Lý luận nhiều bước (multi-step reasoning), kiểm chứng giả thuyết, lập kế hoạch thích ứng, phân rã vấn đề, điều chỉnh hướng đi.",
+    usage: "/sequential-thinking [vấn-đề cần phân tích]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Phân tích từng bước rõ ràng", "Có thể quay lại sửa bước trước", "Kiểm chứng giả thuyết ở mỗi bước", "Lập kế hoạch thích ứng linh hoạt", "Điều chỉnh hướng đi khi cần"],
+      useCases: ["Giải quyết vấn đề phức tạp nhiều bước", "Lý luận logic chặt chẽ", "Phân rã vấn đề lớn thành các phần nhỏ", "Lập kế hoạch có thể điều chỉnh"]
+    }
+  },
+  {
+    name: "shader",
+    icon: "✨",
+    command: "/shader",
+    desc: "Viết GLSL fragment shaders cho đồ họa thủ tục (procedural graphics). Chủ đề: hình học SDF, patterns, noise (Perlin/simplex/cellular), fBm, hệ màu (HSB/RGB), ma trận biến đổi, gradient, animation. Phù hợp cho generative art, textures, hiệu ứng, WebGL, Three.js.",
+    usage: "/shader [hiệu-ứng hoặc pattern]",
+    category: "dev",
+    tags: ["dev", "design"],
+    details: {
+      features: ["GLSL fragment shaders", "Hình học SDF (Signed Distance Fields)", "Các hàm noise: Perlin, simplex, cellular", "Hệ màu HSB/RGB", "Animation và biến đổi ma trận", "Tích hợp WebGL và Three.js"],
+      useCases: ["Tạo generative art bằng code", "Thiết kế textures thủ tục", "Hiệu ứng hình ảnh cho web", "Viết shaders cho WebGL/Three.js", "Tạo material tùy chỉnh"]
+    }
+  },
+  {
+    name: "ship",
+    icon: "🚀",
+    command: "/ship",
+    desc: "Pipeline phát hành hoàn chỉnh: merge nhánh chính, chạy test, review code, commit, push, tạo PR — tất cả trong một lệnh duy nhất. Từ feature branch đến PR URL. Hỗ trợ phát hành chính thức (official) hoặc bản beta.",
+    usage: "/ship [official|beta] [--skip-tests] [--skip-review] [--dry-run]",
+    category: "workflow",
+    tags: ["workflow", "ops"],
+    details: {
+      features: ["Pipeline ship hoàn chỉnh trong 1 lệnh", "Tự động merge nhánh chính mới nhất", "Chạy test tự động", "Review code tự động", "Tạo PR chuyên nghiệp", "Hỗ trợ phát hành beta và official"],
+      useCases: ["Ship tính năng mới lên production", "Tạo release PR chuyên nghiệp", "Phát hành bản beta cho testing", "Pipeline phát hành từ A đến Z"]
+    }
+  },
+  {
+    name: "shopify",
+    icon: "🛒",
+    command: "/shopify",
+    desc: "Xây dựng Shopify apps, extensions, themes với Shopify CLI. Bao gồm: GraphQL/REST APIs, giao diện Polaris UI, template Liquid, tùy chỉnh checkout, webhooks, tích hợp billing/thanh toán.",
+    usage: "/shopify [loại-extension] [tính-năng]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["Shopify CLI phát triển nhanh", "GraphQL và REST APIs", "Giao diện Polaris UI chuẩn Shopify", "Template Liquid cho themes", "Tùy chỉnh checkout flow", "Webhooks xử lý sự kiện"],
+      useCases: ["Tạo Shopify app mới", "Phát triển theme Shopify", "Tạo checkout extension", "Tích hợp webhook", "Setup billing cho app"]
+    }
+  },
+  {
+    name: "skill-creator",
+    icon: "🛠️",
+    command: "/skill-creator",
+    desc: "Tạo hoặc cập nhật Claude skills với quy trình lặp dựa trên đánh giá (eval-driven iteration). Bao gồm: viết skill scripts, quản lý references, tối ưu benchmark, tối ưu description, chạy eval testing.",
+    usage: "/skill-creator [tên-skill hoặc mô-tả]",
+    category: "ai",
+    tags: ["ai", "tool"],
+    details: {
+      features: ["Tạo skill mới từ đầu", "Chạy eval testing đánh giá chất lượng", "Tối ưu benchmark điểm số", "Tối ưu description cho khả năng kích hoạt", "Quản lý tài liệu tham khảo (references)"],
+      useCases: ["Tạo skill mới cho Claude", "Cập nhật và cải thiện skill có sẵn", "Đánh giá chất lượng skill bằng benchmark", "Tối ưu mô tả skill để kích hoạt chính xác hơn"]
+    }
+  },
+  {
+    name: "stitch",
+    icon: "🪡",
+    command: "/stitch",
+    desc: "Tạo thiết kế UI bằng AI với Google Stitch. Sinh giao diện từ mô tả văn bản, xuất ra Tailwind/HTML/DESIGN.md. Điều phối pipeline từ thiết kế đến code. Phù hợp cho: prototyping nhanh, tạo giao diện, khám phá thiết kế.",
+    usage: "/stitch [mô-tả-thiết-kế hoặc hành-động]",
+    category: "design",
+    tags: ["design", "ai"],
+    details: {
+      features: ["Google Stitch AI tạo thiết kế", "Sinh UI từ mô tả văn bản", "Xuất Tailwind CSS", "Xuất HTML sẵn sàng dùng", "Pipeline từ thiết kế đến code tự động"],
+      useCases: ["Tạo prototype nhanh từ ý tưởng", "Sinh giao diện UI từ mô tả", "Khám phá nhiều hướng thiết kế", "Chuyển thiết kế thành code nhanh chóng"]
+    }
+  },
+  {
+    name: "tanstack",
+    icon: "🔷",
+    command: "/tanstack",
+    desc: "Xây dựng ứng dụng với TanStack Start (full-stack React framework), TanStack Form (quản lý form headless), và TanStack AI (streaming/chat AI). Bao gồm: routes, server functions, validation, tính năng chat AI.",
+    usage: "/tanstack [framework] [tính-năng]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["TanStack Start — full-stack React framework", "TanStack Form — quản lý form không phụ thuộc UI", "TanStack AI — streaming và chat AI", "Server functions", "Validation tích hợp", "Tính năng chat AI real-time"],
+      useCases: ["Tạo ứng dụng full-stack React", "Quản lý form phức tạp", "Tích hợp tính năng chat AI", "Thiết lập server functions", "Cấu hình routing cho app"]
+    }
+  },
+  {
+    name: "team",
+    icon: "👥",
+    command: "/team",
+    desc: "Điều phối nhóm Agent làm việc song song trong nhiều phiên cùng lúc. Phù hợp cho: nghiên cứu, triển khai code, review, gỡ lỗi — mỗi nhiệm vụ được giao cho agent độc lập chạy đồng thời.",
+    usage: "/team <template> <bối-cảnh> [--devs N] [--delegate]",
+    category: "ai",
+    tags: ["ai", "workflow"],
+    details: {
+      features: ["Nhiều agent làm việc song song", "Phiên làm việc độc lập cho mỗi agent", "Nhóm nghiên cứu (researchers)", "Nhóm triển khai (developers)", "Nhóm review (reviewers)"],
+      useCases: ["Phát triển song song nhiều tính năng", "Nghiên cứu nhiều chủ đề cùng lúc", "Review code bằng nhiều agent", "Triển khai task phức tạp cần nhiều người"]
+    }
+  },
+  {
+    name: "test",
+    icon: "✅",
+    command: "/test",
+    desc: "Chạy đầy đủ các loại test: unit test, integration test, end-to-end (e2e), và UI test. Bao gồm: thực thi test, phân tích coverage, xác minh build, kiểm tra hồi quy trực quan (visual regression), báo cáo QA.",
+    usage: "/test [bối-cảnh] HOẶC ui [url]",
+    category: "test",
+    tags: ["test"],
+    details: {
+      features: ["Unit test cho từng hàm/module", "Integration test cho nhiều module", "End-to-end test toàn luồng", "UI test trên trình duyệt", "Phân tích code coverage", "Kiểm tra hồi quy trực quan", "Báo cáo QA chi tiết"],
+      useCases: ["Chạy toàn bộ test suite", "Kiểm tra code coverage đạt yêu cầu", "Xác minh build không bị lỗi", "Phát hiện thay đổi UI ngoài ý muốn", "Tạo báo cáo QA cho team"]
+    }
+  },
+  {
+    name: "threejs",
+    icon: "🎮",
+    command: "/threejs",
+    desc: "Xây dựng ứng dụng web 3D với Three.js (WebGL/WebGPU). Kho 556 ví dụ mẫu, 60 API classes, 20 use cases. Chủ đề: GLTF loader, vật liệu PBR, hạt (particles), bóng đổ, hậu xử lý (post-processing), compute shaders, VR/XR.",
+    usage: "/threejs [cảnh-3D hoặc tính-năng]",
+    category: "dev",
+    tags: ["dev", "design"],
+    details: {
+      features: ["556 ví dụ mẫu có thể tìm kiếm", "60 API classes được tài liệu hóa", "Hỗ trợ WebGL và WebGPU", "Tải mô hình GLTF/GLB", "Vật liệu PBR chân thực", "Hệ thống hạt (particles)", "Hỗ trợ VR/XR"],
+      useCases: ["Tạo ứng dụng web 3D", "Trình xem sản phẩm 3D (product viewer)", "Phát triển game web", "Trực quan hóa dữ liệu 3D", "Xây dựng trải nghiệm VR/XR"]
+    }
+  },
+  {
+    name: "ui-styling",
+    icon: "🎨",
+    command: "/ui-styling",
+    desc: "Tạo kiểu giao diện với shadcn/ui components (Radix UI + Tailwind CSS). Bao gồm: themes, dark mode, responsive layouts, design systems, tùy chỉnh màu sắc. Các component accessible sẵn sàng dùng.",
+    usage: "/ui-styling [component hoặc layout]",
+    category: "design",
+    tags: ["design", "dev"],
+    details: {
+      features: ["shadcn/ui components", "Xây dựng trên Radix UI (accessible)", "Styling với Tailwind CSS", "Dark mode tích hợp", "Responsive layouts", "Design system tùy chỉnh", "Tùy chỉnh bảng màu"],
+      useCases: ["Tạo kiểu cho component UI", "Thiết lập theme cho ứng dụng", "Bật dark mode", "Xây dựng design system", "Tạo layout responsive"]
+    }
+  },
+  {
+    name: "ui-ux-pro-max",
+    icon: "💎",
+    command: "/ui-ux-pro-max",
+    desc: "Kho trí tuệ thiết kế UI/UX cho web và mobile. Bao gồm: hơn 50 phong cách thiết kế, 161 bảng màu, 57 cặp font, 161 loại sản phẩm, 99 hướng dẫn UX, 25 loại biểu đồ, 10 tech stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, HTML/CSS).",
+    usage: "/ui-ux-pro-max",
+    category: "design",
+    tags: ["design"],
+    details: {
+      features: ["Hơn 50 phong cách thiết kế", "161 bảng màu được tuyển chọn", "57 cặp font phối hợp", "99 hướng dẫn UX chi tiết", "25 loại biểu đồ", "10 tech stacks hỗ trợ", "Glassmorphism, neumorphism, brutalism, minimalism..."],
+      useCases: ["Thiết kế giao diện UI chuyên nghiệp", "Chọn bảng màu phù hợp cho sản phẩm", "Tìm cặp font đẹp, hài hòa", "Review UX theo hướng dẫn chuẩn", "Xây dựng design system", "Thiết kế dashboard, admin panel"]
+    }
+  },
+  {
+    name: "use-mcp",
+    icon: "🔌",
+    command: "/use-mcp",
+    desc: "Sử dụng các tool từ MCP server với khả năng tìm kiếm thông minh và thực thi tự động. Tìm tool phù hợp nhất cho tác vụ từ tất cả MCP server đang kết nối.",
+    usage: "/use-mcp [tác-vụ]",
+    category: "ai",
+    tags: ["ai", "tool"],
+    details: {
+      features: ["Tìm kiếm tool thông minh", "Thực thi MCP tool tự động", "Hỗ trợ nhiều server cùng lúc"],
+      useCases: ["Sử dụng MCP tool cho tác vụ cụ thể", "Tìm tool phù hợp từ nhiều server", "Thực thi hành động qua MCP"]
+    }
+  },
+  {
+    name: "watzup",
+    icon: "👋",
+    command: "/watzup",
+    desc: "Xem lại các thay đổi gần đây và kết thúc phiên làm việc hiện tại. Tóm tắt những gì đã làm, thay đổi nào đang chờ, và tạo ghi chú cho phiên tiếp theo.",
+    usage: "/watzup",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Xem lại các thay đổi code gần đây", "Tóm tắt phiên làm việc", "Tạo ghi chú kết thúc phiên"],
+      useCases: ["Kết thúc phiên làm việc gọn gàng", "Xem lại những gì đã thay đổi", "Tóm tắt tiến độ cuối ngày"]
+    }
+  },
+  {
+    name: "web-design-guidelines",
+    icon: "📏",
+    command: "/web-design-guidelines",
+    desc: "Review code giao diện theo tiêu chuẩn Web Interface Guidelines. Kiểm tra accessibility (khả năng tiếp cận), audit thiết kế, review UX, đánh giá best practices. Dùng khi cần review UI, kiểm tra accessibility, hoặc audit thiết kế.",
+    usage: "/web-design-guidelines [file-hoặc-pattern]",
+    category: "design",
+    tags: ["design", "test"],
+    details: {
+      features: ["Kiểm tra theo Web Interface Guidelines", "Đánh giá accessibility (WCAG)", "Audit thiết kế UI", "Review trải nghiệm người dùng (UX)", "Kiểm tra best practices"],
+      useCases: ["Review giao diện UI theo chuẩn", "Kiểm tra khả năng tiếp cận (accessibility)", "Audit thiết kế trước khi release", "Đánh giá UX cho sản phẩm"]
+    }
+  },
+  {
+    name: "web-frameworks",
+    icon: "🌐",
+    command: "/web-frameworks",
+    desc: "Xây dựng ứng dụng web với Next.js (App Router, React Server Components, SSR, ISR) và Turborepo monorepos. Bao gồm: ứng dụng React, tối ưu server rendering, cấu hình build, chiến lược caching, chia sẻ dependencies.",
+    usage: "/web-frameworks [framework] [tính-năng]",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["Next.js App Router mới nhất", "React Server Components (RSC)", "Server-Side Rendering (SSR) và Incremental Static Regeneration (ISR)", "Turborepo cho monorepo", "Tối ưu build và bundle", "Chiến lược caching hiệu quả"],
+      useCases: ["Tạo ứng dụng Next.js mới", "Thiết lập monorepo với Turborepo", "Cấu hình SSR/ISR cho SEO", "Tối ưu build và bundle size", "Thiết lập caching chiến lược"]
+    }
+  },
+  {
+    name: "web-testing",
+    icon: "🧪",
+    command: "/web-testing",
+    desc: "Kiểm thử web toàn diện với Playwright (E2E), Vitest (unit/integration), k6 (load test). Bao gồm: E2E, unit, integration, load, security, visual regression, accessibility testing. Hỗ trợ đa trình duyệt, mobile gestures, Core Web Vitals.",
+    usage: "/web-testing [loại-test] [mục-tiêu]",
+    category: "test",
+    tags: ["test"],
+    details: {
+      features: ["Playwright cho E2E testing", "Vitest cho unit và integration test", "k6 cho load testing", "Kiểm tra hồi quy trực quan (visual regression)", "Kiểm tra accessibility (a11y)", "Kiểm tra bảo mật cơ bản"],
+      useCases: ["Viết và chạy E2E test", "Load testing đánh giá khả năng chịu tải", "Kiểm tra UI không bị thay đổi ngoài ý muốn", "Kiểm tra accessibility theo WCAG", "Test đa trình duyệt Chrome/Firefox/Safari"]
+    }
+  },
+  {
+    name: "worktree",
+    icon: "🌳",
+    command: "/worktree",
+    desc: "Tạo git worktree cô lập để phát triển song song trong monorepo. Cho phép làm việc trên nhiều branch cùng lúc mà không cần stash hay chuyển branch, mỗi worktree là một bản sao độc lập.",
+    usage: "/worktree [mô-tả-tính-năng] HOẶC [dự-án] [tính-năng]",
+    category: "workflow",
+    tags: ["workflow"],
+    details: {
+      features: ["Tạo git worktree cô lập", "Phát triển song song nhiều tính năng", "Không cần stash hay chuyển branch", "Hỗ trợ monorepo"],
+      useCases: ["Phát triển 2+ tính năng song song", "Testing cô lập không ảnh hưởng code chính", "Làm việc với monorepo hiệu quả", "Tách biệt branch để tránh xung đột"]
+    }
+  }
+];
+
+const categoryConfig = {
+  all: { label: "Tất cả", color: "#7c6aef" },
+  dev: { label: "Phát triển", color: "#60a5fa" },
+  ai: { label: "AI & ML", color: "#a78bfa" },
+  design: { label: "Thiết kế", color: "#f472b6" },
+  ops: { label: "Vận hành", color: "#fb923c" },
+  test: { label: "Kiểm thử", color: "#34d399" },
+  security: { label: "Bảo mật", color: "#f87171" },
+  workflow: { label: "Quy trình", color: "#fbbf24" },
+  tool: { label: "Công cụ", color: "#22d3ee" },
+};
+
+const iconColors = {
+  dev: "rgba(96,165,250,0.15)",
+  ai: "rgba(167,139,250,0.15)",
+  design: "rgba(244,114,182,0.15)",
+  ops: "rgba(251,146,60,0.15)",
+  test: "rgba(52,211,153,0.15)",
+  security: "rgba(248,113,113,0.15)",
+  workflow: "rgba(251,191,36,0.15)",
+  tool: "rgba(34,211,238,0.15)",
+};
+
+let activeFilter = "all";
+
+function getCategoryCounts() {
+  const counts = { all: skills.length };
+  skills.forEach(s => {
+    counts[s.category] = (counts[s.category] || 0) + 1;
+  });
+  return counts;
+}
+
+function renderFilters() {
+  const counts = getCategoryCounts();
+  const container = document.getElementById("filterTags");
+  container.innerHTML = Object.entries(categoryConfig).map(([key, cfg]) =>
+    `<button class="filter-tag ${activeFilter === key ? 'active' : ''}" data-cat="${key}" onclick="setFilter('${key}')">${cfg.label}<span class="count-badge">${counts[key] || 0}</span></button>`
+  ).join("");
+}
+
+function setFilter(cat) {
+  activeFilter = cat;
+  renderFilters();
+  renderCards();
+}
+
+function renderCards() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const container = document.getElementById("grid");
+
+  const filtered = skills.filter(s => {
+    const matchCategory = activeFilter === "all" || s.category === activeFilter || s.tags.includes(activeFilter);
+    const matchSearch = !query ||
+      s.name.toLowerCase().includes(query) ||
+      s.desc.toLowerCase().includes(query) ||
+      s.command.toLowerCase().includes(query) ||
+      s.usage.toLowerCase().includes(query) ||
+      (s.details.features && s.details.features.some(f => f.toLowerCase().includes(query))) ||
+      (s.details.useCases && s.details.useCases.some(u => u.toLowerCase().includes(query)));
+    return matchCategory && matchSearch;
+  });
+
+  document.getElementById("totalVisible").textContent = filtered.length;
+  document.getElementById("resultsInfo").textContent = filtered.length === skills.length
+    ? `Hiển thị tất cả ${skills.length} skills`
+    : `Tìm thấy ${filtered.length} / ${skills.length} skills`;
+
+  container.innerHTML = filtered.map((s, i) => `
+    <div class="card" data-idx="${i}">
+      <div class="card-header">
+        <div class="card-icon" style="background:${iconColors[s.category] || iconColors.tool}">${s.icon}</div>
+        <div>
+          <div class="card-title">${s.name}</div>
+          <div class="card-command">${s.command}</div>
+        </div>
+      </div>
+      <div class="card-desc">${s.desc}</div>
+      <div class="card-usage">${s.usage}</div>
+      <div class="card-tags">
+        ${s.tags.map(t => `<span class="tag tag-${t}">${categoryConfig[t]?.label || t}</span>`).join("")}
+      </div>
+      <button class="expand-btn" onclick="toggleDetail(this)">Xem chi tiết ▼</button>
+      <div class="card-detail">
+        ${s.details.features ? `
+        <div class="detail-section">
+          <strong>Tính năng</strong>
+          <ul>${s.details.features.map(f => `<li>${f}</li>`).join("")}</ul>
+        </div>` : ""}
+        ${s.details.useCases ? `
+        <div class="detail-section">
+          <strong>Ứng dụng thực tế</strong>
+          <ul>${s.details.useCases.map(u => `<li>${u}</li>`).join("")}</ul>
+        </div>` : ""}
+      </div>
+    </div>
+  `).join("");
+}
+
+function toggleDetail(btn) {
+  const detail = btn.nextElementSibling;
+  detail.classList.toggle("open");
+  btn.textContent = detail.classList.contains("open") ? "Thu gọn ▲" : "Xem chi tiết ▼";
+}
+
+document.getElementById("search").addEventListener("input", renderCards);
+
+document.getElementById("totalSkills").textContent = skills.length;
+document.getElementById("totalCategories").textContent = Object.keys(categoryConfig).length - 1;
+
+renderFilters();
+renderCards();
+</script>
+</body>
+</html>
