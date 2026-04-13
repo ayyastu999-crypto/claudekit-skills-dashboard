@@ -455,14 +455,177 @@
   .detail-section li {
     margin-bottom: 2px;
   }
+
+  /* Tab System */
+  .tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0 20px;
+    background: rgba(10,10,15,0.8);
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    padding: 16px 32px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.3px;
+  }
+  .tab-btn:hover { color: var(--text); background: rgba(124,106,239,0.05); }
+  .tab-btn.active {
+    color: var(--cyan);
+    border-bottom-color: var(--cyan);
+    background: rgba(34,211,238,0.05);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Guide Styles */
+  .guide-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .guide-intro {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .guide-intro h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .guide-intro p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .guide-step {
+    position: relative;
+    padding: 28px 28px 28px 80px;
+    margin-bottom: 16px;
+    background: linear-gradient(145deg, var(--surface), rgba(26,26,46,0.6));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: all 0.3s;
+  }
+  .guide-step:hover {
+    border-color: rgba(124,106,239,0.4);
+    transform: translateX(4px);
+    box-shadow: 0 8px 30px rgba(124,106,239,0.15);
+  }
+  .guide-step-num {
+    position: absolute;
+    left: 20px;
+    top: 28px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #6366f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(124,106,239,0.3);
+  }
+  .guide-step h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .guide-step h3 .cmd {
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    color: var(--cyan);
+    font-size: 0.95rem;
+    margin-left: 8px;
+    background: rgba(34,211,238,0.1);
+    padding: 2px 10px;
+    border-radius: 6px;
+  }
+  .guide-step p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .guide-cmd-box {
+    background: linear-gradient(135deg, rgba(26,26,46,0.9), rgba(18,18,26,0.95));
+    border: 1px solid rgba(34,211,238,0.15);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: var(--cyan);
+    margin-top: 8px;
+    overflow-x: auto;
+  }
+  .guide-cmd-box::before {
+    content: '>';
+    color: var(--accent2);
+    margin-right: 8px;
+    font-weight: bold;
+  }
+  .guide-tip {
+    background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,146,60,0.05));
+    border: 1px solid rgba(251,191,36,0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .guide-tip strong { color: var(--yellow); }
+  .guide-phase {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .guide-phase h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .guide-phase h2 .phase-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .guide-phase p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <div class="version">v3.1.0 &mdash; Engineer Edition</div>
+  <div class="version">v3.2.0 &mdash; Engineer Edition</div>
   <h1>ClaudeKit Skills Dashboard</h1>
-  <p>Tra cứu đầy đủ tất cả skills, lệnh built-in, cách dùng và ứng dụng trong ClaudeKit Engineer</p>
+  <p>Tra cứu đầy đủ tất cả skills, lệnh built-in, hướng dẫn triển khai app từ A-Z trong ClaudeKit Engineer</p>
   <div class="stats-bar">
     <div class="stat"><div class="num" id="totalSkills">0</div><div class="label">Skills</div></div>
     <div class="stat"><div class="num" id="totalCategories">0</div><div class="label">Categories</div></div>
@@ -470,6 +633,12 @@
   </div>
 </div>
 
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('skills')">Skills & Lệnh</button>
+  <button class="tab-btn" onclick="switchTab('guide')">Hướng dẫn tạo App</button>
+</div>
+
+<div id="tab-skills" class="tab-content active">
 <div class="controls">
   <div class="controls-inner">
     <div class="search-box">
@@ -493,8 +662,333 @@
   <div class="grid" id="grid"></div>
 </div>
 
+</div><!-- end tab-skills -->
+
+<div id="tab-guide" class="tab-content">
+<div class="guide-container">
+
+  <div class="guide-intro">
+    <h2>Tạo App từ A-Z với ClaudeKit</h2>
+    <p>Hướng dẫn chi tiết từng bước sử dụng ClaudeKit Skills để tạo một ứng dụng hoàn chỉnh — từ ý tưởng đến triển khai production</p>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(167,139,250,0.15);">🔬</span> Phase 1: Nghiên cứu & Lên ý tưởng</h2>
+    <p>Trước khi code, hãy nghiên cứu kỹ và lên kế hoạch rõ ràng</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">1</div>
+    <h3>Nghiên cứu giải pháp <span class="cmd">/research</span></h3>
+    <p>Nghiên cứu các công nghệ, framework, và giải pháp phù hợp với ý tưởng app. Claude sẽ phân tích ưu nhược điểm từng lựa chọn.</p>
+    <div class="guide-cmd-box">/research Tôi muốn tạo app quản lý tài chính cá nhân, nên dùng tech stack nào?</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">2</div>
+    <h3>Động não ý tưởng <span class="cmd">/brainstorm</span></h3>
+    <p>Thảo luận các hướng triển khai, tính năng cần có, và phân tích trade-offs. Claude sẽ đưa ra nhiều phương án với ưu nhược điểm.</p>
+    <div class="guide-cmd-box">/brainstorm Thiết kế tính năng cho app quản lý chi tiêu: tracking, báo cáo, budget, AI gợi ý</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">3</div>
+    <h3>Tra cứu tài liệu <span class="cmd">/docs-seeker</span></h3>
+    <p>Tìm tài liệu chính thức của framework/thư viện đã chọn để nắm rõ API và best practices.</p>
+    <div class="guide-cmd-box">/docs-seeker next.js app router server components</div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(251,191,36,0.15);">📋</span> Phase 2: Lập kế hoạch & Thiết kế</h2>
+    <p>Lập kế hoạch triển khai chi tiết trước khi bắt tay vào code</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">4</div>
+    <h3>Lập kế hoạch triển khai <span class="cmd">/ck-plan</span></h3>
+    <p>Tạo kế hoạch chi tiết với các giai đoạn, milestone, và danh sách việc cần làm. Claude sẽ chia nhỏ dự án thành các bước rõ ràng.</p>
+    <div class="guide-cmd-box">/ck-plan Xây dựng app quản lý tài chính với Next.js, Supabase, Tailwind CSS</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Dùng <code>/ck-predict</code> sau khi lập kế hoạch — 5 chuyên gia ảo sẽ phản biện và tìm điểm yếu trong kế hoạch trước khi bạn bắt đầu code.</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">5</div>
+    <h3>Phản biện kế hoạch <span class="cmd">/ck-predict</span></h3>
+    <p>5 chuyên gia ảo (kiến trúc sư, bảo mật, UX, performance, QA) sẽ tranh luận về kế hoạch và phát hiện vấn đề tiềm ẩn.</p>
+    <div class="guide-cmd-box">/ck-predict App quản lý tài chính Next.js + Supabase, auth, real-time sync, charts</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">6</div>
+    <h3>Thiết kế UI/UX <span class="cmd">/design</span></h3>
+    <p>Thiết kế giao diện, chọn bảng màu, font chữ, và tạo design system cho app.</p>
+    <div class="guide-cmd-box">/design Tạo design system cho app tài chính: bảng màu xanh lá (trust), font modern, dark mode</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Dùng thêm <code>/ui-ux-pro-max</code> để truy cập kho 161 bảng màu, 57 cặp font, 99 hướng dẫn UX sẵn có.</div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(96,165,250,0.15);">🚀</span> Phase 3: Khởi tạo dự án</h2>
+    <p>Scaffold dự án và thiết lập cấu trúc ban đầu</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">7</div>
+    <h3>Khởi tạo dự án <span class="cmd">/bootstrap</span></h3>
+    <p>Scaffold toàn bộ dự án: cài đặt dependencies, cấu trúc thư mục, config files. Claude tự động chọn tech stack phù hợp dựa trên kế hoạch.</p>
+    <div class="guide-cmd-box">/bootstrap --auto App quản lý tài chính Next.js 15, Supabase, Tailwind, shadcn/ui</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">8</div>
+    <h3>Khởi tạo Claude Memory <span class="cmd">/init</span></h3>
+    <p>Tạo file CLAUDE.md để Claude nhớ bối cảnh dự án xuyên suốt. Ghi lại tech stack, coding conventions, kiến trúc.</p>
+    <div class="guide-cmd-box">/init</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">9</div>
+    <h3>Thiết lập database <span class="cmd">/databases</span></h3>
+    <p>Thiết kế schema database, tạo bảng, indexes, và migration scripts.</p>
+    <div class="guide-cmd-box">/databases Thiết kế schema PostgreSQL cho: users, transactions, categories, budgets, recurring_payments</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">10</div>
+    <h3>Thiết lập xác thực <span class="cmd">/better-auth</span></h3>
+    <p>Tích hợp hệ thống đăng nhập: email/password, Google, GitHub, 2FA.</p>
+    <div class="guide-cmd-box">/better-auth Thiết lập đăng nhập email + Google OAuth + phiên đăng nhập an toàn</div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(96,165,250,0.15);">💻</span> Phase 4: Phát triển tính năng</h2>
+    <p>Code từng tính năng theo kế hoạch đã lập</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">11</div>
+    <h3>Chuẩn bị trước khi code <span class="cmd">/cook</span></h3>
+    <p><strong>LUÔN chạy trước mỗi tính năng.</strong> Claude sẽ kiểm tra yêu cầu, xác nhận phạm vi, lên checklist việc cần làm trước khi bắt đầu code.</p>
+    <div class="guide-cmd-box">/cook Tạo trang Dashboard hiển thị tổng chi tiêu, biểu đồ theo tháng, top categories</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">12</div>
+    <h3>Xây dựng Backend API <span class="cmd">/backend-development</span></h3>
+    <p>Tạo API endpoints cho từng tính năng: CRUD transactions, báo cáo, budget tracking.</p>
+    <div class="guide-cmd-box">/backend-development Tạo REST API cho transactions: create, read, update, delete, filter by date/category</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">13</div>
+    <h3>Xây dựng Frontend <span class="cmd">/frontend-development</span></h3>
+    <p>Code React components, pages, state management, và tích hợp với API.</p>
+    <div class="guide-cmd-box">/frontend-development Tạo Dashboard component với biểu đồ chi tiêu (Chart.js), bảng transactions, filter</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">14</div>
+    <h3>Tạo giao diện đẹp <span class="cmd">/ui-styling</span></h3>
+    <p>Style components với shadcn/ui + Tailwind CSS. Thêm dark mode, responsive, animations.</p>
+    <div class="guide-cmd-box">/ui-styling Tạo theme cho app tài chính: shadcn/ui components, dark mode, responsive mobile</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">15</div>
+    <h3>Tích hợp thanh toán (nếu cần) <span class="cmd">/payment-integration</span></h3>
+    <p>Thêm tính năng thanh toán: Stripe, VietQR (SePay), gói subscription.</p>
+    <div class="guide-cmd-box">/payment-integration Stripe Thiết lập subscription plans: Free, Pro ($9/mo), Premium ($19/mo)</div>
+  </div>
+
+  <div class="guide-tip" style="margin-bottom:16px"><strong>Lặp lại Bước 11-15:</strong> Với mỗi tính năng mới, lặp lại quy trình: <code>/cook</code> → <code>/backend-development</code> → <code>/frontend-development</code> → <code>/ui-styling</code>. Mỗi tính năng nên được hoàn thành trước khi chuyển sang tính năng tiếp theo.</div>
+
+  <!-- PHASE 5 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(52,211,153,0.15);">🧪</span> Phase 5: Kiểm thử & Bảo mật</h2>
+    <p>Đảm bảo app hoạt động đúng và an toàn</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">16</div>
+    <h3>Tạo kịch bản test <span class="cmd">/ck-scenario</span></h3>
+    <p>Sinh ra các edge cases và kịch bản test toàn diện theo 12 chiều phân tích.</p>
+    <div class="guide-cmd-box">/ck-scenario Tính năng thêm giao dịch: nhập số tiền, chọn category, ngày, ghi chú</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">17</div>
+    <h3>Chạy kiểm thử <span class="cmd">/test</span></h3>
+    <p>Chạy unit test, integration test, và E2E test. Phân tích coverage, tìm vùng code chưa được test.</p>
+    <div class="guide-cmd-box">/test Chạy toàn bộ test suite và kiểm tra coverage</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">18</div>
+    <h3>Kiểm thử web E2E <span class="cmd">/web-testing</span></h3>
+    <p>Chạy test end-to-end trên trình duyệt thật với Playwright. Kiểm tra luồng người dùng, responsive, accessibility.</p>
+    <div class="guide-cmd-box">/web-testing e2e Kiểm tra luồng: đăng nhập → thêm giao dịch → xem dashboard → export báo cáo</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">19</div>
+    <h3>Kiểm tra bảo mật <span class="cmd">/ck-security</span></h3>
+    <p>Quét toàn bộ codebase tìm lỗ hổng bảo mật theo STRIDE + OWASP. Tùy chọn tự động sửa.</p>
+    <div class="guide-cmd-box">/ck-security src/ --fix --iterations 3</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">20</div>
+    <h3>Quét secrets & dependencies <span class="cmd">/security-scan</span></h3>
+    <p>Tìm mật khẩu/API keys bị lộ trong code và kiểm tra dependencies có CVE.</p>
+    <div class="guide-cmd-box">/security-scan --full</div>
+  </div>
+
+  <!-- PHASE 6 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(244,114,182,0.15);">🐛</span> Phase 6: Sửa lỗi & Tối ưu</h2>
+    <p>Fix bugs, tối ưu hiệu suất, và polish giao diện</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">21</div>
+    <h3>Sửa lỗi <span class="cmd">/fix</span></h3>
+    <p><strong>LUÔN dùng khi gặp lỗi.</strong> Claude phân tích nguyên nhân gốc rễ rồi sửa. Có chế độ auto, review, quick, parallel.</p>
+    <div class="guide-cmd-box">/fix --auto Lỗi: Dashboard chart không hiển thị dữ liệu khi filter theo tháng</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">22</div>
+    <h3>Debug chuyên sâu <span class="cmd">/ck-debug</span></h3>
+    <p>Khi bug phức tạp — phân tích root cause, truy vết call stack, kiểm tra đa lớp.</p>
+    <div class="guide-cmd-box">/ck-debug API trả về 500 error khi tạo recurring transaction với timezone khác UTC</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">23</div>
+    <h3>Đơn giản hóa code <span class="cmd">/simplify</span></h3>
+    <p>Review code đã viết, tìm chỗ trùng lặp, tối ưu hiệu suất, rồi tự sửa.</p>
+    <div class="guide-cmd-box">/simplify</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">24</div>
+    <h3>Tối ưu tự động <span class="cmd">/ck-autoresearch</span></h3>
+    <p>Chạy vòng lặp tối ưu: đo chỉ số → thử cải thiện → giữ/loại bỏ → lặp lại. Phù hợp cho tăng coverage, giảm bundle size.</p>
+    <div class="guide-cmd-box">/ck-autoresearch Tăng test coverage từ 60% lên 85%</div>
+  </div>
+
+  <!-- PHASE 7 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(96,165,250,0.15);">👁️</span> Phase 7: Review & Kiểm tra cuối</h2>
+    <p>Review code lần cuối trước khi phát hành</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">25</div>
+    <h3>Review code <span class="cmd">/code-review</span></h3>
+    <p>Review toàn bộ code với tinh thần phản biện gay gắt. Tìm lỗ hổng bảo mật, logic sai, code smell.</p>
+    <div class="guide-cmd-box">/code-review --pending</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">26</div>
+    <h3>Kiểm tra UI theo chuẩn <span class="cmd">/web-design-guidelines</span></h3>
+    <p>Review giao diện theo Web Interface Guidelines: accessibility, UX best practices.</p>
+    <div class="guide-cmd-box">/web-design-guidelines src/app/**/*.tsx</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">27</div>
+    <h3>Tạo tài liệu <span class="cmd">/docs</span></h3>
+    <p>Tự động sinh tài liệu từ codebase: README, API docs, hướng dẫn cài đặt.</p>
+    <div class="guide-cmd-box">/docs init</div>
+  </div>
+
+  <!-- PHASE 8 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(251,146,60,0.15);">🚢</span> Phase 8: Phát hành & Triển khai</h2>
+    <p>Ship app lên production!</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">28</div>
+    <h3>Commit code <span class="cmd">/git</span></h3>
+    <p>Commit với conventional commits chuẩn. Tự tách commits theo loại, quét secrets trước khi commit.</p>
+    <div class="guide-cmd-box">/git cm</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">29</div>
+    <h3>Ship & tạo PR <span class="cmd">/ship</span></h3>
+    <p>Pipeline phát hành hoàn chỉnh: merge main → test → review → commit → push → tạo PR. Một lệnh duy nhất.</p>
+    <div class="guide-cmd-box">/ship official</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">30</div>
+    <h3>Deploy lên production <span class="cmd">/deploy</span></h3>
+    <p>Triển khai app lên hosting. Tự động phát hiện platform từ config. Hỗ trợ Vercel, Netlify, Cloudflare, Railway, AWS...</p>
+    <div class="guide-cmd-box">/deploy vercel production</div>
+  </div>
+
+  <!-- PHASE 9 -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(34,211,238,0.15);">🔄</span> Phase 9: Vận hành & Duy trì</h2>
+    <p>Sau khi ship — theo dõi, bảo trì, và phát triển tiếp</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">31</div>
+    <h3>Auto-fix CI/PR <span class="cmd">/autofix-pr</span></h3>
+    <p>Claude tự động theo dõi PR — push fixes khi CI fail hoặc reviewer comment.</p>
+    <div class="guide-cmd-box">/autofix-pr Chỉ sửa lint và type errors</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">32</div>
+    <h3>Theo dõi định kỳ <span class="cmd">/schedule</span></h3>
+    <p>Lên lịch chạy security scan, test, hoặc báo cáo tự động hàng ngày/tuần.</p>
+    <div class="guide-cmd-box">/schedule create Chạy /security-scan mỗi ngày lúc 9h sáng</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">33</div>
+    <h3>Sprint retrospective <span class="cmd">/retro</span></h3>
+    <p>Phân tích chỉ số git (commits, LOC, hotspots) và tạo báo cáo sức khỏe dự án.</p>
+    <div class="guide-cmd-box">/retro --format html --compare</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">34</div>
+    <h3>Kết thúc phiên <span class="cmd">/watzup</span></h3>
+    <p>Tóm tắt phiên làm việc: những gì đã làm, thay đổi đang chờ, ghi chú cho phiên tiếp theo.</p>
+    <div class="guide-cmd-box">/watzup</div>
+  </div>
+
+  <!-- Summary -->
+  <div class="ck-info-banner" style="background:linear-gradient(135deg,rgba(52,211,153,0.12),rgba(34,211,238,0.08));border:1px solid rgba(52,211,153,0.3);border-radius:16px;padding:24px;margin-top:40px;">
+    <div style="font-weight:700;font-size:1.1rem;color:var(--green);margin-bottom:12px;">Tóm tắt quy trình</div>
+    <div style="color:var(--text-muted);font-size:0.9rem;line-height:2;">
+      <strong style="color:var(--accent2);">Nghiên cứu:</strong> <code style="color:var(--cyan);">/research</code> → <code style="color:var(--cyan);">/brainstorm</code> → <code style="color:var(--cyan);">/docs-seeker</code><br>
+      <strong style="color:var(--accent2);">Kế hoạch:</strong> <code style="color:var(--cyan);">/ck-plan</code> → <code style="color:var(--cyan);">/ck-predict</code> → <code style="color:var(--cyan);">/design</code><br>
+      <strong style="color:var(--accent2);">Khởi tạo:</strong> <code style="color:var(--cyan);">/bootstrap</code> → <code style="color:var(--cyan);">/init</code> → <code style="color:var(--cyan);">/databases</code> → <code style="color:var(--cyan);">/better-auth</code><br>
+      <strong style="color:var(--accent2);">Phát triển:</strong> <code style="color:var(--cyan);">/cook</code> → <code style="color:var(--cyan);">/backend-development</code> → <code style="color:var(--cyan);">/frontend-development</code> → <code style="color:var(--cyan);">/ui-styling</code><br>
+      <strong style="color:var(--accent2);">Kiểm thử:</strong> <code style="color:var(--cyan);">/ck-scenario</code> → <code style="color:var(--cyan);">/test</code> → <code style="color:var(--cyan);">/ck-security</code><br>
+      <strong style="color:var(--accent2);">Sửa lỗi:</strong> <code style="color:var(--cyan);">/fix</code> → <code style="color:var(--cyan);">/ck-debug</code> → <code style="color:var(--cyan);">/simplify</code><br>
+      <strong style="color:var(--accent2);">Review:</strong> <code style="color:var(--cyan);">/code-review</code> → <code style="color:var(--cyan);">/web-design-guidelines</code> → <code style="color:var(--cyan);">/docs</code><br>
+      <strong style="color:var(--accent2);">Ship:</strong> <code style="color:var(--cyan);">/git cm</code> → <code style="color:var(--cyan);">/ship</code> → <code style="color:var(--cyan);">/deploy</code><br>
+      <strong style="color:var(--accent2);">Vận hành:</strong> <code style="color:var(--cyan);">/autofix-pr</code> → <code style="color:var(--cyan);">/schedule</code> → <code style="color:var(--cyan);">/retro</code> → <code style="color:var(--cyan);">/watzup</code>
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab-guide -->
+
 <div class="footer">
-  ClaudeKit Engineer v3.1.0 &bull; 156 Lệnh &bull; Tạo bởi Claude Code
+  ClaudeKit Engineer v3.2.0 &bull; 156 Lệnh &bull; 34 Bước hướng dẫn &bull; Tạo bởi Claude Code
 </div>
 
 <script>
@@ -2644,6 +3138,14 @@ document.getElementById("totalCategories").textContent = Object.keys(categoryCon
 
 renderFilters();
 renderCards();
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelector(`.tab-btn[onclick*="${tab}"]`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
