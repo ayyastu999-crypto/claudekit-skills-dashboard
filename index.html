@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClaudeKit Skills Dashboard v3.0.0</title>
+<title>ClaudeKit Skills Dashboard v5.0.0</title>
 <style>
   :root {
     --bg: #0a0a0f;
@@ -623,9 +623,9 @@
 <body>
 
 <div class="hero">
-  <div class="version">v4.0.0 &mdash; Engineer Edition</div>
+  <div class="version">v5.0.0 &mdash; Engineer Edition</div>
   <h1>ClaudeKit Skills Dashboard</h1>
-  <p>Tra cứu đầy đủ tất cả skills, lệnh built-in, hướng dẫn triển khai app từ A-Z trong ClaudeKit Engineer</p>
+  <p>Tra cứu skills, lệnh built-in, hướng dẫn kết hợp Agents và triển khai app từ A-Z trong ClaudeKit Engineer</p>
   <div class="stats-bar">
     <div class="stat"><div class="num" id="totalSkills">0</div><div class="label">Skills</div></div>
     <div class="stat"><div class="num" id="totalCategories">0</div><div class="label">Categories</div></div>
@@ -637,6 +637,7 @@
   <button class="tab-btn active" onclick="switchTab('skills')">Skills & Lệnh</button>
   <button class="tab-btn" onclick="switchTab('agents')">156 Agents</button>
   <button class="tab-btn" onclick="switchTab('auto')">Automation & Plugins</button>
+  <button class="tab-btn" onclick="switchTab('combos')">Agent Combos</button>
   <button class="tab-btn" onclick="switchTab('guide')">Hướng dẫn tạo App</button>
 </div>
 
@@ -775,6 +776,308 @@
 
 </div>
 </div><!-- end tab-auto -->
+
+<div id="tab-combos" class="tab-content">
+<div class="guide-container">
+
+  <div class="guide-intro">
+    <h2>Agent Combos &mdash; Ket hop Agents tao App</h2>
+    <p>Huong dan chi tiet cach ket hop 150+ Agents chuyen gia de xay dung ung dung hieu qua &mdash; tu y tuong den production</p>
+  </div>
+
+  <!-- SECTION 1: Pipeline -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(124,106,239,0.15);">&#9881;</span> Pipeline chuan: Tu y tuong &rarr; App hoan chinh</h2>
+    <p>Quy trinh 7 giai doan voi cac agent phu hop cho tung buoc</p>
+  </div>
+
+  <div style="overflow-x:auto;margin-bottom:32px;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border);">
+          <th style="text-align:left;padding:14px 16px;color:var(--cyan);font-weight:800;">Giai doan</th>
+          <th style="text-align:left;padding:14px 16px;color:var(--cyan);font-weight:800;">Agents ket hop</th>
+          <th style="text-align:left;padding:14px 16px;color:var(--cyan);font-weight:800;">Mo ta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(124,106,239,0.03);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Discovery</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">UX Researcher</code> + <code style="color:var(--cyan);">Product Manager</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Nghien cuu user, xac dinh MVP</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Architecture</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Software Architect</code> + <code style="color:var(--cyan);">Backend Architect</code> + <code style="color:var(--cyan);">Database Optimizer</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Thiet ke he thong</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(124,106,239,0.03);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Design</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">UI Designer</code> + <code style="color:var(--cyan);">UX Architect</code> + <code style="color:var(--cyan);">Brand Guardian</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">UI/UX & design system</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Frontend</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Frontend Developer</code> + <code style="color:var(--cyan);">Accessibility Auditor</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Build UI accessible</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(124,106,239,0.03);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Backend</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Backend Architect</code> + <code style="color:var(--cyan);">Database Optimizer</code> + <code style="color:var(--cyan);">Security Engineer</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">API + DB + bao mat</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Testing</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Code Reviewer</code> + <code style="color:var(--cyan);">API Tester</code> + <code style="color:var(--cyan);">Performance Benchmarker</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">QA toan dien</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(124,106,239,0.03);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Deploy</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">DevOps Automator</code> + <code style="color:var(--cyan);">SRE</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">CI/CD + monitoring</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 2: Combo theo loai App -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(34,211,238,0.15);">&#128187;</span> Combo theo loai App</h2>
+    <p>Chon doi hinh agent phu hop voi tung loai ung dung</p>
+  </div>
+
+  <!-- Web App SaaS -->
+  <div class="guide-step" style="padding-left:28px;">
+    <h3 style="color:var(--cyan);font-size:1.2rem;">&#127760; Web App (SaaS)</h3>
+    <div style="background:rgba(18,18,26,0.8);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.85rem;line-height:2.2;color:var(--text-muted);">
+      <span style="color:var(--accent2);font-weight:700;">Software Architect</span> <span style="color:var(--text-muted);">&rarr; Kien truc tong the</span><br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Frontend Developer</span> &rarr; React/Next.js UI<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Backend Architect</span> &rarr; API + Auth<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Database Optimizer</span> &rarr; Schema PostgreSQL<br>
+      &ensp;&#9492;&#9472;&#9472; <span style="color:var(--cyan);">Security Engineer</span> &rarr; OWASP audit<br>
+      &ensp;&ensp;&ensp;&ensp;&#9492;&#9472;&#9472; <span style="color:var(--green);">DevOps Automator</span> &rarr; Deploy Vercel/AWS
+    </div>
+  </div>
+
+  <!-- Mobile App -->
+  <div class="guide-step" style="padding-left:28px;">
+    <h3 style="color:var(--cyan);font-size:1.2rem;">&#128241; Mobile App</h3>
+    <div style="background:rgba(18,18,26,0.8);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.85rem;line-height:2.2;color:var(--text-muted);">
+      <span style="color:var(--accent2);font-weight:700;">Product Manager</span> <span style="color:var(--text-muted);">&rarr; Scope & roadmap</span><br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Mobile App Builder</span> &rarr; React Native / Flutter<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">UI Designer</span> &rarr; Mobile UI system<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Backend Architect</span> &rarr; REST/GraphQL API<br>
+      &ensp;&#9492;&#9472;&#9472; <span style="color:var(--green);">App Store Optimizer</span> &rarr; ASO & listing
+    </div>
+  </div>
+
+  <!-- AI-powered App -->
+  <div class="guide-step" style="padding-left:28px;">
+    <h3 style="color:var(--cyan);font-size:1.2rem;">&#129302; AI-powered App</h3>
+    <div style="background:rgba(18,18,26,0.8);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.85rem;line-height:2.2;color:var(--text-muted);">
+      <span style="color:var(--accent2);font-weight:700;">AI Engineer</span> <span style="color:var(--text-muted);">&rarr; ML model & pipeline</span><br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Backend Architect</span> &rarr; API serving<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Frontend Developer</span> &rarr; Chat UI / Dashboard<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">MCP Builder</span> &rarr; Tool integration<br>
+      &ensp;&#9492;&#9472;&#9472; <span style="color:var(--green);">Security Engineer</span> &rarr; Data privacy
+    </div>
+  </div>
+
+  <!-- E-commerce -->
+  <div class="guide-step" style="padding-left:28px;">
+    <h3 style="color:var(--cyan);font-size:1.2rem;">&#128722; E-commerce</h3>
+    <div style="background:rgba(18,18,26,0.8);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.85rem;line-height:2.2;color:var(--text-muted);">
+      <span style="color:var(--accent2);font-weight:700;">Backend Architect</span> <span style="color:var(--text-muted);">&rarr; Order/Payment system</span><br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Frontend Developer</span> &rarr; Storefront UI<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Database Optimizer</span> &rarr; Product catalog<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Accounts Payable Agent</span> &rarr; Stripe/VietQR<br>
+      &ensp;&#9492;&#9472;&#9472; <span style="color:var(--green);">SEO Specialist</span> &rarr; Organic traffic
+    </div>
+  </div>
+
+  <!-- Game -->
+  <div class="guide-step" style="padding-left:28px;">
+    <h3 style="color:var(--cyan);font-size:1.2rem;">&#127918; Game Development</h3>
+    <div style="background:rgba(18,18,26,0.8);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.85rem;line-height:2.2;color:var(--text-muted);">
+      <span style="color:var(--accent2);font-weight:700;">Game Designer</span> <span style="color:var(--text-muted);">&rarr; GDD & mechanics</span><br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Narrative Designer</span> &rarr; Story & dialogue<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Level Designer</span> &rarr; Map & layout<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Technical Artist</span> &rarr; Shaders & VFX<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Game Audio Engineer</span> &rarr; FMOD/Wwise<br>
+      &ensp;&#9492;&#9472;&#9472; <span style="color:var(--green);">Unity Architect / Unreal Systems Engineer</span> &rarr; Engine code
+    </div>
+  </div>
+
+  <!-- SECTION 3: Parallel Strategy -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(52,211,153,0.15);">&#9889;</span> Chien luoc song song (Parallel Agents)</h2>
+    <p>Chay dong thoi cac agent doc lap de tiet kiem thoi gian</p>
+  </div>
+
+  <div class="guide-step" style="padding-left:28px;">
+    <h3>Phase 1: Build song song</h3>
+    <div style="background:rgba(18,18,26,0.8);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.85rem;line-height:2.4;color:var(--text-muted);">
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9484;&#9472;&#9472; <span style="color:var(--cyan);">Frontend Developer</span> (UI)<br>
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9474;<br>
+      <span style="color:var(--accent2);font-weight:700;">Software Architect</span> &#9472;&#9532;&#9472;&#9472; <span style="color:var(--cyan);">Backend Architect</span> (API) &ensp;<span style="color:var(--green);font-weight:700;">&larr; Chay song song</span><br>
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9474;<br>
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9492;&#9472;&#9472; <span style="color:var(--cyan);">Database Optimizer</span> (Schema)
+    </div>
+  </div>
+
+  <div class="guide-step" style="padding-left:28px;">
+    <h3>Phase 2: Review song song</h3>
+    <div style="background:rgba(18,18,26,0.8);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.85rem;line-height:2.4;color:var(--text-muted);">
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9484;&#9472;&#9472; <span style="color:var(--cyan);">Code Reviewer</span><br>
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9474;<br>
+      <span style="color:var(--accent2);font-weight:700;">Integration</span> &#9472;&#9532;&#9472;&#9472; <span style="color:var(--cyan);">Security Engineer</span> &ensp;<span style="color:var(--green);font-weight:700;">&larr; Chay song song</span><br>
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9474;<br>
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&#9492;&#9472;&#9472; <span style="color:var(--cyan);">API Tester</span>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Defense Combo -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(248,113,113,0.15);">&#128737;</span> Combo "phong thu" &mdash; Chat luong cao</h2>
+    <p>Ket hop agents de dam bao app khong co loi va bao mat</p>
+  </div>
+
+  <div style="overflow-x:auto;margin-bottom:32px;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border);">
+          <th style="text-align:left;padding:14px 16px;color:var(--cyan);font-weight:800;">Buoc</th>
+          <th style="text-align:left;padding:14px 16px;color:var(--cyan);font-weight:800;">Agent</th>
+          <th style="text-align:left;padding:14px 16px;color:var(--cyan);font-weight:800;">Vai tro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(124,106,239,0.03);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Truoc code</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Software Architect</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Review thiet ke</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Trong code</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Code Reviewer</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Review tung PR</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(124,106,239,0.03);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Sau code</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Security Engineer</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Scan vulnerabilities</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Truoc deploy</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">Performance Benchmarker</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Load test</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(124,106,239,0.03);">
+          <td style="padding:14px 16px;font-weight:700;color:var(--accent2);">Sau deploy</td>
+          <td style="padding:14px 16px;"><code style="color:var(--cyan);">SRE</code> + <code style="color:var(--cyan);">Incident Response Commander</code></td>
+          <td style="padding:14px 16px;color:var(--text-muted);">Monitor + on-call</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 5: Real Example -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(251,191,36,0.15);">&#128161;</span> Vi du thuc te &mdash; Build tinh nang Authentication</h2>
+    <p>Quy trinh 6 buoc ket hop agents de xay dung he thong xac thuc</p>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">1</div>
+    <h3>Chon pattern <span class="cmd">Software Architect</span></h3>
+    <p>Phan tich va chon kien truc xac thuc phu hop: JWT vs Session, OAuth2 flow, token storage strategy.</p>
+    <div class="guide-cmd-box">@agent-Software Architect: Thiet ke he thong auth cho SaaS app, so sanh JWT vs Session</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">2</div>
+    <h3>Thiet ke schema <span class="cmd">Database Optimizer</span></h3>
+    <p>Tao cau truc database toi uu cho users, roles, permissions, sessions, refresh tokens.</p>
+    <div class="guide-cmd-box">@agent-Database Optimizer: Schema PostgreSQL cho users, roles, permissions, sessions</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">3</div>
+    <h3>Build API <span class="cmd">Backend Architect</span></h3>
+    <p>Xay dung API endpoints: /auth/login, /auth/register, /auth/refresh, /auth/logout, middleware.</p>
+    <div class="guide-cmd-box">@agent-Backend Architect: Tao REST API auth voi rate limiting, CORS, refresh token rotation</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">4</div>
+    <h3>Build UI <span class="cmd">Frontend Developer</span></h3>
+    <p>Tao Login/Register form, Protected routes, Token management, OAuth buttons.</p>
+    <div class="guide-cmd-box">@agent-Frontend Developer: Tao Login/Register page voi React Hook Form, Zod validation</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">5</div>
+    <h3>Kiem tra bao mat <span class="cmd">Security Engineer</span></h3>
+    <p>Audit OWASP Authentication checklist: brute force protection, password policy, session fixation, CSRF.</p>
+    <div class="guide-cmd-box">@agent-Security Engineer: Audit he thong auth theo OWASP Top 10, kiem tra XSS, CSRF, injection</div>
+  </div>
+
+  <div class="guide-step">
+    <div class="guide-step-num">6</div>
+    <h3>Review cuoi <span class="cmd">Code Reviewer</span></h3>
+    <p>Review toan bo code auth truoc khi merge: logic, error handling, edge cases, code quality.</p>
+    <div class="guide-cmd-box">@agent-Code Reviewer: Review toan bo module auth, tim loi logic va security holes</div>
+  </div>
+
+  <!-- SECTION 6: Golden Rules -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(52,211,153,0.15);">&#11088;</span> 5 Quy tac vang khi ket hop Agents</h2>
+    <p>Nhung nguyen tac quan trong de su dung agents hieu qua nhat</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:32px;">
+    <div style="background:linear-gradient(145deg,var(--surface),rgba(26,26,46,0.6));border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(124,106,239,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:8px;">&#129521;</div>
+      <div style="font-weight:700;color:var(--text);margin-bottom:6px;">Architect truoc, Code sau</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Luon co thiet ke tong the truoc khi bat tay vao code. Software Architect la agent dau tien ban nen goi.</div>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--surface),rgba(26,26,46,0.6));border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(124,106,239,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:8px;">&#9889;</div>
+      <div style="font-weight:700;color:var(--text);margin-bottom:6px;">Song song khi doc lap</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Frontend + Backend + Database co the chay cung luc. Chi doi khi co phu thuoc giua cac agents.</div>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--surface),rgba(26,26,46,0.6));border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(124,106,239,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:8px;">&#128269;</div>
+      <div style="font-weight:700;color:var(--text);margin-bottom:6px;">Review sau moi phase</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Code Reviewer kiem tra chat luong sau moi giai doan. Phat hien loi som = tiet kiem thoi gian.</div>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--surface),rgba(26,26,46,0.6));border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(124,106,239,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:8px;">&#128274;</div>
+      <div style="font-weight:700;color:var(--text);margin-bottom:6px;">Security xuyen suot</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Khong de cuoi moi scan. Security Engineer nen tham gia tu giai doan thiet ke den sau deploy.</div>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--surface),rgba(26,26,46,0.6));border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(124,106,239,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:8px;">&#128640;</div>
+      <div style="font-weight:700;color:var(--text);margin-bottom:6px;">Test som, test thuong xuyen</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;line-height:1.6;">API Tester va Performance Benchmarker chay lien tuc, khong doi den cuoi sprint moi test.</div>
+    </div>
+  </div>
+
+  <!-- Summary Banner -->
+  <div class="ck-info-banner" style="background:linear-gradient(135deg,rgba(124,106,239,0.12),rgba(34,211,238,0.08));border:1px solid rgba(124,106,239,0.3);border-radius:16px;padding:24px;margin-top:40px;">
+    <div style="font-weight:700;font-size:1.1rem;color:var(--accent2);margin-bottom:12px;">Tom tat: 150+ Agents san sang phuc vu</div>
+    <div style="color:var(--text-muted);font-size:0.9rem;line-height:2;">
+      <strong style="color:var(--cyan);">Web App:</strong> Software Architect + Frontend Developer + Backend Architect + Database Optimizer + Security Engineer<br>
+      <strong style="color:var(--cyan);">Mobile:</strong> Product Manager + Mobile App Builder + UI Designer + Backend Architect + App Store Optimizer<br>
+      <strong style="color:var(--cyan);">AI App:</strong> AI Engineer + Backend Architect + Frontend Developer + MCP Builder + Security Engineer<br>
+      <strong style="color:var(--cyan);">E-commerce:</strong> Backend Architect + Frontend Developer + Database Optimizer + SEO Specialist<br>
+      <strong style="color:var(--cyan);">Game:</strong> Game Designer + Narrative Designer + Level Designer + Technical Artist + Game Audio Engineer<br>
+      <strong style="color:var(--cyan);">Marketing:</strong> Content Creator + SEO Specialist + Social Media Strategist + Growth Hacker
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab-combos -->
 
 <div id="tab-guide" class="tab-content">
 <div class="guide-container">
@@ -1136,7 +1439,7 @@
 </div>
 
 <div class="footer">
-  ClaudeKit Engineer v4.0.0 &bull; 156 Lệnh &bull; 156 Agents &bull; 17 Automations &bull; 21 Plugins &bull; Tạo bởi Vo Hung Anh &middot; Ayya Studio
+  ClaudeKit Engineer v5.0.0 &bull; 156 Lệnh &bull; 156 Agents &bull; Agent Combos &bull; 17 Automations &bull; 21 Plugins &bull; Tạo bởi Vo Hung Anh &middot; Ayya Studio
 </div>
 
 <script>
