@@ -369,6 +369,7 @@
     letter-spacing: 0.5px;
   }
 
+  .tag-builtin { background: rgba(148,163,184,0.15); color: #94a3b8; }
   .tag-dev { background: rgba(96,165,250,0.15); color: var(--blue); }
   .tag-ai { background: rgba(167,139,250,0.15); color: var(--accent2); }
   .tag-ops { background: rgba(251,146,60,0.15); color: var(--orange); }
@@ -459,9 +460,9 @@
 <body>
 
 <div class="hero">
-  <div class="version">v3.0.0 &mdash; Engineer Edition</div>
+  <div class="version">v3.1.0 &mdash; Engineer Edition</div>
   <h1>ClaudeKit Skills Dashboard</h1>
-  <p>Tra cứu đầy đủ tất cả skills, cách dùng và ứng dụng trong ClaudeKit Engineer</p>
+  <p>Tra cứu đầy đủ tất cả skills, lệnh built-in, cách dùng và ứng dụng trong ClaudeKit Engineer</p>
   <div class="stats-bar">
     <div class="stat"><div class="num" id="totalSkills">0</div><div class="label">Skills</div></div>
     <div class="stat"><div class="num" id="totalCategories">0</div><div class="label">Categories</div></div>
@@ -479,12 +480,21 @@
 </div>
 
 <div class="container">
+  <div class="ck-info-banner" style="background:linear-gradient(135deg,rgba(124,106,239,0.12),rgba(34,211,238,0.08));border:1px solid rgba(124,106,239,0.3);border-radius:16px;padding:20px 24px;margin-bottom:24px;">
+    <div style="font-weight:700;font-size:1rem;color:var(--accent2);margin-bottom:8px;">&#128161; Mẹo: Tiền tố <code style="background:rgba(34,211,238,0.15);padding:2px 8px;border-radius:6px;color:var(--cyan);font-family:monospace;">/ck:</code></div>
+    <div style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">
+      Tất cả skills ClaudeKit có thể gọi bằng 2 cách:<br>
+      &bull; <code style="color:var(--cyan);font-family:monospace;">/fix</code> &mdash; gọi trực tiếp<br>
+      &bull; <code style="color:var(--cyan);font-family:monospace;">/ck:fix</code> &mdash; gọi qua namespace ClaudeKit (hữu ích khi có nhiều skill pack cùng tên)<br>
+      Ví dụ: <code style="color:var(--cyan);font-family:monospace;">/ck:ask</code> = <code style="color:var(--cyan);font-family:monospace;">/ask</code>, <code style="color:var(--cyan);font-family:monospace;">/ck:cook</code> = <code style="color:var(--cyan);font-family:monospace;">/cook</code>, <code style="color:var(--cyan);font-family:monospace;">/ck:plan</code> = <code style="color:var(--cyan);font-family:monospace;">/ck-plan</code>
+    </div>
+  </div>
   <div class="results-info" id="resultsInfo"></div>
   <div class="grid" id="grid"></div>
 </div>
 
 <div class="footer">
-  ClaudeKit Engineer v3.0.0 &bull; 104 Skills &bull; Tạo bởi Claude Code
+  ClaudeKit Engineer v3.1.0 &bull; 156 Lệnh &bull; Tạo bởi Claude Code
 </div>
 
 <script>
@@ -1840,11 +1850,689 @@ const skills = [
       features: ["Drone aerial shots điểm đến", "Văn hóa và ẩm thực địa phương", "Golden hour landscapes", "Chuyển cảnh giữa các địa điểm"],
       useCases: ["Video giới thiệu điểm du lịch", "Travel vlog content", "Quảng cáo tour du lịch", "Destination marketing video"]
     }
+  },
+  // ====== BUILT-IN CLAUDE CODE COMMANDS ======
+  {
+    name: "help",
+    icon: "❓",
+    command: "/help",
+    desc: "Hiển thị danh sách tất cả lệnh có sẵn và hướng dẫn sử dụng Claude Code. Là điểm khởi đầu khi chưa biết dùng lệnh nào.",
+    usage: "/help",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Liệt kê tất cả lệnh có sẵn", "Mô tả ngắn gọn từng lệnh", "Hiển thị phím tắt", "Gợi ý lệnh phù hợp"],
+      useCases: ["Xem danh sách lệnh khi mới bắt đầu", "Tìm lệnh phù hợp cho tác vụ", "Xem hướng dẫn nhanh"]
+    }
+  },
+  {
+    name: "clear",
+    icon: "🧹",
+    command: "/clear",
+    desc: "Xóa toàn bộ lịch sử hội thoại và giải phóng context window. Bắt đầu cuộc trò chuyện mới từ đầu. Alias: /reset, /new.",
+    usage: "/clear",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Xóa toàn bộ lịch sử chat", "Giải phóng context window", "Bắt đầu phiên mới sạch sẽ", "Alias: /reset, /new"],
+      useCases: ["Khi context đầy cần bắt đầu lại", "Chuyển sang tác vụ hoàn toàn mới", "Giải phóng bộ nhớ hội thoại"]
+    }
+  },
+  {
+    name: "compact",
+    icon: "📦",
+    command: "/compact",
+    desc: "Nén lịch sử hội thoại để tiết kiệm context, với tùy chọn chỉ dẫn giữ lại phần nào quan trọng. Khác /clear ở chỗ vẫn giữ bối cảnh đã nén.",
+    usage: "/compact [chỉ-dẫn-giữ-lại]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Nén hội thoại giữ lại bối cảnh quan trọng", "Tùy chọn chỉ dẫn giữ phần nào", "Tiết kiệm context token", "Vẫn hiểu bối cảnh công việc"],
+      useCases: ["Khi context sắp đầy nhưng vẫn muốn tiếp tục", "Giữ lại bối cảnh quan trọng, bỏ phần không cần", "Tiết kiệm token cho phiên làm việc dài"]
+    }
+  },
+  {
+    name: "cost",
+    icon: "💰",
+    command: "/cost",
+    desc: "Hiển thị thống kê sử dụng token trong phiên hiện tại, bao gồm input/output tokens và chi phí ước tính theo gói đăng ký.",
+    usage: "/cost",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Thống kê input tokens đã dùng", "Thống kê output tokens đã tạo", "Chi phí ước tính theo gói", "Theo dõi mức sử dụng realtime"],
+      useCases: ["Kiểm tra đã dùng bao nhiêu token", "Ước tính chi phí phiên làm việc", "Theo dõi mức tiêu thụ để tiết kiệm"]
+    }
+  },
+  {
+    name: "usage",
+    icon: "📊",
+    command: "/usage",
+    desc: "Hiển thị giới hạn sử dụng theo gói (plan) và trạng thái rate limit hiện tại. Cho biết còn bao nhiêu quota trước khi bị giới hạn.",
+    usage: "/usage",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Hiển thị giới hạn theo gói đăng ký", "Trạng thái rate limit hiện tại", "Quota còn lại", "Thời gian reset rate limit"],
+      useCases: ["Kiểm tra còn bao nhiêu quota", "Xem trạng thái rate limit", "Lập kế hoạch sử dụng hợp lý"]
+    }
+  },
+  {
+    name: "context",
+    icon: "🧊",
+    command: "/context",
+    desc: "Trực quan hóa mức sử dụng context hiện tại bằng lưới màu, kèm gợi ý tối ưu hóa. Cho biết context đã dùng bao nhiêu phần trăm.",
+    usage: "/context",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Lưới màu trực quan mức sử dụng", "Gợi ý tối ưu hóa context", "Phần trăm context đã dùng", "Cảnh báo khi sắp đầy"],
+      useCases: ["Kiểm tra nhanh context còn bao nhiêu", "Xem gợi ý tối ưu khi context cao", "Quyết định compact hay clear"]
+    }
+  },
+  {
+    name: "model",
+    icon: "🤖",
+    command: "/model",
+    desc: "Chọn hoặc thay đổi model AI đang sử dụng. Dùng mũi tên trái/phải để điều chỉnh effort level. Có hiệu lực ngay lập tức.",
+    usage: "/model [tên-model: sonnet|opus|haiku]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Chuyển đổi giữa các model (Sonnet, Opus, Haiku)", "Điều chỉnh effort level", "Có hiệu lực ngay lập tức", "Hỗ trợ alias ngắn gọn"],
+      useCases: ["Chuyển sang Opus cho tác vụ phức tạp", "Dùng Haiku cho tác vụ đơn giản, nhanh", "Điều chỉnh effort level tiết kiệm token"]
+    }
+  },
+  {
+    name: "effort",
+    icon: "⚡",
+    command: "/effort",
+    desc: "Đặt mức nỗ lực (effort level) cho model. low/medium/high duy trì qua các phiên, max chỉ cho phiên hiện tại (Opus 4.6), auto để reset về mặc định.",
+    usage: "/effort [low|medium|high|max|auto]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["5 mức: low, medium, high, max, auto", "low/medium/high duy trì qua các phiên", "max chỉ cho phiên hiện tại (Opus 4.6)", "auto reset về mặc định"],
+      useCases: ["Dùng low cho câu hỏi đơn giản", "Dùng high cho tác vụ phức tạp", "Dùng max cho tác vụ quan trọng nhất"]
+    }
+  },
+  {
+    name: "fast",
+    icon: "⚡",
+    command: "/fast",
+    desc: "Bật/tắt chế độ nhanh (fast mode). Vẫn dùng cùng model Opus 4.6 nhưng output nhanh hơn. KHÔNG chuyển sang model khác.",
+    usage: "/fast [on|off]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Tăng tốc output response", "Vẫn dùng cùng model (không đổi model)", "Bật/tắt linh hoạt", "Tiết kiệm thời gian chờ"],
+      useCases: ["Khi cần phản hồi nhanh", "Tác vụ đơn giản không cần suy nghĩ sâu", "Tắt khi cần câu trả lời chất lượng cao"]
+    }
+  },
+  {
+    name: "config",
+    icon: "⚙️",
+    command: "/config",
+    desc: "Mở giao diện Settings để điều chỉnh theme, model, output style, và các tùy chọn khác. Alias: /settings.",
+    usage: "/config",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Thay đổi theme giao diện", "Cấu hình model mặc định", "Điều chỉnh output style", "Quản lý tất cả cài đặt", "Alias: /settings"],
+      useCases: ["Tùy chỉnh giao diện Claude Code", "Đổi theme sáng/tối", "Cấu hình model mặc định", "Điều chỉnh cài đặt editor"]
+    }
+  },
+  {
+    name: "theme",
+    icon: "🎨",
+    command: "/theme",
+    desc: "Thay đổi theme màu sắc giao diện. Có theme sáng/tối, theme cho người mù màu (daltonized), và theme ANSI terminal.",
+    usage: "/theme",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Theme sáng và tối", "Theme cho người mù màu (daltonized/colorblind)", "Theme ANSI terminal", "Xem trước trước khi chọn"],
+      useCases: ["Đổi sang dark mode", "Chọn theme phù hợp cho mắt", "Dùng theme accessible cho người mù màu"]
+    }
+  },
+  {
+    name: "permissions",
+    icon: "🔐",
+    command: "/permissions",
+    desc: "Quản lý quyền truy cập tool: allow (cho phép), ask (hỏi trước), deny (từ chối). Mở giao diện tương tác để cấu hình. Alias: /allowed-tools.",
+    usage: "/permissions",
+    category: "builtin",
+    tags: ["builtin", "security"],
+    details: {
+      features: ["Ba mức quyền: allow, ask, deny", "Giao diện tương tác", "Quản lý từng tool riêng biệt", "Alias: /allowed-tools"],
+      useCases: ["Cho phép Claude tự động chạy test", "Chặn Claude xóa file", "Yêu cầu hỏi trước khi push code", "Cấu hình bảo mật cho dự án"]
+    }
+  },
+  {
+    name: "memory",
+    icon: "🧠",
+    command: "/memory",
+    desc: "Chỉnh sửa file CLAUDE.md (bộ nhớ dự án), bật/tắt auto-memory, và xem các mục bộ nhớ tự động. CLAUDE.md giúp Claude nhớ thông tin quan trọng giữa các phiên.",
+    usage: "/memory",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Chỉnh sửa CLAUDE.md trực tiếp", "Bật/tắt auto-memory", "Xem các mục bộ nhớ tự động", "Bộ nhớ duy trì giữa các phiên"],
+      useCases: ["Thêm hướng dẫn cho Claude nhớ lâu dài", "Ghi chú kiến trúc dự án", "Lưu coding conventions của team", "Bật auto-memory để Claude tự ghi nhớ"]
+    }
+  },
+  {
+    name: "init",
+    icon: "🚀",
+    command: "/init",
+    desc: "Khởi tạo dự án với file CLAUDE.md hướng dẫn. Đặt biến CLAUDE_CODE_NEW_INIT=1 để dùng flow tương tác mới với skills, hooks, và memory files.",
+    usage: "/init",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Tạo file CLAUDE.md cho dự án", "Flow tương tác thiết lập skills", "Cấu hình hooks ban đầu", "Thiết lập memory files"],
+      useCases: ["Bắt đầu dự án mới với Claude Code", "Cấu hình Claude cho dự án hiện có", "Thiết lập hướng dẫn cho team"]
+    }
+  },
+  {
+    name: "login",
+    icon: "🔑",
+    command: "/login",
+    desc: "Đăng nhập vào tài khoản Anthropic để sử dụng Claude Code.",
+    usage: "/login",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Đăng nhập tài khoản Anthropic", "Xác thực qua trình duyệt", "Lưu session tự động"],
+      useCases: ["Đăng nhập lần đầu", "Đăng nhập lại sau khi session hết hạn"]
+    }
+  },
+  {
+    name: "logout",
+    icon: "🚪",
+    command: "/logout",
+    desc: "Đăng xuất khỏi tài khoản Anthropic hiện tại.",
+    usage: "/logout",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Đăng xuất an toàn", "Xóa session token"],
+      useCases: ["Chuyển đổi tài khoản", "Đăng xuất khi dùng máy chung"]
+    }
+  },
+  {
+    name: "doctor",
+    icon: "🩺",
+    command: "/doctor",
+    desc: "Chẩn đoán và xác minh cài đặt Claude Code. Kiểm tra kết nối, cấu hình, phiên bản, và phát hiện vấn đề tiềm ẩn.",
+    usage: "/doctor",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Kiểm tra kết nối API", "Xác minh cấu hình", "Kiểm tra phiên bản", "Phát hiện vấn đề cài đặt"],
+      useCases: ["Khi Claude Code không hoạt động đúng", "Kiểm tra sau khi cài đặt mới", "Debug vấn đề kết nối"]
+    }
+  },
+  {
+    name: "status",
+    icon: "📡",
+    command: "/status",
+    desc: "Hiển thị thông tin phiên: phiên bản, model đang dùng, tài khoản, và trạng thái kết nối. Hoạt động ngay cả khi Claude đang trả lời.",
+    usage: "/status",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Phiên bản Claude Code", "Model đang sử dụng", "Thông tin tài khoản", "Trạng thái kết nối", "Hoạt động khi Claude đang respond"],
+      useCases: ["Kiểm tra đang dùng model nào", "Xem trạng thái kết nối", "Xác minh phiên bản hiện tại"]
+    }
+  },
+  {
+    name: "diff",
+    icon: "📝",
+    command: "/diff",
+    desc: "Mở trình xem diff tương tác hiển thị các thay đổi chưa commit và diff theo từng lượt (per-turn). Dùng mũi tên để chuyển giữa các view và file.",
+    usage: "/diff",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Xem diff tương tác", "Hiển thị thay đổi chưa commit", "Diff theo từng lượt hội thoại", "Duyệt file bằng mũi tên"],
+      useCases: ["Xem Claude đã thay đổi gì", "Review thay đổi trước khi commit", "So sánh code trước và sau"]
+    }
+  },
+  {
+    name: "export",
+    icon: "📤",
+    command: "/export",
+    desc: "Xuất toàn bộ hội thoại hiện tại ra file văn bản (plain text). Có thể chỉ định tên file hoặc để mở dialog chọn.",
+    usage: "/export [tên-file]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Xuất hội thoại ra plain text", "Tùy chọn tên file đầu ra", "Bao gồm toàn bộ lịch sử chat"],
+      useCases: ["Lưu lại hội thoại quan trọng", "Chia sẻ cuộc trò chuyện với đồng nghiệp", "Backup phiên làm việc"]
+    }
+  },
+  {
+    name: "copy",
+    icon: "📋",
+    command: "/copy",
+    desc: "Copy câu trả lời cuối của Claude vào clipboard. Truyền số N để copy câu trả lời thứ N gần nhất. Nhấn 'w' để ghi ra file thay vì clipboard.",
+    usage: "/copy [N]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Copy câu trả lời vào clipboard", "Chọn câu trả lời thứ N", "Hiển thị picker cho code blocks", "Nhấn 'w' để ghi ra file"],
+      useCases: ["Copy code snippet vào IDE", "Copy câu trả lời vào tài liệu", "Ghi code block ra file riêng"]
+    }
+  },
+  {
+    name: "rename",
+    icon: "✏️",
+    command: "/rename",
+    desc: "Đổi tên phiên làm việc hiện tại và hiển thị trên prompt bar. Không có tham số sẽ tự động đặt tên.",
+    usage: "/rename [tên-mới]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Đổi tên session", "Tự động đặt tên nếu không truyền", "Hiển thị tên trên prompt bar"],
+      useCases: ["Đặt tên mô tả cho phiên làm việc", "Dễ tìm lại session sau này"]
+    }
+  },
+  {
+    name: "resume",
+    icon: "▶️",
+    command: "/resume",
+    desc: "Tiếp tục phiên làm việc cũ theo ID hoặc tên, hoặc mở picker để chọn. Alias: /continue. Giúp quay lại công việc dở dang.",
+    usage: "/resume [session-ID hoặc tên]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Tiếp tục session cũ", "Tìm theo ID hoặc tên", "Mở picker chọn session", "Alias: /continue"],
+      useCases: ["Quay lại phiên làm việc hôm qua", "Tiếp tục task đang dở", "Tìm lại session cũ"]
+    }
+  },
+  {
+    name: "branch / fork",
+    icon: "🔀",
+    command: "/branch",
+    desc: "Tạo nhánh hội thoại từ điểm hiện tại. Cho phép thử nhiều hướng giải quyết khác nhau mà không mất hội thoại gốc. Alias: /fork.",
+    usage: "/branch [tên]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Phân nhánh hội thoại", "Giữ nguyên hội thoại gốc", "Alias: /fork"],
+      useCases: ["Thử nhiều cách giải quyết khác nhau", "Tách nhánh để thử nghiệm", "So sánh kết quả từ các hướng khác nhau"]
+    }
+  },
+  {
+    name: "rewind",
+    icon: "⏪",
+    command: "/rewind",
+    desc: "Quay lại điểm trước đó trong hội thoại và code. Hoạt động như checkpoint — chọn điểm muốn quay lại. Alias: /checkpoint.",
+    usage: "/rewind",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Quay lại trạng thái code trước đó", "Chọn điểm checkpoint cụ thể", "Hoàn tác thay đổi của Claude", "Alias: /checkpoint"],
+      useCases: ["Khi Claude sửa code sai, quay lại bản đúng", "Undo thay đổi không mong muốn", "Quay về checkpoint an toàn"]
+    }
+  },
+  {
+    name: "add-dir",
+    icon: "📂",
+    command: "/add-dir",
+    desc: "Thêm thư mục làm việc để Claude có thể truy cập file trong phiên hiện tại. Lưu ý: cấu hình .claude/ từ thư mục thêm vào sẽ không được đọc.",
+    usage: "/add-dir <đường-dẫn-thư-mục>",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Thêm thư mục truy cập trong phiên", "Hỗ trợ nhiều thư mục cùng lúc", "Mở rộng phạm vi file Claude có thể đọc"],
+      useCases: ["Thêm thư mục dự án phụ", "Truy cập file từ thư mục khác", "Làm việc với nhiều repo cùng lúc"]
+    }
+  },
+  {
+    name: "mcp",
+    icon: "🔌",
+    command: "/mcp",
+    desc: "Quản lý kết nối MCP server và xác thực OAuth. Xem danh sách server đang kết nối, thêm/xóa server, kiểm tra trạng thái.",
+    usage: "/mcp",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Quản lý MCP server connections", "Xác thực OAuth", "Xem trạng thái từng server", "Thêm/xóa server"],
+      useCases: ["Kiểm tra MCP server đang hoạt động", "Kết nối MCP server mới", "Debug vấn đề MCP"]
+    }
+  },
+  {
+    name: "hooks",
+    icon: "🪝",
+    command: "/hooks",
+    desc: "Xem cấu hình hooks cho các sự kiện tool. Hooks là shell commands chạy tự động khi Claude thực hiện hành động (trước/sau khi gọi tool).",
+    usage: "/hooks",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Xem danh sách hooks đã cấu hình", "Hooks chạy trước/sau tool events", "Shell commands tự động"],
+      useCases: ["Kiểm tra hooks đang hoạt động", "Debug hook không chạy đúng", "Xem cấu hình tự động hóa"]
+    }
+  },
+  {
+    name: "keybindings",
+    icon: "⌨️",
+    command: "/keybindings",
+    desc: "Mở hoặc tạo file cấu hình phím tắt (keybindings.json). Tùy chỉnh tất cả phím tắt trong Claude Code.",
+    usage: "/keybindings",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Mở file keybindings.json", "Tạo file mới nếu chưa có", "Tùy chỉnh mọi phím tắt"],
+      useCases: ["Tùy chỉnh phím tắt theo ý muốn", "Thêm chord bindings mới"]
+    }
+  },
+  {
+    name: "ide",
+    icon: "💻",
+    command: "/ide",
+    desc: "Quản lý tích hợp IDE (VS Code, JetBrains) và hiển thị trạng thái kết nối. Xem IDE nào đang kết nối với Claude Code.",
+    usage: "/ide",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Quản lý tích hợp VS Code", "Quản lý tích hợp JetBrains", "Hiển thị trạng thái kết nối"],
+      useCases: ["Kiểm tra IDE đang kết nối", "Cấu hình tích hợp IDE mới"]
+    }
+  },
+  {
+    name: "desktop",
+    icon: "🖥️",
+    command: "/desktop",
+    desc: "Chuyển phiên hiện tại sang ứng dụng Claude Code Desktop (macOS và Windows). Alias: /app.",
+    usage: "/desktop",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Chuyển session sang Desktop app", "Giữ nguyên hội thoại", "Alias: /app", "Hỗ trợ macOS và Windows"],
+      useCases: ["Chuyển từ terminal sang Desktop app", "Tiếp tục làm việc trên giao diện đẹp hơn"]
+    }
+  },
+  {
+    name: "plan",
+    icon: "📋",
+    command: "/plan",
+    desc: "Vào chế độ lập kế hoạch (plan mode) trực tiếp từ prompt. Claude sẽ phân tích, thiết kế trước khi code — không tự ý thay đổi file.",
+    usage: "/plan [mô-tả-tác-vụ]",
+    category: "builtin",
+    tags: ["builtin", "workflow"],
+    details: {
+      features: ["Chuyển sang plan mode", "Claude phân tích trước khi hành động", "Không tự thay đổi file", "Trình bày kế hoạch để bạn duyệt"],
+      useCases: ["Lập kế hoạch trước khi triển khai tính năng lớn", "Yêu cầu Claude phân tích trước khi code", "Review kế hoạch trước khi thực hiện"]
+    }
+  },
+  {
+    name: "btw",
+    icon: "💬",
+    command: "/btw",
+    desc: "Hỏi câu hỏi phụ nhanh mà không thêm vào hội thoại chính. Phù hợp cho câu hỏi ngoài lề, tra cứu nhanh.",
+    usage: "/btw <câu-hỏi-nhanh>",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Hỏi nhanh không ảnh hưởng context", "Không thêm vào lịch sử chat", "Trả lời ngắn gọn"],
+      useCases: ["Tra cứu nhanh cú pháp", "Hỏi câu hỏi không liên quan đến task chính", "Kiểm tra nhanh một thông tin"]
+    }
+  },
+  {
+    name: "security-review",
+    icon: "🛡️",
+    command: "/security-review",
+    desc: "Phân tích các thay đổi đang chờ trên branch hiện tại để tìm lỗ hổng bảo mật: injection, vấn đề xác thực, lộ dữ liệu.",
+    usage: "/security-review",
+    category: "builtin",
+    tags: ["builtin", "security"],
+    details: {
+      features: ["Quét lỗ hổng injection", "Kiểm tra vấn đề xác thực (auth)", "Phát hiện lộ dữ liệu nhạy cảm", "Phân tích thay đổi trên branch"],
+      useCases: ["Review bảo mật trước khi merge", "Kiểm tra code mới có an toàn không", "Phát hiện vấn đề bảo mật sớm"]
+    }
+  },
+  {
+    name: "tasks",
+    icon: "📋",
+    command: "/tasks",
+    desc: "Liệt kê và quản lý các background tasks đang chạy. Xem trạng thái, output, dừng task. Alias: /bashes.",
+    usage: "/tasks",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Liệt kê tasks đang chạy", "Xem output từng task", "Dừng task cụ thể", "Alias: /bashes"],
+      useCases: ["Kiểm tra background task đang chạy", "Dừng task bị treo", "Xem kết quả task đã hoàn thành"]
+    }
+  },
+  {
+    name: "skills",
+    icon: "🎯",
+    command: "/skills",
+    desc: "Liệt kê tất cả skills có sẵn trong Claude Code, bao gồm skills mặc định và skills đã cài thêm.",
+    usage: "/skills",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Liệt kê tất cả skills", "Hiển thị mô tả ngắn", "Bao gồm skills mặc định và cài thêm"],
+      useCases: ["Xem danh sách skills có sẵn", "Tìm skill phù hợp", "Kiểm tra skills đã cài"]
+    }
+  },
+  {
+    name: "agents",
+    icon: "🤖",
+    command: "/agents",
+    desc: "Quản lý cấu hình agent — xem, thêm, sửa các agent configuration cho các tác vụ chuyên biệt.",
+    usage: "/agents",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Xem danh sách agent configs", "Quản lý agent configurations", "Cấu hình agent chuyên biệt"],
+      useCases: ["Xem agents đang có", "Cấu hình agent mới", "Chỉnh sửa agent config"]
+    }
+  },
+  {
+    name: "stats",
+    icon: "📈",
+    command: "/stats",
+    desc: "Trực quan hóa mức sử dụng hàng ngày, lịch sử session, streaks, và model preferences. Giúp theo dõi thói quen sử dụng Claude Code.",
+    usage: "/stats",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Biểu đồ sử dụng hàng ngày", "Lịch sử sessions", "Tracking streaks", "Model preferences"],
+      useCases: ["Xem mình dùng Claude Code bao nhiêu", "Theo dõi productivity", "Xem model nào dùng nhiều nhất"]
+    }
+  },
+  {
+    name: "powerup",
+    icon: "🎓",
+    command: "/powerup",
+    desc: "Khám phá các tính năng Claude Code qua bài học tương tác ngắn với demo animation. Học cách sử dụng hiệu quả hơn.",
+    usage: "/powerup",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Bài học tương tác ngắn", "Demo animation trực quan", "Khám phá tính năng mới", "Tips và tricks"],
+      useCases: ["Học cách dùng Claude Code hiệu quả", "Khám phá tính năng chưa biết", "Onboarding cho người mới"]
+    }
+  },
+  {
+    name: "insights",
+    icon: "🔍",
+    command: "/insights",
+    desc: "Tạo báo cáo phân tích các phiên Claude Code: lĩnh vực dự án, pattern tương tác, điểm ma sát (friction points).",
+    usage: "/insights",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Phân tích sessions tổng hợp", "Nhận diện interaction patterns", "Phát hiện friction points", "Báo cáo lĩnh vực làm việc"],
+      useCases: ["Xem tổng quan cách mình dùng Claude", "Tìm điểm cần cải thiện", "Phân tích productivity"]
+    }
+  },
+  {
+    name: "release-notes",
+    icon: "📰",
+    command: "/release-notes",
+    desc: "Xem changelog với picker chọn phiên bản tương tác. Theo dõi tính năng mới, bug fixes, và thay đổi qua từng version.",
+    usage: "/release-notes",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Changelog theo phiên bản", "Picker chọn version tương tác", "Tính năng mới và bug fixes"],
+      useCases: ["Xem tính năng mới sau khi cập nhật", "Theo dõi changelog", "Kiểm tra phiên bản hiện tại có gì mới"]
+    }
+  },
+  {
+    name: "feedback / bug",
+    icon: "🐞",
+    command: "/feedback",
+    desc: "Gửi phản hồi hoặc báo lỗi về Claude Code. Alias: /bug.",
+    usage: "/feedback [mô-tả-vấn-đề]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Gửi phản hồi trực tiếp", "Báo lỗi (bug report)", "Alias: /bug"],
+      useCases: ["Báo lỗi gặp phải", "Gợi ý cải thiện", "Phản hồi trải nghiệm"]
+    }
+  },
+  {
+    name: "extra-usage",
+    icon: "➕",
+    command: "/extra-usage",
+    desc: "Cấu hình extra usage để tiếp tục làm việc khi bị rate limit. Cho phép vượt giới hạn gói đăng ký khi cần thiết.",
+    usage: "/extra-usage",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Vượt giới hạn rate limit", "Cấu hình extra usage", "Tiếp tục làm việc không gián đoạn"],
+      useCases: ["Khi bị rate limit và cần tiếp tục", "Cấu hình sẵn cho phiên làm việc dài"]
+    }
+  },
+  {
+    name: "voice",
+    icon: "🎤",
+    command: "/voice",
+    desc: "Bật/tắt chế độ push-to-talk nhập liệu bằng giọng nói. Yêu cầu tài khoản claude.ai.",
+    usage: "/voice",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Nhập liệu bằng giọng nói", "Push-to-talk mode", "Chuyển giọng nói thành text"],
+      useCases: ["Nhập code/lệnh bằng giọng nói", "Mô tả tác vụ bằng lời nói", "Hands-free coding"]
+    }
+  },
+  {
+    name: "batch",
+    icon: "🔄",
+    command: "/batch",
+    desc: "Điều phối thay đổi quy mô lớn trên toàn bộ codebase song song (5-30 đơn vị). Sử dụng git worktrees và tự tạo PRs. Yêu cầu git repo.",
+    usage: "/batch [chỉ-dẫn-thay-đổi]",
+    category: "builtin",
+    tags: ["builtin", "workflow"],
+    details: {
+      features: ["Thay đổi song song 5-30 đơn vị", "Sử dụng git worktrees cô lập", "Tự động tạo PRs", "Thích hợp cho migration/refactor lớn"],
+      useCases: ["Migrate từ framework cũ sang mới", "Refactor hàng loạt files", "Cập nhật API calls trên toàn codebase", "Đổi tên biến/function trên toàn dự án"]
+    }
+  },
+  {
+    name: "autofix-pr",
+    icon: "🔧",
+    command: "/autofix-pr",
+    desc: "Tạo Claude Code web session tự động theo dõi PR của branch hiện tại — tự push fixes khi CI thất bại hoặc reviewer comment.",
+    usage: "/autofix-pr [chỉ-dẫn-tùy-chọn]",
+    category: "builtin",
+    tags: ["builtin", "workflow"],
+    details: {
+      features: ["Tự động theo dõi PR", "Push fixes khi CI fails", "Phản hồi reviewer comments", "Chạy trên web session"],
+      useCases: ["Tự động sửa lỗi CI/lint", "Phản hồi tự động khi reviewer comment", "Giữ PR luôn pass CI"]
+    }
+  },
+  {
+    name: "remote-control",
+    icon: "🌐",
+    command: "/remote-control",
+    desc: "Cho phép điều khiển session hiện tại từ xa qua claude.ai. Alias: /rc.",
+    usage: "/remote-control",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Điều khiển từ xa qua claude.ai", "Alias: /rc", "Kết nối web với terminal local"],
+      useCases: ["Điều khiển Claude Code từ trình duyệt", "Làm việc từ xa qua web"]
+    }
+  },
+  {
+    name: "teleport",
+    icon: "🌀",
+    command: "/teleport",
+    desc: "Kéo Claude Code web session về terminal local — mở picker chọn branch/conversation. Alias: /tp.",
+    usage: "/teleport",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Kéo web session về terminal", "Picker chọn branch", "Picker chọn conversation", "Alias: /tp"],
+      useCases: ["Tiếp tục web session trên terminal", "Chuyển công việc từ web về local"]
+    }
+  },
+  {
+    name: "color",
+    icon: "🎨",
+    command: "/color",
+    desc: "Đặt màu prompt bar cho session hiện tại. Giúp phân biệt các phiên làm việc khác nhau.",
+    usage: "/color [red|blue|green|yellow|purple|orange|pink|cyan|default]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["9 màu: red, blue, green, yellow, purple, orange, pink, cyan, default", "Áp dụng cho prompt bar", "Phân biệt sessions"],
+      useCases: ["Đánh dấu session quan trọng bằng màu", "Phân biệt session dev vs production"]
+    }
+  },
+  {
+    name: "plugin",
+    icon: "🧩",
+    command: "/plugin",
+    desc: "Quản lý Claude Code plugins — cài đặt, xóa, cập nhật plugins mở rộng chức năng.",
+    usage: "/plugin",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Cài đặt plugin mới", "Xóa plugin", "Cập nhật plugins", "Liệt kê plugins đã cài"],
+      useCases: ["Cài plugin mở rộng chức năng", "Quản lý plugins đã cài", "Cập nhật plugins lên phiên bản mới"]
+    }
+  },
+  {
+    name: "statusline",
+    icon: "📊",
+    command: "/statusline",
+    desc: "Cấu hình status line của Claude Code — mô tả những gì bạn muốn hiển thị hoặc chạy không tham số để xem tùy chọn.",
+    usage: "/statusline [mô-tả]",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Tùy chỉnh status line", "Hiển thị thông tin quan trọng", "Cấu hình linh hoạt"],
+      useCases: ["Tùy chỉnh thanh trạng thái", "Hiển thị thông tin dự án trên status line"]
+    }
+  },
+  {
+    name: "upgrade",
+    icon: "⬆️",
+    command: "/upgrade",
+    desc: "Mở trang nâng cấp để chuyển sang gói cao hơn (Pro/Max).",
+    usage: "/upgrade",
+    category: "builtin",
+    tags: ["builtin"],
+    details: {
+      features: ["Mở trang nâng cấp plan", "Xem các gói có sẵn"],
+      useCases: ["Nâng cấp từ Free lên Pro", "Nâng cấp từ Pro lên Max"]
+    }
   }
 ];
 
 const categoryConfig = {
   all: { label: "Tất cả", color: "#7c6aef" },
+  builtin: { label: "Built-in", color: "#94a3b8" },
   dev: { label: "Phát triển", color: "#60a5fa" },
   ai: { label: "AI & ML", color: "#a78bfa" },
   design: { label: "Thiết kế", color: "#f472b6" },
@@ -1856,6 +2544,7 @@ const categoryConfig = {
 };
 
 const iconColors = {
+  builtin: "rgba(148,163,184,0.15)",
   dev: "rgba(96,165,250,0.15)",
   ai: "rgba(167,139,250,0.15)",
   design: "rgba(244,114,182,0.15)",
