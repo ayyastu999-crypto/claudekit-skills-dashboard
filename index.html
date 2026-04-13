@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClaudeKit Skills Dashboard v2.16.0</title>
+<title>ClaudeKit Skills Dashboard v3.0.0</title>
 <style>
   :root {
     --bg: #0a0a0f;
@@ -459,7 +459,7 @@
 <body>
 
 <div class="hero">
-  <div class="version">v2.16.0 &mdash; Engineer Edition</div>
+  <div class="version">v3.0.0 &mdash; Engineer Edition</div>
   <h1>ClaudeKit Skills Dashboard</h1>
   <p>Tra cứu đầy đủ tất cả skills, cách dùng và ứng dụng trong ClaudeKit Engineer</p>
   <div class="stats-bar">
@@ -484,7 +484,7 @@
 </div>
 
 <div class="footer">
-  ClaudeKit Engineer v2.16.0 &bull; 76 Skills &bull; Tạo bởi Claude Code
+  ClaudeKit Engineer v3.0.0 &bull; 104 Skills &bull; Tạo bởi Claude Code
 </div>
 
 <script>
@@ -1488,6 +1488,357 @@ const skills = [
     details: {
       features: ["Tạo git worktree cô lập", "Phát triển song song nhiều tính năng", "Không cần stash hay chuyển branch", "Hỗ trợ monorepo"],
       useCases: ["Phát triển 2+ tính năng song song", "Testing cô lập không ảnh hưởng code chính", "Làm việc với monorepo hiệu quả", "Tách biệt branch để tránh xung đột"]
+    }
+  },
+  {
+    name: "update-config",
+    icon: "⚙️",
+    command: "/update-config",
+    desc: "Cấu hình Claude Code thông qua settings.json. Các hành vi tự động ('từ bây giờ khi X', 'mỗi lần X', 'trước/sau khi X') cần được cấu hình qua hooks trong settings.json — hệ thống thực thi chúng, không phải Claude.",
+    usage: "/update-config [cài-đặt cần thay đổi]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Cấu hình settings.json cho Claude Code", "Thiết lập hooks tự động", "Quản lý hành vi tự động (before/after events)", "Cấu hình permissions và allowlists"],
+      useCases: ["Thiết lập hooks tự động chạy khi commit", "Cấu hình behavior tùy chỉnh cho dự án", "Quản lý quyền truy cập tool", "Tùy chỉnh Claude Code cho workflow riêng"]
+    }
+  },
+  {
+    name: "keybindings-help",
+    icon: "⌨️",
+    command: "/keybindings-help",
+    desc: "Tùy chỉnh phím tắt, thay đổi keybinding, thêm chord shortcuts, hoặc chỉnh sửa ~/.claude/keybindings.json. Dùng khi muốn rebind phím, thêm shortcut mới, hoặc thay đổi phím submit.",
+    usage: "/keybindings-help [phím-tắt cần thay đổi]",
+    category: "tool",
+    tags: ["tool"],
+    details: {
+      features: ["Tùy chỉnh phím tắt bàn phím", "Hỗ trợ chord bindings (tổ hợp nhiều phím)", "Chỉnh sửa keybindings.json", "Thay đổi phím submit, cancel..."],
+      useCases: ["Rebind Ctrl+S cho hành động khác", "Thêm chord shortcut tùy chỉnh", "Thay đổi phím submit message", "Tùy chỉnh keybindings cho workflow riêng"]
+    }
+  },
+  {
+    name: "simplify",
+    icon: "✂️",
+    command: "/simplify",
+    desc: "Review code đã thay đổi để tìm cơ hội tái sử dụng, nâng cao chất lượng, và tối ưu hiệu suất — sau đó tự động sửa các vấn đề tìm được. Giúp code gọn gàng, DRY, và hiệu quả hơn.",
+    usage: "/simplify",
+    category: "dev",
+    tags: ["dev"],
+    details: {
+      features: ["Phát hiện code trùng lặp có thể tái sử dụng", "Đánh giá chất lượng code", "Tối ưu hiệu suất", "Tự động sửa các vấn đề phát hiện được"],
+      useCases: ["Dọn dẹp code sau khi hoàn thành tính năng", "Tìm và loại bỏ code trùng lặp", "Tối ưu code cho hiệu suất tốt hơn", "Refactor code gọn gàng hơn"]
+    }
+  },
+  {
+    name: "loop",
+    icon: "🔁",
+    command: "/loop",
+    desc: "Chạy một prompt hoặc slash command lặp lại theo chu kỳ (ví dụ: /loop 5m /foo). Bỏ qua khoảng thời gian để model tự điều chỉnh tốc độ. Phù hợp cho: thiết lập tác vụ lặp lại, kiểm tra trạng thái định kỳ, chạy lệnh tự động theo lịch.",
+    usage: "/loop [khoảng-thời-gian] [lệnh-hoặc-prompt]",
+    category: "workflow",
+    tags: ["workflow", "ai"],
+    details: {
+      features: ["Chạy lệnh lặp lại theo chu kỳ", "Tự động điều chỉnh tốc độ (self-pacing)", "Hỗ trợ mọi slash command", "Kiểm soát khoảng thời gian linh hoạt"],
+      useCases: ["Kiểm tra trạng thái build định kỳ", "Chạy test tự động mỗi 5 phút", "Theo dõi thay đổi file liên tục", "Polling API hoặc service status"]
+    }
+  },
+  {
+    name: "schedule",
+    icon: "📅",
+    command: "/schedule",
+    desc: "Tạo, cập nhật, liệt kê, hoặc chạy các remote agent theo lịch trình cron. Thiết lập tác vụ tự động chạy định kỳ, quản lý scheduled agents, tạo cron job cho Claude Code.",
+    usage: "/schedule [create|list|update|run] [cron-expression] [prompt]",
+    category: "workflow",
+    tags: ["workflow", "ai"],
+    details: {
+      features: ["Tạo scheduled remote agents", "Cron expression linh hoạt", "Quản lý danh sách tác vụ đã lên lịch", "Chạy thủ công tác vụ đã lên lịch", "Cập nhật và xóa schedule"],
+      useCases: ["Lên lịch chạy security scan hàng ngày", "Tự động tạo báo cáo mỗi tuần", "Chạy test regression định kỳ", "Lên lịch backup hoặc maintenance"]
+    }
+  },
+  {
+    name: "claude-api",
+    icon: "🔗",
+    command: "/claude-api",
+    desc: "Xây dựng, gỡ lỗi, và tối ưu ứng dụng sử dụng Claude API / Anthropic SDK. Ứng dụng được tạo với skill này sẽ tự động bao gồm prompt caching. Kích hoạt khi code import anthropic hoặc @anthropic-ai/sdk.",
+    usage: "/claude-api [tác-vụ API hoặc câu-hỏi]",
+    category: "ai",
+    tags: ["ai", "dev"],
+    details: {
+      features: ["Tích hợp Claude API / Anthropic SDK", "Prompt caching tự động", "Hỗ trợ Python và TypeScript SDK", "Tool use (function calling)", "Streaming responses", "Managed Agents"],
+      useCases: ["Tạo ứng dụng AI sử dụng Claude API", "Tối ưu prompt caching giảm chi phí", "Xây dựng chatbot với Claude", "Tích hợp tool use cho agent", "Gỡ lỗi API calls"]
+    }
+  },
+  {
+    name: "sd-anime",
+    icon: "🎌",
+    command: "/sd-anime",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Anime / Animation. Tạo prompt chuyên nghiệp cho video AI phong cách anime, hoạt hình Nhật Bản, với chuyển động mượt mà và phong cách nghệ thuật đặc trưng.",
+    usage: "/sd-anime [mô-tả-cảnh-anime]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Prompt engineering cho video anime AI", "Phong cách hoạt hình Nhật Bản đa dạng", "Chuyển động nhân vật mượt mà", "Hiệu ứng đặc trưng anime (sakura, speed lines...)", "Tối ưu cho Seedance 2.0"],
+      useCases: ["Tạo video anime ngắn", "Sinh hoạt hình nhân vật anime", "Tạo MV phong cách anime", "Làm intro/outro anime cho kênh"]
+    }
+  },
+  {
+    name: "sd-action",
+    icon: "🏃",
+    command: "/sd-action",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Action / Sports. Tạo prompt cho video hành động, thể thao với chuyển động nhanh, góc quay động, và năng lượng cao.",
+    usage: "/sd-action [mô-tả-cảnh-hành-động]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Prompt cho video hành động tốc độ cao", "Góc quay động (dynamic camera angles)", "Slow motion và speed ramping", "Hiệu ứng thể thao chuyên nghiệp"],
+      useCases: ["Tạo video quảng cáo thể thao", "Sinh cảnh hành động cho phim ngắn", "Video highlight thể thao", "Quảng cáo sản phẩm thể thao"]
+    }
+  },
+  {
+    name: "sd-horror",
+    icon: "👻",
+    command: "/sd-horror",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Horror / Thriller / Dark. Tạo prompt cho video kinh dị, giật gân với bầu không khí u ám, ánh sáng đặc biệt và hiệu ứng rùng rợn.",
+    usage: "/sd-horror [mô-tả-cảnh-kinh-dị]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Bầu không khí kinh dị, u ám", "Ánh sáng chiaroscuro, low-key", "Hiệu ứng jump scare, suspense", "Phong cách gothic, psychological horror"],
+      useCases: ["Tạo trailer phim kinh dị", "Video Halloween", "Short horror film", "Nội dung dark aesthetic"]
+    }
+  },
+  {
+    name: "sd-food",
+    icon: "🍜",
+    command: "/sd-food",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Food / Restaurant. Tạo prompt cho video ẩm thực hấp dẫn với góc quay close-up, steam effect, và màu sắc sống động.",
+    usage: "/sd-food [mô-tả-món-ăn/nhà-hàng]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Close-up food cinematography", "Steam và sizzle effects", "Màu sắc ấm, hấp dẫn", "Góc quay chuyên nghiệp cho ẩm thực"],
+      useCases: ["Video quảng cáo nhà hàng", "Food review trên mạng xã hội", "Menu video cho nhà hàng", "Quảng cáo delivery app"]
+    }
+  },
+  {
+    name: "sd-fitness",
+    icon: "💪",
+    command: "/sd-fitness",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Fitness / Sport. Tạo prompt cho video tập luyện, gym, yoga với chuyển động cơ thể chính xác và năng lượng tích cực.",
+    usage: "/sd-fitness [mô-tả-bài-tập/cảnh-gym]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Chuyển động cơ thể chính xác", "Ánh sáng dramatic cho cơ bắp", "Góc quay gym chuyên nghiệp", "Năng lượng tích cực, motivational"],
+      useCases: ["Video quảng cáo phòng gym", "Hướng dẫn tập luyện", "Quảng cáo supplement/sportswear", "Motivational fitness content"]
+    }
+  },
+  {
+    name: "sd-fashion",
+    icon: "👗",
+    command: "/sd-fashion",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Fashion / Lookbook. Tạo prompt cho video thời trang với chuyển động catwalk, lookbook shoots, và phong cách editorial.",
+    usage: "/sd-fashion [mô-tả-thời-trang/lookbook]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Catwalk và runway movements", "Editorial fashion photography style", "Lookbook video sequences", "Ánh sáng studio chuyên nghiệp"],
+      useCases: ["Video lookbook cho thương hiệu", "Quảng cáo thời trang", "Fashion campaign video", "Social media fashion content"]
+    }
+  },
+  {
+    name: "sd-corporate",
+    icon: "🏢",
+    command: "/sd-corporate",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Corporate / B2B. Tạo prompt cho video doanh nghiệp chuyên nghiệp, giới thiệu công ty, sản phẩm B2B với phong cách sang trọng, đáng tin cậy.",
+    usage: "/sd-corporate [mô-tả-nội-dung-doanh-nghiệp]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Phong cách chuyên nghiệp, đáng tin cậy", "Tone màu corporate (xanh navy, trắng, bạc)", "Motion graphics doanh nghiệp", "Cảnh văn phòng, họp hành, teamwork"],
+      useCases: ["Video giới thiệu công ty", "Quảng cáo sản phẩm B2B", "Video onboarding nhân viên", "Presentation video cho hội nghị"]
+    }
+  },
+  {
+    name: "sd-cinematic",
+    icon: "🎬",
+    command: "/sd-cinematic",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Cinematic / Film. Tạo prompt cho video phong cách điện ảnh với color grading chuyên nghiệp, tỷ lệ khung hình rộng, và chuyển động camera mượt mà.",
+    usage: "/sd-cinematic [mô-tả-cảnh-phim]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Tỷ lệ khung hình cinematic (21:9, anamorphic)", "Color grading phong cách phim", "Camera movements mượt mà (dolly, crane, steadicam)", "Depth of field và bokeh", "Film grain và lens flare"],
+      useCases: ["Tạo short film", "Trailer phim ngắn", "Video quảng cáo cao cấp", "Cinematic B-roll footage"]
+    }
+  },
+  {
+    name: "sd-beauty",
+    icon: "💄",
+    command: "/sd-beauty",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Beauty / Makeup Tutorial. Tạo prompt cho video làm đẹp, trang điểm với close-up chi tiết, ánh sáng đẹp da, và hiệu ứng mịn màng.",
+    usage: "/sd-beauty [mô-tả-nội-dung-làm-đẹp]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Close-up da mịn màng, chi tiết", "Ánh sáng ring light, beauty lighting", "Hiệu ứng glowing skin", "Chuyển động trang điểm mượt mà"],
+      useCases: ["Video quảng cáo mỹ phẩm", "Tutorial trang điểm", "Skincare routine video", "Beauty brand campaign"]
+    }
+  },
+  {
+    name: "sd-automotive",
+    icon: "🚗",
+    command: "/sd-automotive",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Automotive / Car Ad. Tạo prompt cho video ô tô với góc quay orbital, phản chiếu bóng loáng, và hiệu ứng tốc độ.",
+    usage: "/sd-automotive [mô-tả-xe/cảnh-lái]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Orbital camera quanh xe", "Phản chiếu và bóng loáng xe", "Hiệu ứng tốc độ, motion blur", "Cảnh lái xe qua địa hình đẹp"],
+      useCases: ["Video quảng cáo ô tô", "Car review video", "Showroom virtual tour", "Racing và drift content"]
+    }
+  },
+  {
+    name: "sd-portrait",
+    icon: "🖼️",
+    command: "/sd-portrait",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Portrait / Character. Tạo prompt cho video chân dung nhân vật với biểu cảm phong phú, ánh sáng Rembrandt, và depth of field đẹp.",
+    usage: "/sd-portrait [mô-tả-nhân-vật/chân-dung]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Biểu cảm khuôn mặt phong phú", "Ánh sáng Rembrandt, split, butterfly", "Depth of field bokeh đẹp", "Character introduction sequences"],
+      useCases: ["Video giới thiệu nhân vật", "Portrait nghệ thuật động", "Character reel cho phim/game", "Personal brand video"]
+    }
+  },
+  {
+    name: "sd-nature",
+    icon: "🌿",
+    command: "/sd-nature",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Nature / Landscape. Tạo prompt cho video thiên nhiên, phong cảnh với drone shots, golden hour, và hiệu ứng thời tiết.",
+    usage: "/sd-nature [mô-tả-cảnh-thiên-nhiên]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Drone aerial shots", "Golden hour và blue hour lighting", "Hiệu ứng thời tiết (mưa, sương, tuyết)", "Macro nature photography"],
+      useCases: ["Video phong cảnh du lịch", "Nature documentary footage", "Meditation/relaxation video", "Environmental campaign"]
+    }
+  },
+  {
+    name: "sd-musicvideo",
+    icon: "🎵",
+    command: "/sd-musicvideo",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Music Video / MV. Tạo prompt cho MV với hiệu ứng ánh sáng neon, chuyển cảnh nhịp nhàng theo beat, và phong cách nghệ thuật đa dạng.",
+    usage: "/sd-musicvideo [mô-tả-MV/phong-cách]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Hiệu ứng neon, strobe, laser", "Chuyển cảnh theo nhịp beat", "Phong cách MV đa dạng (pop, hip-hop, EDM, indie)", "Visual effects ấn tượng"],
+      useCases: ["Tạo MV cho ca sĩ/nghệ sĩ", "Lyric video animation", "Concert/live performance video", "Visualizer cho nhạc"]
+    }
+  },
+  {
+    name: "sd-multishot",
+    icon: "🎞️",
+    command: "/sd-multishot",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Multi-Shot Sequence. Tạo prompt cho chuỗi nhiều cảnh quay liên tiếp, với chuyển cảnh mượt mà và câu chuyện mạch lạc.",
+    usage: "/sd-multishot [mô-tả-chuỗi-cảnh]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Chuỗi nhiều cảnh quay liên tiếp", "Chuyển cảnh mượt mà (transitions)", "Kể chuyện qua hình ảnh (visual storytelling)", "Shot list planning tự động"],
+      useCases: ["Tạo short film nhiều cảnh", "Video quảng cáo kể chuyện", "Storyboard to video", "Narrative content creation"]
+    }
+  },
+  {
+    name: "sd-realestate",
+    icon: "🏠",
+    command: "/sd-realestate",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Real Estate / Interior Design. Tạo prompt cho video bất động sản, nội thất với virtual tour, ánh sáng tự nhiên, và không gian sống.",
+    usage: "/sd-realestate [mô-tả-bất-động-sản/nội-thất]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Virtual tour walkthrough", "Ánh sáng tự nhiên, window light", "Góc rộng cho không gian nội thất", "Day-to-night transition"],
+      useCases: ["Video giới thiệu căn hộ/nhà", "Interior design showcase", "Virtual tour bất động sản", "Quảng cáo dự án mới"]
+    }
+  },
+  {
+    name: "sd-product",
+    icon: "📦",
+    command: "/sd-product",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Product / E-Commerce Ad. Tạo prompt cho video sản phẩm thương mại điện tử với 360° view, unboxing, và hiệu ứng hero shot.",
+    usage: "/sd-product [mô-tả-sản-phẩm]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["360° product rotation", "Hero shot với ánh sáng studio", "Unboxing sequence", "Macro detail shots", "Clean background isolation"],
+      useCases: ["Video quảng cáo sản phẩm", "E-commerce product listing video", "Unboxing video", "Product launch teaser"]
+    }
+  },
+  {
+    name: "sd-scifi",
+    icon: "🚀",
+    command: "/sd-scifi",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Sci-Fi / Fantasy / Surreal. Tạo prompt cho video khoa học viễn tưởng, fantasy, siêu thực với hiệu ứng VFX ấn tượng và thế giới tưởng tượng.",
+    usage: "/sd-scifi [mô-tả-cảnh-sci-fi/fantasy]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Thế giới sci-fi, vũ trụ, cyberpunk", "Hiệu ứng hologram, portal, energy", "Fantasy landscapes và creatures", "Surreal visual effects"],
+      useCases: ["Tạo concept video sci-fi", "Game trailer phong cách fantasy", "VFX demo reel", "Metaverse/virtual world content"]
+    }
+  },
+  {
+    name: "sd-timelapse",
+    icon: "⏳",
+    command: "/sd-timelapse",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Timelapse / Hyperlapse. Tạo prompt cho video timelapse thành phố, thiên nhiên, xây dựng với chuyển động thời gian ấn tượng.",
+    usage: "/sd-timelapse [mô-tả-cảnh-timelapse]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["City timelapse (day-to-night)", "Nature timelapse (hoa nở, mây trôi)", "Construction timelapse", "Hyperlapse chuyển động qua không gian"],
+      useCases: ["Timelapse thành phố về đêm", "Video hoa nở, thời tiết thay đổi", "Timelapse xây dựng công trình", "Hyperlapse du lịch"]
+    }
+  },
+  {
+    name: "sd-ugc",
+    icon: "📱",
+    command: "/sd-ugc",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về UGC / Social Media (TikTok, Reels, Shorts). Tạo prompt cho video mạng xã hội phong cách tự nhiên, trending, dọc 9:16.",
+    usage: "/sd-ugc [mô-tả-nội-dung-social]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Format dọc 9:16 cho TikTok/Reels/Shorts", "Phong cách UGC tự nhiên, không quá 'quảng cáo'", "Trending transitions và effects", "Hook trong 3 giây đầu"],
+      useCases: ["Tạo UGC content cho thương hiệu", "Video TikTok viral", "Instagram Reels quảng cáo", "YouTube Shorts content"]
+    }
+  },
+  {
+    name: "sd-wedding",
+    icon: "💍",
+    command: "/sd-wedding",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Wedding / Ceremony. Tạo prompt cho video đám cưới, lễ cưới với ánh sáng lãng mạn, slow motion, và khoảnh khắc cảm xúc.",
+    usage: "/sd-wedding [mô-tả-cảnh-đám-cưới]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Ánh sáng lãng mạn, golden hour", "Slow motion khoảnh khắc cảm xúc", "Bokeh và fairy lights", "Phong cách film đám cưới cao cấp"],
+      useCases: ["Video save-the-date", "Wedding highlights reel", "Pre-wedding video", "Invitation video đám cưới"]
+    }
+  },
+  {
+    name: "sd-travel",
+    icon: "✈️",
+    command: "/sd-travel",
+    desc: "Seedance 2.0 Prompt Engineer chuyên về Travel / Destination. Tạo prompt cho video du lịch, điểm đến với drone shots, văn hóa địa phương, và cảnh đẹp ấn tượng.",
+    usage: "/sd-travel [mô-tả-điểm-đến/du-lịch]",
+    category: "ai",
+    tags: ["ai", "design"],
+    details: {
+      features: ["Drone aerial shots điểm đến", "Văn hóa và ẩm thực địa phương", "Golden hour landscapes", "Chuyển cảnh giữa các địa điểm"],
+      useCases: ["Video giới thiệu điểm du lịch", "Travel vlog content", "Quảng cáo tour du lịch", "Destination marketing video"]
     }
   }
 ];
