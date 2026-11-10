@@ -619,6 +619,12 @@
     margin-top: 4px;
   }
 
+  .tab-bar { overflow-x:auto; scrollbar-width:thin; }
+  .tab-btn { white-space:nowrap; flex:0 0 auto; }
+  @media (max-width: 900px) {
+    .tab-bar { justify-content:flex-start; padding:0 8px; }
+    .tab-btn { padding:14px 16px; font-size:0.9rem; }
+  }
   .user-only { display:inline-block; margin-top:4px; font-size:0.7rem; color:var(--yellow); border:1px solid rgba(251,191,36,0.35); border-radius:6px; padding:1px 6px; }
   .akw-banner { background:linear-gradient(135deg,rgba(124,106,239,0.12),rgba(34,211,238,0.08)); border:1px solid rgba(124,106,239,0.3); border-radius:16px; padding:20px 24px; margin-bottom:24px; }
   .akw-banner-title { font-weight:700; font-size:1rem; color:var(--accent2); margin-bottom:8px; }
@@ -960,85 +966,88 @@
 
   <div style="text-align:center;margin-bottom:40px;">
     <h2 style="font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;">Automation & Plugins</h2>
-    <p style="color:var(--text-muted);font-size:1rem;">Các tác vụ tự động, MCP plugins, và document skills đã cài đặt</p>
+    <p style="color:var(--text-muted);font-size:1rem;">Lịch chạy tự động, plugin, kết nối dịch vụ và skill tạo tài liệu (cập nhật 10/11/2026)</p>
   </div>
 
   <!-- Scheduled Tasks -->
   <div class="guide-phase">
-    <h2><span class="phase-icon" style="background:rgba(251,191,36,0.15);">&#9200;</span> 17 Scheduled Tasks (Tác vụ tự động)</h2>
-    <p>Các tác vụ đã lên lịch chạy tự động hàng ngày/tuần</p>
+    <h2><span class="phase-icon" style="background:rgba(251,191,36,0.15);">&#9200;</span> 17 mẫu tác vụ tự động (đang tắt)</h2>
+    <p>Các tác vụ từng dựng cho Gmail, Drive, Telegram, nhân sự. Hiện chưa bật lại sau khi chuyển sang AgentKit; giữ làm mẫu để dựng lại.</p>
   </div>
 
   <div class="grid" style="margin-bottom:40px;">
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-telegram-morning</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Tóm tắt email buổi sáng, gửi qua Telegram Bot tự động</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-tool">Telegram</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-telegram-evening</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Tóm tắt email buổi tối, gửi qua Telegram Bot tự động</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-tool">Telegram</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-auto-draft-reply</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Tự động soạn bản nháp trả lời email quan trọng</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-ai">AI</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(248,113,113,0.15)">&#128680;</div><div><div class="card-title">gmail-urgent-alert</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Cảnh báo email khẩn cấp cần xử lý ngay</div><div class="card-tags"><span class="tag tag-security">Urgent</span><span class="tag tag-workflow">Gmail</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-unreplied-reminder</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Nhắc nhở email chưa trả lời quá lâu</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-categorized-summary</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Phân loại và tóm tắt email theo chủ đề</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-ai">AI</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-ayya-customer-alert</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Cảnh báo email từ khách hàng Ayya Studio</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-security">Alert</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128202;</div><div><div class="card-title">gmail-weekly-stats</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Thống kê email hàng tuần: đã nhận, đã trả lời, chưa xử lý</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-dev">Stats</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128194;</div><div><div class="card-title">bao-cao-google-drive</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Báo cáo hoạt động Google Drive hàng ngày</div><div class="card-tags"><span class="tag tag-tool">Drive</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128197;</div><div><div class="card-title">bao-cao-tuan-drive</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Báo cáo tổng hợp Google Drive hàng tuần</div><div class="card-tags"><span class="tag tag-tool">Drive</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128197;</div><div><div class="card-title">bao-cao-thang-drive</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Báo cáo tổng hợp Google Drive hàng tháng</div><div class="card-tags"><span class="tag tag-tool">Drive</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(248,113,113,0.15)">&#128680;</div><div><div class="card-title">canh-bao-file-la</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Cảnh báo khi phát hiện file lạ, bất thường trên Drive</div><div class="card-tags"><span class="tag tag-security">Security</span><span class="tag tag-tool">Drive</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#128269;</div><div><div class="card-title">kiem-tra-cau-truc-thu-muc</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Kiểm tra cấu trúc thư mục có đúng quy chuẩn</div><div class="card-tags"><span class="tag tag-tool">QA</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#128269;</div><div><div class="card-title">kiem-tra-chat-luong-file</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Kiểm tra chất lượng file: format, naming, metadata</div><div class="card-tags"><span class="tag tag-tool">QA</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,146,60,0.15)">&#128230;</div><div><div class="card-title">kiem-tra-don-chua-ban-giao</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Kiểm tra đơn hàng chưa bàn giao, nhắc nhở xử lý</div><div class="card-tags"><span class="tag tag-ops">Business</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(167,139,250,0.15)">&#129302;</div><div><div class="card-title">telegram-command-listener</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Bot Telegram lắng nghe và xử lý lệnh tự động</div><div class="card-tags"><span class="tag tag-ai">Bot</span><span class="tag tag-tool">Telegram</span></div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(244,114,182,0.15)">&#128101;</div><div><div class="card-title">theo-doi-nhan-su</div><div class="card-command">Scheduled</div></div></div><div class="card-desc">Theo dõi hoạt động nhân sự, chấm công, nghỉ phép</div><div class="card-tags"><span class="tag tag-ops">HR</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-telegram-morning</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Tóm tắt email buổi sáng, gửi qua Telegram Bot tự động</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-tool">Telegram</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-telegram-evening</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Tóm tắt email buổi tối, gửi qua Telegram Bot tự động</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-tool">Telegram</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-auto-draft-reply</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Tự động soạn bản nháp trả lời email quan trọng</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-ai">AI</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(248,113,113,0.15)">&#128680;</div><div><div class="card-title">gmail-urgent-alert</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Cảnh báo email khẩn cấp cần xử lý ngay</div><div class="card-tags"><span class="tag tag-security">Urgent</span><span class="tag tag-workflow">Gmail</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-unreplied-reminder</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Nhắc nhở email chưa trả lời quá lâu</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-categorized-summary</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Phân loại và tóm tắt email theo chủ đề</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-ai">AI</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,191,36,0.15)">&#128231;</div><div><div class="card-title">gmail-ayya-customer-alert</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Cảnh báo email từ khách hàng Ayya Studio</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-security">Alert</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128202;</div><div><div class="card-title">gmail-weekly-stats</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Thống kê email hàng tuần: đã nhận, đã trả lời, chưa xử lý</div><div class="card-tags"><span class="tag tag-workflow">Gmail</span><span class="tag tag-dev">Stats</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128194;</div><div><div class="card-title">bao-cao-google-drive</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Báo cáo hoạt động Google Drive hàng ngày</div><div class="card-tags"><span class="tag tag-tool">Drive</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128197;</div><div><div class="card-title">bao-cao-tuan-drive</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Báo cáo tổng hợp Google Drive hàng tuần</div><div class="card-tags"><span class="tag tag-tool">Drive</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128197;</div><div><div class="card-title">bao-cao-thang-drive</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Báo cáo tổng hợp Google Drive hàng tháng</div><div class="card-tags"><span class="tag tag-tool">Drive</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(248,113,113,0.15)">&#128680;</div><div><div class="card-title">canh-bao-file-la</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Cảnh báo khi phát hiện file lạ, bất thường trên Drive</div><div class="card-tags"><span class="tag tag-security">Security</span><span class="tag tag-tool">Drive</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#128269;</div><div><div class="card-title">kiem-tra-cau-truc-thu-muc</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Kiểm tra cấu trúc thư mục có đúng quy chuẩn</div><div class="card-tags"><span class="tag tag-tool">QA</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#128269;</div><div><div class="card-title">kiem-tra-chat-luong-file</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Kiểm tra chất lượng file: format, naming, metadata</div><div class="card-tags"><span class="tag tag-tool">QA</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,146,60,0.15)">&#128230;</div><div><div class="card-title">kiem-tra-don-chua-ban-giao</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Kiểm tra đơn hàng chưa bàn giao, nhắc nhở xử lý</div><div class="card-tags"><span class="tag tag-ops">Business</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(167,139,250,0.15)">&#129302;</div><div><div class="card-title">telegram-command-listener</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Bot Telegram lắng nghe và xử lý lệnh tự động</div><div class="card-tags"><span class="tag tag-ai">Bot</span><span class="tag tag-tool">Telegram</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(244,114,182,0.15)">&#128101;</div><div><div class="card-title">theo-doi-nhan-su</div><div class="card-command">Mẫu · đang tắt</div></div></div><div class="card-desc">Theo dõi hoạt động nhân sự, chấm công, nghỉ phép</div><div class="card-tags"><span class="tag tag-ops">HR</span></div></div>
   </div>
 
-  <!-- MCP Plugins -->
+  <div class="guide-tip" style="margin:-24px 0 40px;"><strong>Ba cách hẹn giờ hiện nay:</strong> <b>Scheduled tasks</b> trong app Claude desktop (chạy trên máy, theo lịch cron); <code>/schedule</code> tạo routine chạy trên cloud, không cần mở máy; <code>/loop 5m &lt;lệnh&gt;</code> lặp một lệnh trong phiên đang mở. Báo cáo Drive qua Telegram có skill sẵn: <code>drive-telegram-reporter</code>.</div>
+
   <div class="guide-phase">
-    <h2><span class="phase-icon" style="background:rgba(34,211,238,0.15);">&#128268;</span> 16 MCP Plugins (Tích hợp bên ngoài)</h2>
-    <p>Plugins kết nối Claude Code với dịch vụ bên ngoài</p>
+    <h2><span class="phase-icon" style="background:rgba(34,211,238,0.15);">&#128268;</span> Plugin đang cài</h2>
+    <p>Plugin thêm skill, agent, hook hoặc MCP vào Claude Code. Quản lý trong app hoặc bằng lệnh /plugin.</p>
   </div>
 
   <div class="grid" style="margin-bottom:40px;">
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128187;</div><div><div class="card-title">Supabase</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Quản lý database, auth, storage trực tiếp từ Claude Code</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,146,60,0.15)">&#128293;</div><div><div class="card-title">Firebase</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Tương tác Google Firebase: Firestore, Auth, Functions</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#127917;</div><div><div class="card-title">Playwright</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Browser automation nâng cao cho testing và scraping</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128172;</div><div><div class="card-title">Discord</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Tương tác với Discord server: gửi tin, quản lý kênh</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#9992;</div><div><div class="card-title">Telegram</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Gửi tin nhắn, quản lý bot Telegram tự động</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128025;</div><div><div class="card-title">GitHub</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Quản lý repo, issues, PRs, actions trên GitHub</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,146,60,0.15)">&#129418;</div><div><div class="card-title">GitLab</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Tương tác GitLab: repo, CI/CD, merge requests</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(167,139,250,0.15)">&#127912;</div><div><div class="card-title">Figma</div><div class="card-command">MCP Server</div></div></div><div class="card-desc">Truy cập và phân tích file thiết kế Figma</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128203;</div><div><div class="card-title">Linear</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Quản lý issues, projects, sprints trên Linear</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,146,60,0.15)">&#128203;</div><div><div class="card-title">Asana</div><div class="card-command">MCP Server</div></div></div><div class="card-desc">Quản lý tasks, projects trên Asana</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128269;</div><div><div class="card-title">Greptile</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Tìm kiếm code chuyên sâu trên toàn bộ codebase</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#128218;</div><div><div class="card-title">Context7</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Tổng hợp context từ nhiều nguồn cho AI</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(167,139,250,0.15)">&#128173;</div><div><div class="card-title">Intercom</div><div class="card-command">MCP Server</div></div></div><div class="card-desc">Quản lý hỗ trợ khách hàng qua Intercom</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(244,114,182,0.15)">&#128172;</div><div><div class="card-title">Slack</div><div class="card-command">MCP Server</div></div></div><div class="card-desc">Gửi tin nhắn, quản lý channels trên Slack</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#127760;</div><div><div class="card-title">Terraform</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Infrastructure as Code: quản lý hạ tầng cloud</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(248,113,113,0.15)">&#128316;</div><div><div class="card-title">Laravel Boost</div><div class="card-command">MCP Plugin</div></div></div><div class="card-desc">Tối ưu và tăng tốc phát triển Laravel</div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#9650;</div><div><div class="card-title">vercel</div><div class="card-command">Plugin</div></div></div><div class="card-desc">Deploy, env, domain, log trên Vercel; skill vercel:* cho Next.js, AI SDK, Functions, Storage.</div><div class="card-tags"><span class="tag tag-ops">Deploy</span><span class="tag tag-dev">Next.js</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#128737;</div><div><div class="card-title">sage</div><div class="card-command">Plugin</div></div></div><div class="card-desc">Lớp an toàn: soát lệnh và tool trước khi chạy, ghi nhật ký kiểm tra, báo nhầm (false positive).</div><div class="card-tags"><span class="tag tag-security">Bảo mật</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#9881;</div><div><div class="card-title">claude-code-setup</div><div class="card-command">Plugin</div></div></div><div class="card-desc">Gợi ý tự động hoá cho Claude Code: hook, skill, subagent, MCP phù hợp với dự án.</div><div class="card-tags"><span class="tag tag-tool">Thiết lập</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#127912;</div><div><div class="card-title">design</div><div class="card-command">Plugin</div></div></div><div class="card-desc">Skill design:* (design-critique, accessibility-review, design-system, ux-copy, user-research…) và kết nối Figma, Linear, Asana, Slack, Notion, Intercom, Atlassian (cần đăng nhập).</div><div class="card-tags"><span class="tag tag-design">Thiết kế</span></div></div>
   </div>
 
-  <!-- MCP Servers -->
   <div class="guide-phase">
-    <h2><span class="phase-icon" style="background:rgba(124,106,239,0.15);">&#128279;</span> MCP Servers (OAuth)</h2>
-    <p>Dịch vụ kết nối qua OAuth — cần xác thực trước khi dùng</p>
+    <h2><span class="phase-icon" style="background:rgba(124,106,239,0.15);">&#128279;</span> Kết nối dịch vụ (Connectors)</h2>
+    <p>Đăng nhập một lần bằng OAuth trên claude.ai, dùng được trong mọi phiên.</p>
   </div>
 
   <div class="grid" style="margin-bottom:40px;">
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(248,113,113,0.15)">&#128231;</div><div><div class="card-title">Gmail</div><div class="card-command">OAuth MCP</div></div></div><div class="card-desc">Đọc, gửi, tìm kiếm email Gmail trực tiếp từ Claude</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128197;</div><div><div class="card-title">Google Calendar</div><div class="card-command">OAuth MCP</div></div></div><div class="card-desc">Tạo, sửa, xóa sự kiện lịch Google Calendar</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128221;</div><div><div class="card-title">Notion</div><div class="card-command">OAuth MCP</div></div></div><div class="card-desc">Đọc và chỉnh sửa tài liệu, database trên Notion</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(34,211,238,0.15)">&#127912;</div><div><div class="card-title">Canva</div><div class="card-command">OAuth MCP</div></div></div><div class="card-desc">Tạo thiết kế, export PDF/PNG/PPTX/MP4, quản lý brand kit trên Canva</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#127760;</div><div><div class="card-title">Wix</div><div class="card-command">OAuth MCP</div></div></div><div class="card-desc">Quản lý website Wix: tạo site, gọi API, quản lý nội dung</div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(124,106,239,0.15)">&#128231;</div><div><div class="card-title">Gmail</div><div class="card-command">Connector</div></div></div><div class="card-desc">Tìm, đọc thư, soạn nháp, trả lời, gắn nhãn.</div><div class="card-tags"><span class="tag tag-tool">Email</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(124,106,239,0.15)">&#128197;</div><div><div class="card-title">Google Calendar</div><div class="card-command">Connector</div></div></div><div class="card-desc">Xem lịch, tạo, sửa sự kiện, gợi ý giờ trống.</div><div class="card-tags"><span class="tag tag-tool">Lịch</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(124,106,239,0.15)">&#128193;</div><div><div class="card-title">Google Drive</div><div class="card-command">Connector</div></div></div><div class="card-desc">Tìm, đọc, tạo, chia sẻ file Docs, Sheets, Slides.</div><div class="card-tags"><span class="tag tag-tool">File</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(124,106,239,0.15)">&#128221;</div><div><div class="card-title">Notion</div><div class="card-command">Connector</div></div></div><div class="card-desc">Đọc, tạo trang và database, lịch, ghi nhớ.</div><div class="card-tags"><span class="tag tag-tool">Tài liệu</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(124,106,239,0.15)">&#127912;</div><div><div class="card-title">Canva</div><div class="card-command">Connector</div></div></div><div class="card-desc">Tạo, sửa thiết kế, xuất PDF/PNG/PPTX/MP4, brand kit.</div><div class="card-tags"><span class="tag tag-design">Thiết kế</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(124,106,239,0.15)">&#127912;</div><div><div class="card-title">Figma</div><div class="card-command">Connector</div></div></div><div class="card-desc">Đọc thiết kế ra code, đẩy giao diện vào Figma, FigJam, Code Connect.</div><div class="card-tags"><span class="tag tag-design">Thiết kế</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(124,106,239,0.15)">&#127760;</div><div><div class="card-title">Wix</div><div class="card-command">Connector</div></div></div><div class="card-desc">Tạo, quản lý site Wix, gọi API Wix.</div><div class="card-tags"><span class="tag tag-ops">Website</span></div></div>
   </div>
 
-  <!-- Document Skills -->
   <div class="guide-phase">
-    <h2><span class="phase-icon" style="background:rgba(52,211,153,0.15);">&#128196;</span> Document Skills (Tạo tài liệu)</h2>
-    <p>Tạo file Office trực tiếp từ Claude Code</p>
+    <h2><span class="phase-icon" style="background:rgba(52,211,153,0.15);">&#128187;</span> MCP chạy trên máy</h2>
+    <p>Công cụ điều khiển máy và ứng dụng cục bộ.</p>
   </div>
 
-  <div class="grid">
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(248,113,113,0.15)">&#128196;</div><div><div class="card-title">PDF Generator</div><div class="card-command">/pdf</div></div></div><div class="card-desc">Tạo file PDF chuyên nghiệp với formatting, bảng, biểu đồ</div><div class="card-usage">/pdf [mô-tả-nội-dung]</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(96,165,250,0.15)">&#128196;</div><div><div class="card-title">DOCX Generator</div><div class="card-command">/docx</div></div></div><div class="card-desc">Tạo file Word (.docx) với heading, bảng, hình ảnh</div><div class="card-usage">/docx [mô-tả-nội-dung]</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(251,146,60,0.15)">&#128202;</div><div><div class="card-title">PPTX Generator</div><div class="card-command">/pptx</div></div></div><div class="card-desc">Tạo slide PowerPoint (.pptx) chuyên nghiệp</div><div class="card-usage">/pptx [mô-tả-nội-dung]</div></div>
-    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128200;</div><div><div class="card-title">XLSX Generator</div><div class="card-command">/xlsx</div></div></div><div class="card-desc">Tạo file Excel (.xlsx) với công thức, biểu đồ, pivot</div><div class="card-usage">/xlsx [mô-tả-nội-dung]</div></div>
+  <div class="grid" style="margin-bottom:40px;">
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#127760;</div><div><div class="card-title">Claude in Chrome</div><div class="card-command">MCP</div></div></div><div class="card-desc">Điều khiển Chrome thật của bạn: mở trang, bấm, điền form, đọc trang, quay GIF.</div><div class="card-tags"><span class="tag tag-test">Trình duyệt</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128433;</div><div><div class="card-title">Computer use</div><div class="card-command">MCP</div></div></div><div class="card-desc">Chụp màn hình và điều khiển ứng dụng desktop bằng chuột, bàn phím.</div><div class="card-tags"><span class="tag tag-tool">Desktop</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#9200;</div><div><div class="card-title">Scheduled tasks</div><div class="card-command">MCP</div></div></div><div class="card-desc">Tạo, sửa, chạy tác vụ hẹn giờ trên máy.</div><div class="card-tags"><span class="tag tag-workflow">Tự động</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#127916;</div><div><div class="card-title">ChatCut Desktop</div><div class="card-command">MCP</div></div></div><div class="card-desc">Dựng video trong ChatCut: dự án, phụ đề, motion graphics, giọng đọc.</div><div class="card-tags"><span class="tag tag-ai">Video</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128269;</div><div><div class="card-title">REA</div><div class="card-command">MCP</div></div></div><div class="card-desc">Dịch ngược phần mềm, ứng dụng Electron, trang web để phân tích tính năng.</div><div class="card-tags"><span class="tag tag-security">Phân tích</span></div></div>
+  </div>
+
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(52,211,153,0.15);">&#128196;</span> Skill tạo tài liệu Office</h2>
+    <p>Tạo và sửa file Word, PDF, PowerPoint, Excel ngay trong Claude Code.</p>
+  </div>
+
+  <div class="grid" style="margin-bottom:40px;">
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128196;</div><div><div class="card-title">AK Document Skills</div><div class="card-command">/ak:document-skills</div></div></div><div class="card-desc">Một skill cho cả 4 loại: docx, pdf, pptx, xlsx. Cách gõ: /ak:document-skills &lt;docx|pdf|pptx|xlsx&gt; [đường dẫn] [việc cần làm].</div><div class="card-tags"><span class="tag tag-tool">Office</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128196;</div><div><div class="card-title">PDF</div><div class="card-command">anthropic-skills:pdf</div></div></div><div class="card-desc">Đọc, gộp, tách, xoay, đóng dấu, điền form, OCR, tạo PDF mới.</div><div class="card-tags"><span class="tag tag-tool">PDF</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128196;</div><div><div class="card-title">Word</div><div class="card-command">anthropic-skills:docx</div></div></div><div class="card-desc">Tạo, sửa .docx: heading, bảng, ảnh, track changes, comment.</div><div class="card-tags"><span class="tag tag-tool">Word</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128202;</div><div><div class="card-title">PowerPoint</div><div class="card-command">anthropic-skills:pptx</div></div></div><div class="card-desc">Tạo, sửa, đọc slide .pptx và template .potx.</div><div class="card-tags"><span class="tag tag-tool">Slide</span></div></div>
+    <div class="card"><div class="card-header"><div class="card-icon" style="background:rgba(52,211,153,0.15)">&#128200;</div><div><div class="card-title">Excel</div><div class="card-command">anthropic-skills:xlsx</div></div></div><div class="card-desc">Tạo, sửa bảng tính: công thức, định dạng, biểu đồ, làm sạch dữ liệu.</div><div class="card-tags"><span class="tag tag-tool">Excel</span></div></div>
   </div>
 
 </div>
@@ -1157,7 +1166,7 @@
       <span style="color:var(--accent2);font-weight:700;">Backend Architect</span> <span style="color:var(--text-muted);">&rarr; Order/Payment system</span><br>
       &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Frontend Developer</span> &rarr; Storefront UI<br>
       &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Database Optimizer</span> &rarr; Product catalog<br>
-      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">Accounts Payable Agent</span> &rarr; Stripe/VietQR<br>
+      &ensp;&#9500;&#9472;&#9472; <span style="color:var(--cyan);">/ak:payment-integration</span> &rarr; Stripe/VietQR/SePay<br>
       &ensp;&#9492;&#9472;&#9472; <span style="color:var(--green);">SEO Specialist</span> &rarr; Organic traffic
     </div>
   </div>
@@ -1296,6 +1305,35 @@
     <div class="guide-cmd-box">@agent-Code Reviewer: Review to&agrave;n b&#7897; module auth, t&igrave;m l&#7895;i logic v&agrave; security holes</div>
   </div>
 
+  <!-- SECTION: AgentKit core agents -->
+  <div class="guide-phase">
+    <h2><span class="phase-icon" style="background:rgba(124,106,239,0.15);">&#129302;</span> Agent lõi của AgentKit — skill tự gọi</h2>
+    <p>Khác với 150+ agent chuyên gia ở trên (bạn gọi bằng <code>@agent-…</code>), các agent này do skill AK tự triệu hồi đúng lúc. Thường bạn không cần gọi tay.</p>
+  </div>
+  <div class="akw-table-wrap">
+    <table class="akw-table">
+      <thead><tr><th>Agent</th><th>Làm gì</th><th>Skill nào gọi</th></tr></thead>
+      <tbody>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">planner</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Lập plan nhiều phase</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:plan, /ak:bootstrap</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">researcher</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Nghiên cứu công nghệ, tài liệu</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:research, /ak:plan --hard</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">brainstormer</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Tranh luận phương án trước khi làm</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:brainstorm</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">fullstack-developer</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Làm một phase code, giữ đúng file được giao</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:cook --parallel</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">tester</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Chạy test, đo coverage, kiểm build</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:test, /ak:cook</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">code-reviewer</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Review có kiểm chứng, soát bảo mật</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:code-review, /ak:ship</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">debugger</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Tìm nguyên nhân gốc, đọc log, CI</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:fix (sau 2 lần trượt), /ak:debug</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">docs-manager</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Viết, đối chiếu tài liệu dự án</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:docs</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">git-manager</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Commit chuẩn, push</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:git</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">project-manager</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Theo dõi tiến độ plan, báo cáo</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:project-management</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">journal-writer</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Ghi nhật ký khi có sự cố, quyết định lớn</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:journal</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">kongming</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Cố vấn chạy trên model mạnh nhất khi bí</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">--advice, gọi @kongming</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">advisor</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Phỏng vấn tới khi chốt rồi tư vấn</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:advise</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">code-simplifier</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Làm gọn code vừa viết</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">gọi trực tiếp</td></tr>
+        <tr><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);"><code style="color:var(--cyan);">ui-ux-designer</code></td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">Thiết kế giao diện, wireframe</td><td style="padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border);">/ak:frontend-design</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="guide-tip" style="margin-bottom:40px;"><strong>Khi nào nên tự gọi agent chuyên gia:</strong> cần góc nhìn nghề nghiệp mà skill AK không có (SEO, tăng trưởng, game, pháp lý…). Việc code, test, review, sửa lỗi thì để skill AK điều phối agent lõi sẽ gọn hơn.</div>
+
   <!-- SECTION 6: Golden Rules -->
   <div class="guide-phase">
     <h2><span class="phase-icon" style="background:rgba(52,211,153,0.15);">&#11088;</span> 5 Quy t&#7855;c v&agrave;ng khi k&#7871;t h&#7907;p Agents</h2>
@@ -1397,9 +1435,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">5</div>
-    <h3>Thi&#7871;t k&#7871; wireframe &amp; layout <span class="cmd">/ak:design</span></h3>
-    <p>T&#7841;o wireframe layout: hero section, features, testimonials, pricing, FAQ, CTA. Ch&#7885;n b&#7843;ng m&agrave;u, font ph&ugrave; h&#7907;p.</p>
-    <div class="guide-cmd-box">/ak:design T&#7841;o wireframe landing page cho [s&#7843;n ph&#7849;m]: hero + features + testimonials + pricing + FAQ + CTA</div>
+    <h3>Thiết kế wireframe &amp; layout <span class="cmd">/ak:frontend-design</span></h3>
+    <p>Dựng bố cục và hướng thẩm mỹ: hero, tính năng, testimonials, bảng giá, FAQ, CTA. Có thể đưa ảnh chụp hoặc link trang mẫu để dựng theo.</p>
+    <div class="guide-cmd-box">/ak:frontend-design Landing page [sản phẩm]: hero + features + testimonials + pricing + FAQ + CTA, mobile-first</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Cần bảng màu, cặp font có sẵn thì thêm <code>/ak:ui-ux-pro-max</code>. Logo, nhận diện thương hiệu thì dùng <code>/ak:design</code>.</div>
   </div>
 
   <div class="guide-step">
@@ -1411,17 +1450,17 @@
 
   <div class="guide-step">
     <div class="guide-step-num">7</div>
-    <h3>Vi&#7871;t headline &amp; copy chuy&#7875;n &#273;&#7893;i <span class="cmd">@agent-Content Creator</span></h3>
-    <p>Vi&#7871;t headline h&#7845;p d&#7851;n (c&oacute; keyword ch&iacute;nh), subheadline gi&#7843;i th&iacute;ch gi&aacute; tr&#7883;, body copy thuy&#7871;t ph&#7909;c, CTA r&otilde; r&agrave;ng. &Aacute;p d&#7909;ng c&ocirc;ng th&#7913;c AIDA/PAS.</p>
-    <div class="guide-cmd-box">@agent-Content Creator: Vi&#7871;t copy landing page theo c&ocirc;ng th&#7913;c PAS cho [s&#7843;n ph&#7849;m], keyword ch&iacute;nh "[keyword]", t&#7889;i &#432;u chuy&#7875;n &#273;&#7893;i</div>
-    <div class="guide-tip"><strong>M&#7865;o:</strong> Headline n&ecirc;n ch&#7913;a keyword ch&iacute;nh v&agrave; d&#432;&#7899;i 60 k&yacute; t&#7921;. D&ugrave;ng s&#7889; li&#7879;u c&#7909; th&#7875; thay v&igrave; t&#7915; chung chung (VD: "T&#259;ng 47% doanh thu" thay v&igrave; "T&#259;ng doanh thu").</div>
+    <h3>Viết headline &amp; copy chuyển đổi <span class="cmd">/ak:copywriting</span></h3>
+    <p>Viết headline có keyword chính, subheadline nói rõ giá trị, nội dung thuyết phục và CTA theo công thức AIDA/PAS; có thể áp giọng văn riêng từ file mẫu.</p>
+    <div class="guide-cmd-box">/ak:copywriting landing-page [sản phẩm], keyword chính "[keyword]", công thức PAS</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Headline nên chứa keyword chính và dưới 60 ký tự. Muốn có thêm góc nhìn chiến lược nội dung thì gọi <code>@agent-Content Creator</code>.</div>
   </div>
 
   <div class="guide-step">
     <div class="guide-step-num">8</div>
-    <h3>T&#7841;o h&igrave;nh &#7843;nh &amp; visual <span class="cmd">/ak:ai-multimodal</span></h3>
-    <p>T&#7841;o hero image, illustrations, icons, screenshots s&#7843;n ph&#7849;m. T&#7889;i &#432;u dung l&#432;&#7907;ng &#7843;nh cho t&#7889;c &#273;&#7897; t&#7843;i trang.</p>
-    <div class="guide-cmd-box">/ak:ai-multimodal T&#7841;o hero image chuy&ecirc;n nghi&#7879;p cho landing page v&#7873; [s&#7843;n ph&#7849;m], phong c&aacute;ch modern, clean</div>
+    <h3>Tạo hình ảnh &amp; visual <span class="cmd">/ak:ai-artist</span></h3>
+    <p>Tạo hero image, mockup sản phẩm, hình minh hoạ qua Nano Banana với 129 prompt mẫu. Sau đó nén ảnh ở bước 15.</p>
+    <div class="guide-cmd-box">/ak:ai-artist Hero image landing page [sản phẩm], phong cách modern, clean --mode creative</div>
   </div>
 
   <!-- PHASE 3 -->
@@ -1440,9 +1479,9 @@
 
   <div class="guide-step">
     <div class="guide-step-num">10</div>
-    <h3>Chu&#7849;n b&#7883; tr&#432;&#7899;c khi code <span class="cmd">/ak:cook</span></h3>
-    <p>Ki&#7875;m tra y&ecirc;u c&#7847;u, x&aacute;c nh&#7853;n ph&#7841;m vi, l&ecirc;n checklist SEO elements c&#7847;n c&oacute;.</p>
-    <div class="guide-cmd-box">/ak:cook T&#7841;o landing page [s&#7843;n ph&#7849;m] v&#7899;i: hero, features, testimonials, FAQ schema, CTA, responsive, SEO on-page</div>
+    <h3>Code landing page <span class="cmd">/ak:cook</span></h3>
+    <p>Viết code trang theo yêu cầu hoặc plan đã chốt, tự gọi skill frontend/ui-styling khi cần và chạy kiểm tra.</p>
+    <div class="guide-cmd-box">/ak:cook Landing page [sản phẩm]: hero, features, testimonials, FAQ schema, CTA, responsive, SEO on-page</div>
   </div>
 
   <div class="guide-step">
@@ -1474,10 +1513,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">14</div>
-    <h3>Schema Markup (Structured Data) <span class="cmd">@agent-SEO Specialist</span></h3>
-    <p>Th&ecirc;m JSON-LD schema: Product, FAQPage, Organization, BreadcrumbList, Review. Gi&uacute;p Google hi&#7875;u n&#7897;i dung v&agrave; hi&#7875;n th&#7883; rich snippets.</p>
-    <div class="guide-cmd-box">@agent-SEO Specialist: T&#7841;o JSON-LD schema cho landing page: FAQPage + Product + Organization + Review</div>
-    <div class="guide-tip"><strong>M&#7865;o:</strong> FAQPage schema gi&uacute;p trang xu&#7845;t hi&#7879;n d&#7841;ng h&#7887;i &#273;&aacute;p tr&ecirc;n Google, t&#259;ng di&#7879;n t&iacute;ch hi&#7875;n th&#7883; v&agrave; CTR &#273;&aacute;ng k&#7875;.</div>
+    <h3>Schema Markup (Structured Data) <span class="cmd">/ak:web-frameworks</span></h3>
+    <p>Thêm JSON-LD: Product, FAQPage, Organization, BreadcrumbList, Review để Google hiểu nội dung và hiện rich snippets. Skill này có sẵn phần SEO/GEO cho Next.js.</p>
+    <div class="guide-cmd-box">/ak:web-frameworks nextjs Thêm JSON-LD FAQPage + Product + Organization cho landing page</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> FAQPage schema giúp trang hiện dạng hỏi đáp trên Google, tăng diện tích hiển thị và CTR. Cần tư vấn nội dung schema thì hỏi thêm <code>@agent-SEO Specialist</code>.</div>
   </div>
 
   <div class="guide-step">
@@ -1496,9 +1535,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">17</div>
-    <h3>Sitemap &amp; Robots.txt <span class="cmd">@agent-SEO Specialist</span></h3>
-    <p>T&#7841;o XML sitemap, robots.txt cho ph&eacute;p crawl. Submit l&ecirc;n Google Search Console.</p>
-    <div class="guide-cmd-box">@agent-SEO Specialist: T&#7841;o sitemap.xml v&agrave; robots.txt chu&#7849;n cho landing page, h&#432;&#7899;ng d&#7851;n submit Google Search Console</div>
+    <h3>Sitemap, robots.txt &amp; llms.txt <span class="cmd">/ak:web-frameworks</span></h3>
+    <p>Tạo sitemap.xml, robots.txt cho phép crawl, thêm llms.txt và bản .md cho từng trang để AI (ChatGPT, Claude, Perplexity) đọc được. Submit sitemap lên Google Search Console.</p>
+    <div class="guide-cmd-box">/ak:web-frameworks nextjs Thêm sitemap, robots, llms.txt và social cards</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Trang không dùng Next.js thì tạo llms.txt bằng <code>/ak:llms</code>.</div>
   </div>
 
   <!-- PHASE 5 -->
@@ -1563,9 +1603,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">24</div>
-    <h3>Ki&#7875;m tra SEO to&agrave;n di&#7879;n <span class="cmd">@agent-SEO Specialist</span></h3>
-    <p>Audit checklist: title tag, meta desc, H1, alt text, schema, canonical, mobile, speed, internal links, broken links.</p>
-    <div class="guide-cmd-box">@agent-SEO Specialist: Audit SEO to&agrave;n di&#7879;n landing page: on-page, technical, content, mobile, speed</div>
+    <h3>Kiểm tra SEO &amp; UX toàn diện <span class="cmd">/ak:enhance-ux-ax</span></h3>
+    <p>Quét trang đang chạy: title, meta, H1, schema, sitemap, robots, llms.txt, social cards, tốc độ, responsive, nội dung. Trả về đề xuất xếp hạng theo mức ảnh hưởng.</p>
+    <div class="guide-cmd-box">/ak:enhance-ux-ax https://ten-mien-cua-ban.com</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Thêm <code>--auto</code> để AK tự sửa theo đề xuất. Cần nhận định chuyên sâu về từ khoá thì hỏi <code>@agent-SEO Specialist</code>.</div>
   </div>
 
   <div class="guide-step">
@@ -1694,16 +1735,17 @@
 
   <div class="guide-step">
     <div class="guide-step-num">1</div>
-    <h3>Nghiên cứu giải pháp <span class="cmd">/ak:research</span></h3>
-    <p>Nghiên cứu các công nghệ, framework, và giải pháp phù hợp với ý tưởng app. Claude sẽ phân tích ưu nhược điểm từng lựa chọn.</p>
-    <div class="guide-cmd-box">/ak:research Tôi muốn tạo app quản lý tài chính cá nhân, nên dùng tech stack nào?</div>
+    <h3>Chốt mục tiêu trước <span class="cmd">/ak:brainstorm</span></h3>
+    <p>Bước mở đầu bắt buộc của AK cho mọi việc nhiều bước. Ghi rõ 4 thứ: kết quả cuối cùng, ràng buộc, việc không làm, tiêu chí nghiệm thu. Nếu có nhiều hướng, AK so tối đa 3 phương án và đề xuất phương án nhỏ nhất đủ dùng.</p>
+    <div class="guide-cmd-box">/ak:brainstorm App quản lý chi tiêu cá nhân: ghi giao dịch, báo cáo tháng, ngân sách, AI gợi ý tiết kiệm --ask</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Thêm <code>--ask</code> để AK phỏng vấn từng câu tới khi chốt; <code>--html</code> để có bản tóm tắt dạng trang web.</div>
   </div>
 
   <div class="guide-step">
     <div class="guide-step-num">2</div>
-    <h3>Động não ý tưởng <span class="cmd">/ak:brainstorm</span></h3>
-    <p>Thảo luận các hướng triển khai, tính năng cần có, và phân tích trade-offs. Claude sẽ đưa ra nhiều phương án với ưu nhược điểm.</p>
-    <div class="guide-cmd-box">/ak:brainstorm Thiết kế tính năng cho app quản lý chi tiêu: tracking, báo cáo, budget, AI gợi ý</div>
+    <h3>Nghiên cứu giải pháp <span class="cmd">/ak:research</span></h3>
+    <p>Khi còn phân vân công nghệ: so sánh framework, dịch vụ, thư viện cho đúng hợp đồng vừa chốt, có nêu ưu nhược và rủi ro bảo mật, khả năng mở rộng.</p>
+    <div class="guide-cmd-box">/ak:research Next.js + Supabase hay Next.js + Cloudflare D1 cho app chi tiêu cá nhân?</div>
   </div>
 
   <div class="guide-step">
@@ -1721,10 +1763,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">4</div>
-    <h3>Lập kế hoạch triển khai <span class="cmd">/ak:plan</span></h3>
-    <p>Tạo kế hoạch chi tiết với các giai đoạn, milestone, và danh sách việc cần làm. Claude sẽ chia nhỏ dự án thành các bước rõ ràng.</p>
-    <div class="guide-cmd-box">/ak:plan Xây dựng app quản lý tài chính với Next.js, Supabase, Tailwind CSS</div>
-    <div class="guide-tip"><strong>Mẹo:</strong> Dùng <code>/ak:predict</code> sau khi lập kế hoạch — 5 chuyên gia ảo sẽ phản biện và tìm điểm yếu trong kế hoạch trước khi bạn bắt đầu code.</div>
+    <h3>Lập kế hoạch theo phase <span class="cmd">/ak:plan</span></h3>
+    <p>Tạo thư mục <code>plans/&lt;ngày&gt;-&lt;tên&gt;/</code> gồm plan tổng (phase, phụ thuộc, tiêu chí nghiệm thu) và từng file phase (file sẽ sửa, các bước, cách kiểm, rủi ro). Plan chỉ lập kế hoạch, không viết code.</p>
+    <div class="guide-cmd-box">/ak:plan App chi tiêu Next.js + Supabase --hard --tdd</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Dùng <code>/ak:predict</code> sau khi lập plan để 5 chuyên gia ảo phản biện; <code>/ak:plan validate</code> hoặc <code>/ak:plan red-team</code> để soát lại plan.</div>
   </div>
 
   <div class="guide-step">
@@ -1736,10 +1778,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">6</div>
-    <h3>Thiết kế UI/UX <span class="cmd">/ak:design</span></h3>
-    <p>Thiết kế giao diện, chọn bảng màu, font chữ, và tạo design system cho app.</p>
-    <div class="guide-cmd-box">/ak:design Tạo design system cho app tài chính: bảng màu xanh lá (trust), font modern, dark mode</div>
-    <div class="guide-tip"><strong>Mẹo:</strong> Dùng thêm <code>/ak:ui-ux-pro-max</code> để truy cập kho 161 bảng màu, 57 cặp font, 99 hướng dẫn UX sẵn có.</div>
+    <h3>Thiết kế UI/UX <span class="cmd">/ak:ui-ux-pro-max</span></h3>
+    <p>Chọn phong cách, bảng màu, cặp font, quy tắc UX và design system cho app. Kho có sẵn 50+ phong cách, 161 bảng màu, 57 cặp font, 99 hướng dẫn UX.</p>
+    <div class="guide-cmd-box">/ak:ui-ux-pro-max design-system App tài chính: tông xanh lá tin cậy, dark mode --framework nextjs</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Cần giao diện thật đẹp, có chủ đích thẩm mỹ thì dùng <code>/ak:frontend-design</code>. <code>/ak:design</code> chỉ dành cho logo, nhận diện thương hiệu, banner, không dùng cho code UI.</div>
   </div>
 
   <!-- PHASE 3 -->
@@ -1750,16 +1792,17 @@
 
   <div class="guide-step">
     <div class="guide-step-num">7</div>
-    <h3>Khởi tạo dự án <span class="cmd">/ak:bootstrap</span></h3>
-    <p>Scaffold toàn bộ dự án: cài đặt dependencies, cấu trúc thư mục, config files. Claude tự động chọn tech stack phù hợp dựa trên kế hoạch.</p>
-    <div class="guide-cmd-box">/ak:bootstrap --auto App quản lý tài chính Next.js 15, Supabase, Tailwind, shadcn/ui</div>
+    <h3>Khởi tạo dự án mới <span class="cmd">/ak:bootstrap</span></h3>
+    <p>Dành cho dự án mới tinh: đi từ phạm vi đã chốt thẳng tới code (qua <code>/ak:cook</code>), rồi tự review code và kiểm UX cho web. Bootstrap không có bước plan riêng; nếu đã có plan ở bước 4 thì dùng <code>/ak:cook &lt;đường-dẫn-plan&gt;</code> thay vì bootstrap.</p>
+    <div class="guide-cmd-box">/ak:bootstrap --auto App chi tiêu Next.js 15, Supabase, Tailwind, shadcn/ui</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Chế độ: <code>--auto</code> AK tự quyết, <code>--full</code> làm kỹ có hỏi đáp, <code>--fast</code> bỏ nghiên cứu, <code>--parallel</code> nhiều agent, <code>--ask</code> phỏng vấn tới khi chốt phạm vi.</div>
   </div>
 
   <div class="guide-step">
     <div class="guide-step-num">8</div>
-    <h3>Khởi tạo Claude Memory <span class="cmd">/init</span></h3>
-    <p>Tạo file CLAUDE.md để Claude nhớ bối cảnh dự án xuyên suốt. Ghi lại tech stack, coding conventions, kiến trúc.</p>
-    <div class="guide-cmd-box">/init</div>
+    <h3>Tạo file bối cảnh dự án <span class="cmd">/init</span></h3>
+    <p>Tạo <code>CLAUDE.md</code> để Claude nhớ tech stack, quy ước code, kiến trúc trong mọi phiên. Bản AK: <code>/ak:docs agent-context</code> viết và tối ưu <code>CLAUDE.md</code>/<code>AGENTS.md</code> dựa trên code thật; <code>/ak:folder-context</code> cho từng thư mục con.</p>
+    <div class="guide-cmd-box">/ak:docs agent-context</div>
   </div>
 
   <div class="guide-step">
@@ -1784,9 +1827,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">11</div>
-    <h3>Chuẩn bị trước khi code <span class="cmd">/ak:cook</span></h3>
-    <p><strong>LUÔN chạy trước mỗi tính năng.</strong> Claude sẽ kiểm tra yêu cầu, xác nhận phạm vi, lên checklist việc cần làm trước khi bắt đầu code.</p>
-    <div class="guide-cmd-box">/ak:cook Tạo trang Dashboard hiển thị tổng chi tiêu, biểu đồ theo tháng, top categories</div>
+    <h3>Viết code tính năng <span class="cmd">/ak:cook</span></h3>
+    <p>Lệnh chính để làm tính năng: đọc yêu cầu hoặc plan, viết code từng phase, tự gọi skill chuyên môn (backend, frontend, database…) khi cần, chạy kiểm tra rồi báo kết quả. Cook cần yêu cầu đã rõ; chưa rõ thì quay lại <code>/ak:brainstorm</code>.</p>
+    <div class="guide-cmd-box">/ak:cook plans/261110-app-chi-tieu --auto</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> <code>--interactive</code> dừng cho bạn duyệt từng bước lớn; <code>--fast</code> cho việc nhỏ; <code>--parallel</code> chia phần độc lập cho subagent; <code>--tdd</code> viết test trước.</div>
   </div>
 
   <div class="guide-step">
@@ -1817,7 +1861,7 @@
     <div class="guide-cmd-box">/ak:payment-integration Stripe Thiết lập subscription plans: Free, Pro ($9/mo), Premium ($19/mo)</div>
   </div>
 
-  <div class="guide-tip" style="margin-bottom:16px"><strong>Lặp lại Bước 11-15:</strong> Với mỗi tính năng mới, lặp lại quy trình: <code>/ak:cook</code> → <code>/ak:backend-development</code> → <code>/ak:frontend-development</code> → <code>/ak:ui-styling</code>. Mỗi tính năng nên được hoàn thành trước khi chuyển sang tính năng tiếp theo.</div>
+  <div class="guide-tip" style="margin-bottom:16px"><strong>Mỗi tính năng mới:</strong> chỉ cần <code>/ak:brainstorm</code> → <code>/ak:plan</code> → <code>/ak:cook</code>. Cook tự gọi <code>/ak:backend-development</code>, <code>/ak:frontend-development</code>, <code>/ak:ui-styling</code> khi cần; bạn gọi thẳng các skill chuyên môn này khi việc chỉ nằm gọn trong một mảng.</div>
 
   <!-- PHASE 5 -->
   <div class="guide-phase">
@@ -1856,8 +1900,9 @@
   <div class="guide-step">
     <div class="guide-step-num">20</div>
     <h3>Quét secrets & dependencies <span class="cmd">/ak:security</span></h3>
-    <p>Tìm mật khẩu/API keys bị lộ trong code và kiểm tra dependencies có CVE.</p>
-    <div class="guide-cmd-box">/ak:security --full</div>
+    <p>Tìm mật khẩu, API key bị lộ trong code và kiểm tra thư viện có lỗ hổng CVE. Chạy riêng từng phần cho nhanh.</p>
+    <div class="guide-cmd-box">/ak:security --secrets-only</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Kiểm thư viện: <code>/ak:security --deps-only</code>. Đánh giá kiểu kẻ tấn công: <code>/ak:security --red-team</code>.</div>
   </div>
 
   <!-- PHASE 6 -->
@@ -1889,9 +1934,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">24</div>
-    <h3>Tối ưu tự động <span class="cmd">/ak:autoresearch</span></h3>
-    <p>Chạy vòng lặp tối ưu: đo chỉ số → thử cải thiện → giữ/loại bỏ → lặp lại. Phù hợp cho tăng coverage, giảm bundle size.</p>
-    <div class="guide-cmd-box">/ak:autoresearch Tăng test coverage từ 60% lên 85%</div>
+    <h3>Tối ưu theo chỉ số <span class="cmd">/ak:loop</span></h3>
+    <p>Vòng lặp tự động: đo chỉ số → thử một thay đổi → giữ hoặc bỏ → lặp N lần. Chỉ dùng khi có chỉ số đo được (coverage, bundle size, thời gian chạy). Đây là skill bạn phải tự gõ, Claude không tự gọi.</p>
+    <div class="guide-cmd-box">/ak:loop Tăng test coverage từ 60% lên 85%, tối đa 10 vòng</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Không chắc dùng vòng lặp nào thì gõ <code>/ak:autoresearch</code>: nó chuyển việc sang <code>/ak:loop</code>, <code>/ak:predict</code>, <code>/ak:scenario</code> hoặc <code>/ak:security</code> tuỳ mục tiêu.</div>
   </div>
 
   <!-- PHASE 7 -->
@@ -1909,9 +1955,10 @@
 
   <div class="guide-step">
     <div class="guide-step-num">26</div>
-    <h3>Kiểm tra UI theo chuẩn <span class="cmd">/ak:ui-ux-pro-max</span></h3>
-    <p>Review giao diện theo Web Interface Guidelines: accessibility, UX best practices.</p>
-    <div class="guide-cmd-box">/ak:ui-ux-pro-max src/app/**/*.tsx</div>
+    <h3>Soát UX trên app đang chạy <span class="cmd">/ak:enhance-ux-ax</span></h3>
+    <p>Chấm UX và trải nghiệm cho AI (AX) của site đang chạy: độ nhớ thương hiệu, nội dung, chuyển động, responsive, SEO/GEO (sitemap, robots, llms.txt, schema). Ghi đề xuất xếp hạng; <code>--auto</code> tự sửa, <code>--loop</code> lặp có chụp màn hình kiểm.</p>
+    <div class="guide-cmd-box">/ak:enhance-ux-ax http://localhost:3000 --auto</div>
+    <div class="guide-tip"><strong>Mẹo:</strong> Chỉ soát độ chỉn chu giao diện thì dùng <code>/ak:frontend-design</code>; soát theo checklist UX/accessibility trong code thì dùng <code>/ak:ui-ux-pro-max</code>.</div>
   </div>
 
   <div class="guide-step">
@@ -1986,15 +2033,15 @@
   <div class="ck-info-banner" style="background:linear-gradient(135deg,rgba(52,211,153,0.12),rgba(34,211,238,0.08));border:1px solid rgba(52,211,153,0.3);border-radius:16px;padding:24px;margin-top:40px;">
     <div style="font-weight:700;font-size:1.1rem;color:var(--green);margin-bottom:12px;">Tóm tắt quy trình</div>
     <div style="color:var(--text-muted);font-size:0.9rem;line-height:2;">
-      <strong style="color:var(--accent2);">Nghiên cứu:</strong> <code style="color:var(--cyan);">/ak:research</code> → <code style="color:var(--cyan);">/ak:brainstorm</code> → <code style="color:var(--cyan);">/ak:docs-seeker</code><br>
-      <strong style="color:var(--accent2);">Kế hoạch:</strong> <code style="color:var(--cyan);">/ak:plan</code> → <code style="color:var(--cyan);">/ak:predict</code> → <code style="color:var(--cyan);">/ak:design</code><br>
-      <strong style="color:var(--accent2);">Khởi tạo:</strong> <code style="color:var(--cyan);">/ak:bootstrap</code> → <code style="color:var(--cyan);">/init</code> → <code style="color:var(--cyan);">/ak:databases</code> → <code style="color:var(--cyan);">/ak:better-auth</code><br>
-      <strong style="color:var(--accent2);">Phát triển:</strong> <code style="color:var(--cyan);">/ak:cook</code> → <code style="color:var(--cyan);">/ak:backend-development</code> → <code style="color:var(--cyan);">/ak:frontend-development</code> → <code style="color:var(--cyan);">/ak:ui-styling</code><br>
+      <strong style="color:var(--accent2);">Chốt & nghiên cứu:</strong> <code style="color:var(--cyan);">/ak:brainstorm</code> → <code style="color:var(--cyan);">/ak:research</code> → <code style="color:var(--cyan);">/ak:docs-seeker</code><br>
+      <strong style="color:var(--accent2);">Kế hoạch:</strong> <code style="color:var(--cyan);">/ak:plan</code> → <code style="color:var(--cyan);">/ak:predict</code> → <code style="color:var(--cyan);">/ak:ui-ux-pro-max</code><br>
+      <strong style="color:var(--accent2);">Khởi tạo:</strong> <code style="color:var(--cyan);">/ak:bootstrap</code> → <code style="color:var(--cyan);">/ak:docs agent-context</code> → <code style="color:var(--cyan);">/ak:databases</code> → <code style="color:var(--cyan);">/ak:better-auth</code><br>
+      <strong style="color:var(--accent2);">Phát triển:</strong> <code style="color:var(--cyan);">/ak:cook</code> → <code style="color:var(--cyan);">(tự gọi backend / frontend / ui-styling)</code><br>
       <strong style="color:var(--accent2);">Kiểm thử:</strong> <code style="color:var(--cyan);">/ak:scenario</code> → <code style="color:var(--cyan);">/ak:test</code> → <code style="color:var(--cyan);">/ak:security</code><br>
       <strong style="color:var(--accent2);">Sửa lỗi:</strong> <code style="color:var(--cyan);">/ak:fix</code> → <code style="color:var(--cyan);">/ak:debug</code> → <code style="color:var(--cyan);">/simplify</code><br>
-      <strong style="color:var(--accent2);">Review:</strong> <code style="color:var(--cyan);">/ak:code-review</code> → <code style="color:var(--cyan);">/ak:ui-ux-pro-max</code> → <code style="color:var(--cyan);">/ak:docs</code><br>
+      <strong style="color:var(--accent2);">Review:</strong> <code style="color:var(--cyan);">/ak:code-review</code> → <code style="color:var(--cyan);">/ak:enhance-ux-ax</code> → <code style="color:var(--cyan);">/ak:docs update</code><br>
       <strong style="color:var(--accent2);">Ship:</strong> <code style="color:var(--cyan);">/ak:git cm</code> → <code style="color:var(--cyan);">/ak:ship</code> → <code style="color:var(--cyan);">/ak:deploy</code><br>
-      <strong style="color:var(--accent2);">Vận hành:</strong> <code style="color:var(--cyan);">/autofix-pr</code> → <code style="color:var(--cyan);">/schedule</code> → <code style="color:var(--cyan);">/ak:retro</code> → <code style="color:var(--cyan);">/ak:watzup</code>
+      <strong style="color:var(--accent2);">Vận hành:</strong> <code style="color:var(--cyan);">/autofix-pr</code> → <code style="color:var(--cyan);">/schedule</code> → <code style="color:var(--cyan);">/ak:retro</code> → <code style="color:var(--cyan);">/ak:watzup</code> → <code style="color:var(--cyan);">/ak:handoff</code>
     </div>
   </div>
 
@@ -2038,7 +2085,7 @@
 </div>
 
 <div class="footer">
-  AgentKit Engineer v6.0.0 &bull; 103 skill /ak: &bull; Quy trình AK &bull; Lệnh built-in &bull; 156 Agents &bull; Agent Combos &bull; Landing Page SEO &bull; 17 Automations &bull; 21 Plugins &bull; Tạo bởi Vo Hung Anh &middot; Ayya Studio
+  AgentKit Engineer v6.0.0 &bull; 103 skill /ak: &bull; Quy trình AK &bull; Lệnh built-in &bull; 156 Agents &bull; Agent Combos &bull; Landing Page SEO &bull; Plugins &amp; Connectors &bull; Tạo bởi Vo Hung Anh &middot; Ayya Studio
 </div>
 
 <script>
